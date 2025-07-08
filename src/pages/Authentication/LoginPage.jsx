@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router";
 import { toast } from "react-toastify";
+import GoogleLogin from "../../components/common/Auth/GoogleLogin";
 import useAuth from "../../hooks/useAuth";
 
 const LoginPage = () => {
@@ -95,6 +96,7 @@ const LoginPage = () => {
           Register
         </Link>
       </p>
+      <GoogleLogin></GoogleLogin>
     </div>
   );
 };

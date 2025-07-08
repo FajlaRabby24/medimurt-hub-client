@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router";
 import { toast } from "react-toastify";
+import GoogleLogin from "../../components/common/Auth/GoogleLogin";
 import useAuth from "../../hooks/useAuth";
 import { imageUpload } from "../../utilities/imageUpload";
 
@@ -157,6 +158,7 @@ const RegisterPage = () => {
           Login
         </Link>{" "}
       </p>
+      <GoogleLogin />
     </div>
   );
 };
