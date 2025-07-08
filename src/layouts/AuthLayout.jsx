@@ -1,3 +1,4 @@
+// ✅ AuthLayout.jsx (Updated to be responsive)
 import Lottie from "lottie-react";
 import { Outlet } from "react-router";
 import registerLotties from "../assets/lotties/registerLotties.json";
@@ -5,15 +6,15 @@ import Logo from "../components/common/logo/Logo";
 
 const AuthLayout = () => {
   return (
-    <div className="max-w-7xl mx-auto ">
-      <div className="pl-12 pt-2">
+    <div className="max-w-7xl mx-auto px-4 md:px-8 pb-10 ">
+      <div className="pt-2 md:pt-4">
         <Logo />
       </div>
-      <div className="min-h-[calc(100vh-58px)] flex items-center justify-between ">
-        <div className="flex-1">
-          <Outlet></Outlet>
+      <div className="min-h-[calc(100vh-70px)] flex flex-col-reverse md:flex-row items-center justify-between gap-6">
+        <div className="w-full md:w-1/2">
+          <Outlet />
         </div>
-        <figure className="flex-1">
+        <figure className="w-full md:w-1/2">
           <Lottie animationData={registerLotties} loop={true} />
         </figure>
       </div>

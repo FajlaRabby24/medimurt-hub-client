@@ -38,14 +38,14 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="max-w-7xl mx-auto">
+    <nav className="max-w-7xl px-1 xl:px-0 mx-auto ">
       <div className="navbar ">
         <div className="navbar-start">
           <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+            <div tabIndex={0} role="button" className=" pr-3  lg:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
+                className="h-7 w-7 "
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -72,7 +72,7 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1 gap-5">{links}</ul>
         </div>
         {/* navbar end  */}
-        <div className="navbar-end gap-5">
+        <div className="navbar-end md:gap-5">
           {/* Cart Icon */}
           <Link to={"/cart"}>
             <button className="btn btn-ghost btn-circle">

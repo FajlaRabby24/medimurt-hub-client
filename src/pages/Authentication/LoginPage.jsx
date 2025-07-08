@@ -33,7 +33,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="max-w-lg mx-auto p-6 bg-white shadow-lg rounded-xl ">
+    <div className="max-w-lg mx-auto p-4  md:p-6 bg-white shadow-lg rounded-xl ">
       <h2 className="text-2xl font-bold text-center text-primary mb-6">
         Login to MediMart Hub
       </h2>
