@@ -1,4 +1,5 @@
 import CustomerReviews from "../components/Home/CustomerReivew";
+import HealthTipsArticles from "../components/Home/HelthTipsArticles";
 import TrackMedicine from "../components/Home/TrackMedicine";
 
 const HomePage = () => {
@@ -6,6 +7,7 @@ const HomePage = () => {
     <div className="space-y-44">
       <TrackMedicine />
       <CustomerReviews />
+      <HealthTipsArticles />
     </div>
   );
 };
