@@ -1,12 +1,15 @@
 import { FaShoppingCart } from "react-icons/fa";
 import { HiOutlineLanguage } from "react-icons/hi2";
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
+import { toast } from "react-toastify";
 import defaultUser from "../../assets/images/defaultUser.png";
 import useAuth from "../../hooks/useAuth";
 import Logo from "../common/logo/Logo";
 
 const Navbar = () => {
-  const { user } = useAuth();
+  const { user, signOutUser } = useAuth();
+  const navigate = useNavigate();
+
   const links = (
     <>
       <li>
@@ -21,6 +24,18 @@ const Navbar = () => {
       </li>
     </>
   );
+
+  // handle sign out
+  const handleSignOut = () => {
+    signOutUser()
+      .then(() => {
+        toast.success("Sign out successfully!");
+        navigate("/auth/join-us");
+      })
+      .catch((error) => {
+        toast.error("Some went wrong. Please try again!");
+      });
+  };
 
   return (
     <nav className="max-w-7xl mx-auto">
@@ -113,7 +128,9 @@ const Navbar = () => {
                   </Link>
                 </li>
                 <li>
-                  <button className="btn btn-warning">Log Out</button>
+                  <button onClick={handleSignOut} className="btn btn-warning">
+                    Log Out
+                  </button>
                 </li>
               </ul>
             </div>

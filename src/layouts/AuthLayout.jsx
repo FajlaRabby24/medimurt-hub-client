@@ -1,16 +1,22 @@
 import Lottie from "lottie-react";
 import { Outlet } from "react-router";
 import registerLotties from "../assets/lotties/registerLotties.json";
+import Logo from "../components/common/logo/Logo";
 
 const AuthLayout = () => {
   return (
-    <div className="min-h-screen flex items-center justify-between max-w-7xl mx-auto">
-      <div className="flex-1">
-        <Outlet></Outlet>
+    <div className="max-w-7xl mx-auto ">
+      <div className="pl-12 pt-2">
+        <Logo />
       </div>
-      <figure className="flex-1">
-        <Lottie animationData={registerLotties} loop={true} />
-      </figure>
+      <div className="min-h-screen flex items-center justify-between ">
+        <div className="flex-1">
+          <Outlet></Outlet>
+        </div>
+        <figure className="flex-1">
+          <Lottie animationData={registerLotties} loop={true} />
+        </figure>
+      </div>
     </div>
   );
 };

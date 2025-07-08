@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { Link, useLocation, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import useAuth from "../../hooks/useAuth";
 import { imageUpload } from "../../utilities/imageUpload";
 
 const RegisterPage = () => {
   const { signUpUser, updateUserProfile } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.from || "/";
 
   // state
   const [previewImage, setPreviewImage] = useState(null);
@@ -31,16 +35,16 @@ const RegisterPage = () => {
           photoURL: imageUrl,
         });
         toast.success("Register successfully!");
+        navigate(from);
       })
       .catch((error) => {
-        toast.success("Some went wrong. Please try again!");
+        toast.error("Some went wrong. Please try again!");
       });
 
-    // reset();
+    reset();
   };
 
   // handle preview image
-
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -50,7 +54,7 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="w-lg mx-auto p-6 bg-white shadow-lg rounded-xl ">
+    <div className="max-w-lg mx-auto p-6 bg-white shadow-lg rounded-xl ">
       <h2 className="text-2xl font-bold text-center text-primary mb-6">
         Register to MediMart Hub
       </h2>
@@ -149,9 +153,9 @@ const RegisterPage = () => {
       {/* Redirect to login */}
       <p className="text-center mt-4 text-sm">
         Already have an account?{" "}
-        <a href="/auth/join-us" className="text-blue-500 hover:underline">
+        <Link to="/auth/join-us" className="text-blue-500 hover:underline">
           Login
-        </a>
+        </Link>{" "}
       </p>
     </div>
   );
