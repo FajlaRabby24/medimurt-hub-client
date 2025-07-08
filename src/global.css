@@ -7,3 +7,14 @@ body {
 
 @import "tailwindcss";
 @plugin 'daisyui';
+
+.bg {
+  @apply bg-red-500;
+}
+.bg2 {
+  @apply bg-green-500;
+}
+
+.radius {
+  @apply rounded-lg;
+}
