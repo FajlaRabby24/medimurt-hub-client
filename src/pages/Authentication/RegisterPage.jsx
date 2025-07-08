@@ -4,11 +4,14 @@ import { Link, useLocation, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import GoogleLogin from "../../components/common/Auth/GoogleLogin";
 import useAuth from "../../hooks/useAuth";
+import useAxios from "../../hooks/useAxios";
 import { imageUpload } from "../../utilities/imageUpload";
 
 const RegisterPage = () => {
   const { signUpUser, updateUserProfile } = useAuth();
   const location = useLocation();
+  const axiosPublic = useAxios();
+  const [userCreatting, setUserCreating] = useState(false);
   const navigate = useNavigate();
   const from = location.state?.from || "/";
 
@@ -23,22 +26,37 @@ const RegisterPage = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log("Form Data:", data);
+    setUserCreating(true);
     const image = data?.photo[0];
     const imageUrl = await imageUpload(image);
     console.log(imageUrl);
 
     signUpUser(data?.email, data?.password)
       .then(async (result) => {
-        console.log({ result });
+        const newUser = {
+          name: data?.name,
+          email: data?.email,
+          image: imageUrl,
+          role: "user", // by default
+          created_at: new Date().toISOString(),
+          last_logged_in: new Date().toISOString(),
+        };
+
+        const userRes = await axiosPublic.post("/users", newUser);
+        console.log(userRes);
+        if (userRes?.data.insertedId) {
+          toast.success(userRes?.data.message);
+        }
+
         await updateUserProfile({
           displayName: data?.name,
           photoURL: imageUrl,
         });
-        toast.success("Register successfully!");
+        setUserCreating(false);
         navigate(from);
       })
       .catch((error) => {
+        setUserCreating(false);
         toast.error("Some went wrong. Please try again!");
       });
 
@@ -147,7 +165,17 @@ const RegisterPage = () => {
 
         {/* Submit Button */}
         <div className="form-control mt-6">
-          <button className="btn btn-primary w-full">Register</button>
+          <button
+            type="submit"
+            disabled={userCreatting}
+            className="btn btn-primary w-full"
+          >
+            {userCreatting ? (
+              <span className="loading loading-spinner loading-md"></span>
+            ) : (
+              "Register"
+            )}
+          </button>
         </div>
       </form>
 
