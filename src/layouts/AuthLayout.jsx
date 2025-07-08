@@ -9,7 +9,7 @@ const AuthLayout = () => {
       <div className="pl-12 pt-2">
         <Logo />
       </div>
-      <div className="min-h-screen flex items-center justify-between ">
+      <div className="min-h-[calc(100vh-58px)] flex items-center justify-between ">
         <div className="flex-1">
           <Outlet></Outlet>
         </div>
