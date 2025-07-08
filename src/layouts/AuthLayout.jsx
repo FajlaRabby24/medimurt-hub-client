@@ -1,4 +1,3 @@
-// ✅ AuthLayout.jsx (Updated to be responsive)
 import Lottie from "lottie-react";
 import { Outlet } from "react-router";
 import registerLotties from "../assets/lotties/registerLotties.json";
