@@ -3,11 +3,13 @@ import { Link, useLocation, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import GoogleLogin from "../../components/common/Auth/GoogleLogin";
 import useAuth from "../../hooks/useAuth";
+import useAxios from "../../hooks/useAxios";
 
 const LoginPage = () => {
   const { signInUser } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
+  const axiosPublic = useAxios();
   const from = location.state?.from || "/";
 
   const {
@@ -21,8 +23,12 @@ const LoginPage = () => {
     console.log("Login Data:", data);
 
     signInUser(data?.email, data?.password)
-      .then((result) => {
+      .then(async (result) => {
         toast.success("Login successfull!");
+        // update user last log in time
+        const userRes = await axiosPublic.patch(
+          `/users/loginUser?email=${data?.email}`
+        );
         navigate(from);
       })
       .catch((error) => {
