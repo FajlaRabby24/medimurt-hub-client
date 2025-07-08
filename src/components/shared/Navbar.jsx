@@ -1,10 +1,12 @@
 import { FaShoppingCart } from "react-icons/fa";
-import { Link, NavLink } from "react-router";
-
 import { HiOutlineLanguage } from "react-icons/hi2";
+import { Link, NavLink } from "react-router";
+import defaultUser from "../../assets/images/defaultUser.png";
+import useAuth from "../../hooks/useAuth";
 import Logo from "../common/logo/Logo";
 
 const Navbar = () => {
+  const { user } = useAuth();
   const links = (
     <>
       <li>
@@ -54,6 +56,7 @@ const Navbar = () => {
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1 gap-5">{links}</ul>
         </div>
+        {/* navbar end  */}
         <div className="navbar-end gap-5">
           {/* Cart Icon */}
           <Link to={"/cart"}>
@@ -80,16 +83,45 @@ const Navbar = () => {
               <li>
                 <a>বাংলা</a>
               </li>
-              <li>
-                <a>Español</a>
-              </li>
             </ul>
           </div>
 
           {/* Join Us Button */}
-          <Link to={"/auth/join-us"}>
-            <button className="btn  ">Join Us</button>
-          </Link>
+          {user ? (
+            <div className="dropdown dropdown-end  ml-5 ">
+              <div className="avatar" tabIndex={0}>
+                <div className="ring-primary ring-offset-base-100 w-9 rounded-full ring-2 ring-offset-2">
+                  <img
+                    src={user?.photoURL || defaultUser}
+                    alt="user profile image"
+                    className="cursor-pointer"
+                  />
+                </div>
+              </div>
+              <ul
+                tabIndex={0}
+                className="dropdown-content menu bg-base-100 space-y-2 w-max rounded-box z-1  shadow-sm"
+              >
+                <li>
+                  <Link to={"/update-profile"} className="btn btn-warning ">
+                    Update Profile
+                  </Link>
+                </li>
+                <li className="w">
+                  <Link to={"/dashboard"} className="btn btn-warning ">
+                    Dashboard
+                  </Link>
+                </li>
+                <li>
+                  <button className="btn btn-warning">Log Out</button>
+                </li>
+              </ul>
+            </div>
+          ) : (
+            <Link to={"/auth/join-us"}>
+              <button className="btn  ">Join Us</button>
+            </Link>
+          )}
         </div>
       </div>
     </nav>
