@@ -1,17 +1,32 @@
 import { useLocation, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import useAuth from "../../../hooks/useAuth";
+import useAxios from "../../../hooks/useAxios";
 
 const GoogleLogin = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from || "/";
+  const axiosPublic = useAxios();
   const { googleLogin } = useAuth();
 
   const handleGoogleSignIn = () => {
     googleLogin()
       .then(async (result) => {
-        toast.success("Register successfully!");
+        const user = result?.user;
+        console.log(result);
+        toast.success("Login successfully!");
+        const newUser = {
+          name: user?.displayName,
+          email: user?.email,
+          image: user?.photoURL,
+          role: "user", // by default
+          created_at: new Date().toISOString(),
+          last_logged_in: new Date().toISOString(),
+        };
+
+        const userRes = await axiosPublic.post("/users", newUser);
+        console.log(userRes);
         navigate(from);
       })
       .catch((error) => {

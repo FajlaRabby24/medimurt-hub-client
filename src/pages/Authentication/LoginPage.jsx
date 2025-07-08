@@ -26,9 +26,9 @@ const LoginPage = () => {
       .then(async (result) => {
         toast.success("Login successfull!");
         // update user last log in time
-        const userRes = await axiosPublic.patch(
-          `/users/loginUser?email=${data?.email}`
-        );
+        const userRes = await axiosPublic.post(`/users`, {
+          email: data?.email,
+        });
         navigate(from);
       })
       .catch((error) => {
