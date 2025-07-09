@@ -4,11 +4,13 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import MainLayout from "../layouts/MainLayout";
 import LoginPage from "../pages/Authentication/LoginPage";
 import RegisterPage from "../pages/Authentication/RegisterPage";
+import ManageUsers from "../pages/Dashboard/Admin/ManageUser";
 import DashboardHome from "../pages/Dashboard/DashboardHome";
 import AskForAdvertisement from "../pages/Dashboard/seller/AskForAdvertisement";
 import ManageMedicine from "../pages/Dashboard/seller/ManageMedicine";
 import Forbidden from "../pages/Forbidden";
 import HomePage from "../pages/HomePage";
+import AdminRoute from "./AdminRoute";
 import PrivateRoute from "./PrivateRoute";
 import SellerRouter from "./SellerRoute";
 
@@ -54,6 +56,15 @@ export const router = createBrowserRouter([
       {
         index: true,
         Component: DashboardHome,
+      },
+      // admin routes
+      {
+        path: "manage-user",
+        element: (
+          <AdminRoute>
+            <ManageUsers />
+          </AdminRoute>
+        ),
       },
       // seller routes
       {

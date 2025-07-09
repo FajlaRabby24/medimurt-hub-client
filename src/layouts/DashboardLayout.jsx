@@ -61,7 +61,22 @@ const DashboardLayout = () => {
                 Dashboard
               </NavLink>
             </li>
-            {role === "admin" && !roleLoading && <></>}
+            {role === "admin" && !roleLoading && (
+              <>
+                <li>
+                  <NavLink
+                    to="/dashboard/manage-user"
+                    end
+                    className={({ isActive }) =>
+                      `text-lg font-semibold ${isActive ? "active" : ""}`
+                    }
+                  >
+                    <FaHome size={25} className="inline-block mr-1" />
+                    Manage user
+                  </NavLink>
+                </li>
+              </>
+            )}
             {/* seller routes  */}
             {role === "seller" && !roleLoading && (
               <>
