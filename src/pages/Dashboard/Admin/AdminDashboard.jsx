@@ -1,7 +1,48 @@
+import {
+  FaCheckCircle,
+  FaHourglassHalf,
+  FaMoneyCheckAlt,
+} from "react-icons/fa";
+
 const AdminDashboard = () => {
   return (
-    <div>
-      <h1>Admin dashboard</h1>
+    <div className="p-4 w-full">
+      <h2 className="text-2xl font-bold mb-6">
+        Welcome, <span className="text-primary">Admin</span>!
+      </h2>
+
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="bg-gradient-to-r from-purple-400 to-purple-600 text-white rounded-xl p-6 shadow-md">
+          <div className="flex items-center gap-4">
+            <FaMoneyCheckAlt className="text-4xl" />
+            <div>
+              <p className="text-lg">Total Revenue</p>
+              <h3 className="text-2xl font-bold">$0</h3>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-gradient-to-r from-green-400 to-green-600 text-white rounded-xl p-6 shadow-md">
+          <div className="flex items-center gap-4">
+            <FaCheckCircle className="text-4xl" />
+            <div>
+              <p className="text-lg">Paid Orders</p>
+              <h3 className="text-2xl font-bold">$0</h3>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-gradient-to-r from-yellow-400 to-yellow-600 text-white rounded-xl p-6 shadow-md">
+          <div className="flex items-center gap-4">
+            <FaHourglassHalf className="text-4xl" />
+            <div>
+              <p className="text-lg">Pending Orders</p>
+              <h3 className="text-2xl font-bold">$0</h3>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

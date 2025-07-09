@@ -1,4 +1,4 @@
-import { FaHome } from "react-icons/fa";
+import { FaBullhorn, FaHome, FaPills } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router";
 import Logo from "../components/common/logo/Logo";
 import useUserRole from "../hooks/useUserRole";
@@ -61,6 +61,7 @@ const DashboardLayout = () => {
                 Dashboard
               </NavLink>
             </li>
+            {role === "admin" && !roleLoading && <></>}
             {/* seller routes  */}
             {role === "seller" && !roleLoading && (
               <>
@@ -71,7 +72,7 @@ const DashboardLayout = () => {
                       `text-lg font-semibold ${isActive ? "active" : ""}`
                     }
                   >
-                    <FaHome size={25} className="inline-block mr-1" />
+                    <FaPills size={25} className="inline-block mr-1" />
                     Manage medicine
                   </NavLink>
                 </li>
@@ -82,7 +83,7 @@ const DashboardLayout = () => {
                       `text-lg font-semibold ${isActive ? "active" : ""}`
                     }
                   >
-                    <FaHome size={25} className="inline-block mr-1" />
+                    <FaBullhorn size={25} className="inline-block mr-1" />
                     Ask for Advertise
                   </NavLink>
                 </li>
