@@ -4,6 +4,7 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import MainLayout from "../layouts/MainLayout";
 import LoginPage from "../pages/Authentication/LoginPage";
 import RegisterPage from "../pages/Authentication/RegisterPage";
+import ManageBannerAdvertise from "../pages/Dashboard/Admin/ManageBannerAdvertise";
 import ManageUsers from "../pages/Dashboard/Admin/ManageUser";
 import DashboardHome from "../pages/Dashboard/DashboardHome";
 import AskForAdvertisement from "../pages/Dashboard/seller/AskForAdvertisement";
@@ -63,6 +64,14 @@ export const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <ManageUsers />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "manage-advertise",
+        element: (
+          <AdminRoute>
+            <ManageBannerAdvertise />
           </AdminRoute>
         ),
       },

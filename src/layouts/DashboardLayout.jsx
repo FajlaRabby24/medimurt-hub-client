@@ -65,6 +65,18 @@ const DashboardLayout = () => {
               <>
                 <li>
                   <NavLink
+                    to="/dashboard/manage-advertise"
+                    end
+                    className={({ isActive }) =>
+                      `text-lg font-semibold ${isActive ? "active" : ""}`
+                    }
+                  >
+                    <FaHome size={25} className="inline-block mr-1" />
+                    Manage advertise
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
                     to="/dashboard/manage-user"
                     end
                     className={({ isActive }) =>

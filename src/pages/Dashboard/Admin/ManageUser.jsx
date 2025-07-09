@@ -50,7 +50,7 @@ const ManageUsers = () => {
 
       <div className="overflow-x-auto">
         <table className="table table-zebra w-full min-w-[700px]">
-          <thead>
+          <thead className="bg-base-300">
             <tr>
               <th>#</th>
               <th>Name</th>
