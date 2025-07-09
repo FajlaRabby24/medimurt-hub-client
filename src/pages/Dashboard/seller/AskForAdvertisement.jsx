@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEye, FaTrash } from "react-icons/fa";
@@ -6,14 +6,12 @@ import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import LoadingSpiner from "../../../components/common/Loading/LoadingSpiner";
 import useAuth from "../../../hooks/useAuth";
-
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { imageUpload } from "../../../utilities/imageUpload";
 
 const AskForAdvertisement = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
-  const queryClient = useQueryClient();
   const [showModal, setShowModal] = useState(false);
   const [showViewModal, setShowViewModal] = useState(false);
   const [selectedAd, setSelectedAd] = useState(null);
@@ -78,7 +76,7 @@ const AskForAdvertisement = () => {
   };
 
   // handle image preview
-  const handleImageChange = (e) => {
+  const handleImagePreview = (e) => {
     const file = e.target.files[0];
     if (file) {
       const previewURL = URL.createObjectURL(file);
@@ -213,7 +211,7 @@ const AskForAdvertisement = () => {
                   className="file-input file-input-bordered w-full sm:w-[110px]"
                   {...register("photo", {
                     required: "Photo is required",
-                    onChange: (e) => handleImageChange(e),
+                    onChange: (e) => handleImagePreview(e),
                   })}
                 />
                 {previewImage && (

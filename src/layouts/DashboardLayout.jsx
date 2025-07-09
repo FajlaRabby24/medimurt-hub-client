@@ -48,34 +48,47 @@ const DashboardLayout = () => {
         <ul className="menu bg-[#edf2fe] text-base-content min-h-full w-80 p-4">
           {/* Sidebar content here */}
           <Logo></Logo>
-          <li className="mt-7">
-            <NavLink
-              to="/dashboard"
-              end
-              className={({ isActive }) =>
-                `text-lg font-semibold ${isActive ? "active" : ""}`
-              }
-            >
-              <FaHome size={25} className="inline-block mr-1" />
-              Dashboard
-            </NavLink>
-          </li>
-          {/* seller routes  */}
-          {role === "seller" && !roleLoading && (
-            <>
-              <li>
-                <NavLink
-                  to="/dashboard/ask-for-advertise"
-                  className={({ isActive }) =>
-                    `text-lg font-semibold ${isActive ? "active" : ""}`
-                  }
-                >
-                  <FaHome size={25} className="inline-block mr-1" />
-                  Ask for Advertise
-                </NavLink>
-              </li>
-            </>
-          )}
+          <div className="space-y-2">
+            <li className="mt-7">
+              <NavLink
+                to="/dashboard"
+                end
+                className={({ isActive }) =>
+                  `text-lg font-semibold ${isActive ? "active" : ""}`
+                }
+              >
+                <FaHome size={25} className="inline-block mr-1" />
+                Dashboard
+              </NavLink>
+            </li>
+            {/* seller routes  */}
+            {role === "seller" && !roleLoading && (
+              <>
+                <li>
+                  <NavLink
+                    to="/dashboard/manage-medicine"
+                    className={({ isActive }) =>
+                      `text-lg font-semibold ${isActive ? "active" : ""}`
+                    }
+                  >
+                    <FaHome size={25} className="inline-block mr-1" />
+                    Manage medicine
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/dashboard/ask-for-advertise"
+                    className={({ isActive }) =>
+                      `text-lg font-semibold ${isActive ? "active" : ""}`
+                    }
+                  >
+                    <FaHome size={25} className="inline-block mr-1" />
+                    Ask for Advertise
+                  </NavLink>
+                </li>
+              </>
+            )}
+          </div>
         </ul>
       </div>
     </div>

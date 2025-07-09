@@ -6,6 +6,7 @@ import LoginPage from "../pages/Authentication/LoginPage";
 import RegisterPage from "../pages/Authentication/RegisterPage";
 import DashboardHome from "../pages/Dashboard/DashboardHome";
 import AskForAdvertisement from "../pages/Dashboard/seller/AskForAdvertisement";
+import ManageMedicine from "../pages/Dashboard/seller/ManageMedicine";
 import Forbidden from "../pages/Forbidden";
 import HomePage from "../pages/HomePage";
 import PrivateRoute from "./PrivateRoute";
@@ -60,6 +61,14 @@ export const router = createBrowserRouter([
         element: (
           <SellerRouter>
             <AskForAdvertisement />
+          </SellerRouter>
+        ),
+      },
+      {
+        path: "manage-medicine",
+        element: (
+          <SellerRouter>
+            <ManageMedicine />
           </SellerRouter>
         ),
       },
