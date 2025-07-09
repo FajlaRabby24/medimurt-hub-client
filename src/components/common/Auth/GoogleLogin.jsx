@@ -25,7 +25,7 @@ const GoogleLogin = () => {
           last_logged_in: new Date().toISOString(),
         };
 
-        const userRes = await axiosPublic.post("/users", newUser);
+        const userRes = await axiosPublic.post("/api/users", newUser);
         console.log(userRes);
         navigate(from);
       })

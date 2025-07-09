@@ -26,7 +26,7 @@ const LoginPage = () => {
       .then(async (result) => {
         toast.success("Login successfull!");
         // update user last log in time
-        const userRes = await axiosPublic.post(`/users`, {
+        const userRes = await axiosPublic.post(`/api/users`, {
           email: data?.email,
         });
         navigate(from);

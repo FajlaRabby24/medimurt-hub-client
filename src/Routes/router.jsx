@@ -5,6 +5,7 @@ import MainLayout from "../layouts/MainLayout";
 import LoginPage from "../pages/Authentication/LoginPage";
 import RegisterPage from "../pages/Authentication/RegisterPage";
 import DashboardHome from "../pages/Dashboard/DashboardHome";
+import Forbidden from "../pages/Forbidden";
 import HomePage from "../pages/HomePage";
 import PrivateRoute from "./PrivateRoute";
 
@@ -17,6 +18,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         Component: HomePage,
+      },
+      {
+        path: "forbidden",
+        Component: Forbidden,
       },
     ],
   },

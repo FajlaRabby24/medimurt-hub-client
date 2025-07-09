@@ -1,8 +1,11 @@
 import { FaHome } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router";
 import Logo from "../components/common/logo/Logo";
+import useUserRole from "../hooks/useUserRole";
 
 const DashboardLayout = () => {
+  const { role, roleLoading } = useUserRole();
+
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -46,11 +49,33 @@ const DashboardLayout = () => {
           {/* Sidebar content here */}
           <Logo></Logo>
           <li className="mt-7">
-            <NavLink to="/dashboard" className={"text-lg font-semibold"}>
+            <NavLink
+              to="/dashboard"
+              end
+              className={({ isActive }) =>
+                `text-lg font-semibold ${isActive ? "active" : ""}`
+              }
+            >
               <FaHome size={25} className="inline-block mr-1" />
               Dashboard
             </NavLink>
           </li>
+          {/* seller routes  */}
+          {role === "seller" && !roleLoading && (
+            <>
+              <li>
+                <NavLink
+                  to="/dashboard/manage-medicine"
+                  className={({ isActive }) =>
+                    `text-lg font-semibold ${isActive ? "active" : ""}`
+                  }
+                >
+                  <FaHome size={25} className="inline-block mr-1" />
+                  Manage Medicine
+                </NavLink>
+              </li>
+            </>
+          )}
         </ul>
       </div>
     </div>
