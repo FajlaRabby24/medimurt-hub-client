@@ -5,9 +5,11 @@ import MainLayout from "../layouts/MainLayout";
 import LoginPage from "../pages/Authentication/LoginPage";
 import RegisterPage from "../pages/Authentication/RegisterPage";
 import DashboardHome from "../pages/Dashboard/DashboardHome";
+import AskForAdvertisement from "../pages/Dashboard/seller/AskForAdvertisement";
 import Forbidden from "../pages/Forbidden";
 import HomePage from "../pages/HomePage";
 import PrivateRoute from "./PrivateRoute";
+import SellerRouter from "./SellerRoute";
 
 export const router = createBrowserRouter([
   // main layout
@@ -51,6 +53,15 @@ export const router = createBrowserRouter([
       {
         index: true,
         Component: DashboardHome,
+      },
+      // seller routes
+      {
+        path: "ask-for-advertise",
+        element: (
+          <SellerRouter>
+            <AskForAdvertisement />
+          </SellerRouter>
+        ),
       },
     ],
   },

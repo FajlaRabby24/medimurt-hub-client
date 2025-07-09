@@ -65,13 +65,13 @@ const DashboardLayout = () => {
             <>
               <li>
                 <NavLink
-                  to="/dashboard/manage-medicine"
+                  to="/dashboard/ask-for-advertise"
                   className={({ isActive }) =>
                     `text-lg font-semibold ${isActive ? "active" : ""}`
                   }
                 >
                   <FaHome size={25} className="inline-block mr-1" />
-                  Manage Medicine
+                  Ask for Advertise
                 </NavLink>
               </li>
             </>
