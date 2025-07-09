@@ -39,6 +39,7 @@ const AskForAdvertisement = () => {
       );
       return res.data;
     },
+    staleTime: Infinity,
   });
 
   // Submit Handler

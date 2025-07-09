@@ -33,6 +33,7 @@ const ManageMedicine = () => {
       );
       return res.data;
     },
+    staleTime: Infinity,
   });
 
   // onsubmit

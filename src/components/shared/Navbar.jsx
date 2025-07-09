@@ -1,3 +1,4 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { FaShoppingCart } from "react-icons/fa";
 import { HiOutlineLanguage } from "react-icons/hi2";
 import { Link, NavLink, useNavigate } from "react-router";
@@ -8,6 +9,7 @@ import Logo from "../common/logo/Logo";
 
 const Navbar = () => {
   const { user, signOutUser } = useAuth();
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   const links = (
@@ -30,6 +32,7 @@ const Navbar = () => {
     signOutUser()
       .then(() => {
         toast.success("Sign out successfully!");
+        queryClient.clear();
         navigate("/auth/join-us");
       })
       .catch((error) => {
