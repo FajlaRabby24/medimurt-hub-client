@@ -3,9 +3,12 @@ import AuthLayout from "../layouts/AuthLayout";
 import MainLayout from "../layouts/MainLayout";
 import LoginPage from "../pages/Authentication/LoginPage";
 import RegisterPage from "../pages/Authentication/RegisterPage";
+import DashboardHome from "../pages/Dashboard/DashboardHome";
 import HomePage from "../pages/HomePage";
+import PrivateRoute from "./PrivateRoute";
 
 export const router = createBrowserRouter([
+  // main layout
   {
     path: "/",
     Component: MainLayout,
@@ -16,6 +19,7 @@ export const router = createBrowserRouter([
       },
     ],
   },
+  // authentication
   {
     path: "/auth",
     Component: AuthLayout,
@@ -29,5 +33,13 @@ export const router = createBrowserRouter([
         Component: LoginPage,
       },
     ],
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <DashboardHome />
+      </PrivateRoute>
+    ),
   },
 ]);
