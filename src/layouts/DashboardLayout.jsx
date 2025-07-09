@@ -1,4 +1,5 @@
-import { FaBullhorn, FaHome, FaPills } from "react-icons/fa";
+import { FaBullhorn, FaHome, FaPills, FaUsersCog } from "react-icons/fa";
+import { MdOutlineCampaign } from "react-icons/md";
 import { NavLink, Outlet } from "react-router";
 import Logo from "../components/common/logo/Logo";
 import useUserRole from "../hooks/useUserRole";
@@ -71,7 +72,10 @@ const DashboardLayout = () => {
                       `text-lg font-semibold ${isActive ? "active" : ""}`
                     }
                   >
-                    <FaHome size={25} className="inline-block mr-1" />
+                    <MdOutlineCampaign
+                      size={25}
+                      className="inline-block mr-1"
+                    />
                     Manage advertise
                   </NavLink>
                 </li>
@@ -83,7 +87,7 @@ const DashboardLayout = () => {
                       `text-lg font-semibold ${isActive ? "active" : ""}`
                     }
                   >
-                    <FaHome size={25} className="inline-block mr-1" />
+                    <FaUsersCog size={25} className="inline-block mr-1" />
                     Manage user
                   </NavLink>
                 </li>
