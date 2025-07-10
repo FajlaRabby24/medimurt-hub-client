@@ -29,7 +29,6 @@ const RegisterPage = () => {
     setUserCreating(true);
     const image = data?.photo[0];
     const imageUrl = await imageUpload(image);
-    console.log(imageUrl);
 
     signUpUser(data?.email, data?.password)
       .then(async (result) => {

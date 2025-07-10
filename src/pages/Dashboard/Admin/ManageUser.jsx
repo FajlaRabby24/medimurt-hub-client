@@ -74,6 +74,7 @@ const ManageUsers = () => {
                   <div className="flex flex-wrap gap-2">
                     {user.role !== "admin" && (
                       <button
+                        disabled={user.role === "admin"}
                         onClick={() => handleRoleChange(user, "admin")}
                         className="btn btn-sm btn-outline text-blue-600"
                         title="Make Admin"
@@ -83,6 +84,7 @@ const ManageUsers = () => {
                     )}
                     {user.role !== "seller" && (
                       <button
+                        disabled={user.role === "admin"}
                         onClick={() => handleRoleChange(user, "seller")}
                         className="btn btn-sm btn-outline text-green-600"
                         title="Make Seller"
@@ -92,6 +94,7 @@ const ManageUsers = () => {
                     )}
                     {user.role !== "user" && (
                       <button
+                        disabled={user.role === "admin"}
                         onClick={() => handleRoleChange(user, "user")}
                         className="btn btn-sm btn-outline text-red-600"
                         title="Revoke Role"

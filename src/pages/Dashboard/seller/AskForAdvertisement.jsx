@@ -54,7 +54,6 @@ const AskForAdvertisement = () => {
       medicine_name: data.name,
       description: data.description,
       status: "pending",
-      created_at: new Date(),
     };
 
     try {
