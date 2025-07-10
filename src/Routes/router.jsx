@@ -5,6 +5,7 @@ import MainLayout from "../layouts/MainLayout";
 import LoginPage from "../pages/Authentication/LoginPage";
 import RegisterPage from "../pages/Authentication/RegisterPage";
 import ManageBannerAdvertise from "../pages/Dashboard/Admin/ManageBannerAdvertise";
+import ManageCategory from "../pages/Dashboard/Admin/ManageCategory";
 import ManageUsers from "../pages/Dashboard/Admin/ManageUser";
 import DashboardHome from "../pages/Dashboard/DashboardHome";
 import AskForAdvertisement from "../pages/Dashboard/seller/AskForAdvertisement";
@@ -67,6 +68,15 @@ export const router = createBrowserRouter([
           </AdminRoute>
         ),
       },
+      {
+        path: "manage-category",
+        element: (
+          <AdminRoute>
+            <ManageCategory />
+          </AdminRoute>
+        ),
+      },
+
       {
         path: "manage-advertise",
         element: (

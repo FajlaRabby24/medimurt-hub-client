@@ -91,6 +91,18 @@ const DashboardLayout = () => {
                     Manage user
                   </NavLink>
                 </li>
+                <li>
+                  <NavLink
+                    to="/dashboard/manage-category"
+                    end
+                    className={({ isActive }) =>
+                      `text-lg font-semibold ${isActive ? "active" : ""}`
+                    }
+                  >
+                    <FaUsersCog size={25} className="inline-block mr-1" />
+                    Manage category
+                  </NavLink>
+                </li>
               </>
             )}
             {/* seller routes  */}
