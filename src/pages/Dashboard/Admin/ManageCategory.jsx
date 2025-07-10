@@ -2,10 +2,12 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import LoadingSpiner from "../../../components/common/Loading/LoadingSpiner";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { convertToLocatTime } from "../../../utilities/convertToLocalTime";
 import { imageUpload } from "../../../utilities/imageUpload";
 
 const ManageCategorys = () => {
@@ -49,6 +51,9 @@ const ManageCategorys = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries(["medicineCategories"]);
+      toast.success(
+        `Category ${editingCategory ? "updated" : "added"} successfully!`
+      );
       reset();
       setShowModal(false);
       setEditingCategory(null);
@@ -68,6 +73,7 @@ const ManageCategorys = () => {
       if (result.isConfirmed) {
         await axiosSecure.delete(`/api/categories/${id}`);
         queryClient.invalidateQueries(["medicineCategories"]);
+        toast.error(`Category deleted successfully!`);
       }
     });
   };
@@ -128,6 +134,7 @@ const ManageCategorys = () => {
               <th>#</th>
               <th>Image</th>
               <th>Category Name</th>
+              <th>Created</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -143,6 +150,7 @@ const ManageCategorys = () => {
                   />
                 </td>
                 <td>{cat.category_name}</td>
+                <td>{convertToLocatTime(cat.created_at)}</td>
                 <td>
                   <div className="flex gap-2">
                     <button
