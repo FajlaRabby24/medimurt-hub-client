@@ -4,6 +4,7 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import MainLayout from "../layouts/MainLayout";
 import LoginPage from "../pages/Authentication/LoginPage";
 import RegisterPage from "../pages/Authentication/RegisterPage";
+import CategoryDetailsPage from "../pages/CategoryDetailsPage";
 import ManageBannerAdvertise from "../pages/Dashboard/Admin/ManageBannerAdvertise";
 import ManageCategory from "../pages/Dashboard/Admin/ManageCategory";
 import ManageUsers from "../pages/Dashboard/Admin/ManageUser";
@@ -25,6 +26,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         Component: HomePage,
+      },
+      {
+        path: "categories/:category",
+        Component: CategoryDetailsPage,
       },
       {
         path: "forbidden",
