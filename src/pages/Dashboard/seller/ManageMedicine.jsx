@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEye, FaTrashAlt } from "react-icons/fa";
@@ -9,13 +9,11 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { imageUpload } from "../../../utilities/imageUpload";
 
 const ManageMedicine = () => {
-  const queryClient = useQueryClient();
   const [showModal, setShowModal] = useState(false);
   const { user } = useAuth();
   const [viewData, setViewData] = useState(null);
   const [uploading, setIsUploading] = useState(false);
   const axiosSecure = useAxiosSecure();
-  const [editData, setEditData] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
 
   const {
@@ -31,6 +29,15 @@ const ManageMedicine = () => {
       const res = await axiosSecure.get(
         `/api/medicines/mine?email=${user.email}`
       );
+      return res.data;
+    },
+    staleTime: Infinity,
+  });
+
+  const { data: allCategories = [] } = useQuery({
+    queryKey: ["allCategories"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/api/categories");
       return res.data;
     },
     staleTime: Infinity,
@@ -106,7 +113,6 @@ const ManageMedicine = () => {
         <h2 className="text-xl sm:text-2xl font-bold">Manage Medicines</h2>
         <button
           onClick={() => {
-            setEditData(null);
             reset();
             setShowModal(true);
           }}
@@ -204,10 +210,11 @@ const ManageMedicine = () => {
               className="select select-bordered w-full"
             >
               <option value="">Select Category</option>
-              <option value="Painkiller">Painkiller</option>
-              <option value="Antibiotic">Antibiotic</option>
-              <option value="Antacid">Antacid</option>
-              <option value="Antihistamine">Antihistamine</option>
+              {allCategories.map((cat, idx) => (
+                <option key={idx} value={cat.category_name}>
+                  {cat.category_name}
+                </option>
+              ))}
             </select>
 
             <select
@@ -282,7 +289,6 @@ const ManageMedicine = () => {
                 onClick={() => {
                   setShowModal(false);
                   reset();
-                  setEditData(null);
                   setPreviewImage(null);
                 }}
               >

@@ -22,7 +22,6 @@ const useAxiosSecure = () => {
   axiosSecure.interceptors.response.use(
     (res) => res,
     (error) => {
-      console.log(error, "error in interceptors");
       const status = error.status;
       if (status === 403) {
         navigate("/forbidden");
