@@ -15,6 +15,7 @@ const DiscountMedicines = () => {
       const res = await axiosPublic.get("/api/medicines/discounted");
       return res.data;
     },
+    staleTime: Infinity,
   });
 
   if (isLoading) {

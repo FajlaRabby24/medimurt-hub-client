@@ -13,6 +13,7 @@ import AskForAdvertisement from "../pages/Dashboard/seller/AskForAdvertisement";
 import ManageMedicine from "../pages/Dashboard/seller/ManageMedicine";
 import Forbidden from "../pages/Forbidden";
 import HomePage from "../pages/HomePage";
+import ShopPage from "../pages/ShopPage";
 import AdminRoute from "./AdminRoute";
 import PrivateRoute from "./PrivateRoute";
 import SellerRouter from "./SellerRoute";
@@ -26,6 +27,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         Component: HomePage,
+      },
+      {
+        path: "shop",
+        Component: ShopPage,
       },
       {
         path: "categories/:category",
