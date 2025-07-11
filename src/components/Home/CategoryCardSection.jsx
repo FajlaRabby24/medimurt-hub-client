@@ -43,7 +43,7 @@ const CategoryCardSection = () => {
                   {cat.category_name}
                 </h3>
                 <p className="text-sm text-gray-600 text-center mt-1">
-                  {cat.totalMedicines || 0} Medicines
+                  {cat.total_medicines ? cat.total_medicines : "No"} Medicines
                 </p>
               </div>
             </Link>
