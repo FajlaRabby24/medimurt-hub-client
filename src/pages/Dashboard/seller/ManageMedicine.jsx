@@ -49,17 +49,17 @@ const ManageMedicine = () => {
     const image = data?.photo[0];
     const imageUrl = await imageUpload(image);
     const medicineData = {
-      name: data.name,
-      genericName: data.genericName,
+      medicine_name: data.name,
+      generic_name: data.genericName,
       description: data.description,
       image: imageUrl,
       category: data.category,
       company: data.company,
       unit: data.unit,
+      dosage_form: data.dosageForm,
       price: Number(data.price),
       discount: Number(data.discount) || 0,
       created_by: user.email,
-      created_at: new Date().toISOString(),
     };
 
     try {
@@ -132,6 +132,7 @@ const ManageMedicine = () => {
               <th>Category</th>
               <th>Company</th>
               <th>Unit</th>
+              <th>Dosage form</th>
               <th>Price</th>
               <th>Discount</th>
               <th>Actions</th>
@@ -147,11 +148,12 @@ const ManageMedicine = () => {
                     className="w-12 h-12 rounded"
                   />
                 </td>
-                <td>{med.name}</td>
-                <td>{med.genericName}</td>
+                <td>{med.medicine_name}</td>
+                <td>{med.generic_name}</td>
                 <td>{med.category}</td>
                 <td>{med.company}</td>
                 <td>{med.unit}</td>
+                <td>{med.dosage_form}</td>
                 <td>${med.price}</td>
                 <td>{med.discount}%</td>
                 <td>
@@ -187,7 +189,7 @@ const ManageMedicine = () => {
 
             <input
               type="text"
-              placeholder="Item Name"
+              placeholder="Medicine Name"
               className="input input-bordered w-full"
               {...register("name", { required: true })}
             />
@@ -225,6 +227,17 @@ const ManageMedicine = () => {
               <option value="Square">Square</option>
               <option value="ACI">ACI</option>
               <option value="Beximco">Beximco</option>
+            </select>
+
+            <select
+              {...register("dosageForm", { required: true })}
+              className="select select-bordered w-full"
+            >
+              <option value="">Select dosage form</option>
+              <option value="Tablet">Tablet</option>
+              <option value="Syrup">Syrup</option>
+              <option value="Injection">Injection</option>
+              <option value="Capsule">Capsule</option>
             </select>
 
             <select
@@ -301,7 +314,7 @@ const ManageMedicine = () => {
 
       {/* View Modal */}
       {viewData && (
-        <dialog open className="modal modal-bottom sm:modal-middle">
+        <dialog open className="modal modal-middle">
           <div className="modal-box">
             <h3 className="font-bold text-xl mb-2">Medicine Details</h3>
             <img
@@ -310,10 +323,10 @@ const ManageMedicine = () => {
               className="w-32 h-32 object-cover rounded mb-4"
             />
             <p>
-              <strong>Name:</strong> {viewData.name}
+              <strong>Name:</strong> {viewData.medicine_name}
             </p>
             <p>
-              <strong>Generic Name:</strong> {viewData.genericName}
+              <strong>Generic Name:</strong> {viewData.generic_name}
             </p>
             <p>
               <strong>Description:</strong> {viewData.description}
@@ -326,6 +339,9 @@ const ManageMedicine = () => {
             </p>
             <p>
               <strong>Unit:</strong> {viewData.unit}
+            </p>
+            <p>
+              <strong>Dosage form:</strong> {viewData.dosage_form}
             </p>
             <p>
               <strong>Price:</strong> ${viewData.price}

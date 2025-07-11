@@ -37,6 +37,8 @@ const CategoryDetailsPage = () => {
                 <th>Image</th>
                 <th>Name</th>
                 <th>Generic</th>
+                <th>Dosage form</th>
+                <th>Company</th>
                 <th>Unit</th>
                 <th>Price</th>
                 <th>Actions</th>
@@ -52,8 +54,10 @@ const CategoryDetailsPage = () => {
                       className="w-12 h-12 rounded"
                     />
                   </td>
-                  <td>{med.name}</td>
-                  <td>{med.genericName}</td>
+                  <td>{med.medicine_name}</td>
+                  <td>{med.generic_name}</td>
+                  <td>{med.dosage_form}</td>
+                  <td>{med.company}</td>
                   <td>{med.unit}</td>
                   <td>${med.price}</td>
                   <td>
@@ -80,25 +84,40 @@ const CategoryDetailsPage = () => {
 
         {/* Modal */}
         {selectedMedicine && (
-          <dialog open className="modal modal-bottom sm:modal-middle">
+          <dialog open className="modal modal-middle">
             <div className="modal-box">
               <h3 className="font-bold text-lg">{selectedMedicine.name}</h3>
               <img
                 src={selectedMedicine.image}
                 alt={selectedMedicine.name}
-                className="w-full h-40 object-cover rounded my-2"
+                className="w-full  object-cover rounded my-2"
               />
               <p>
-                <strong>Generic Name:</strong> {selectedMedicine.genericName}
+                <strong>Name:</strong> {selectedMedicine.medicine_name}
+              </p>
+              <p>
+                <strong>Generic Name:</strong> {selectedMedicine.generic_name}
               </p>
               <p>
                 <strong>Description:</strong> {selectedMedicine.description}
               </p>
               <p>
+                <strong>Category:</strong> {selectedMedicine.category}
+              </p>
+              <p>
+                <strong>Company:</strong> {selectedMedicine.company}
+              </p>
+              <p>
                 <strong>Unit:</strong> {selectedMedicine.unit}
               </p>
               <p>
+                <strong>Dosage form:</strong> {selectedMedicine.dosage_form}
+              </p>
+              <p>
                 <strong>Price:</strong> ${selectedMedicine.price}
+              </p>
+              <p>
+                <strong>Discount:</strong> {selectedMedicine.discount}%
               </p>
 
               <div className="modal-action">
