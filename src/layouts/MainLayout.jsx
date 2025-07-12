@@ -1,11 +1,10 @@
 import { Outlet } from "react-router";
 import Footer from "../components/shared/Footer";
 import Navbar from "../components/shared/Navbar";
-import CartProvider from "../store/provider/CartProvider";
 
 const MainLayout = () => {
   return (
-    <CartProvider>
+    <div>
       <header>
         <Navbar />
       </header>
@@ -15,7 +14,7 @@ const MainLayout = () => {
       <footer>
         <Footer />
       </footer>
-    </CartProvider>
+    </div>
   );
 };
 
