@@ -10,7 +10,7 @@ const CartPage = () => {
   const { cart } = useCart();
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
-  const queryclient = useQueryClient();
+  const queryClient = useQueryClient();
 
   // Calculate total
   const total = cart.reduce((sum, item) => sum + item.total_price, 0);
@@ -21,13 +21,41 @@ const CartPage = () => {
       await axiosSecure.delete(`/api/cart/${id}`);
     },
     onSuccess: () => {
-      queryclient.invalidateQueries(["cart", user?.email]);
+      queryClient.invalidateQueries(["cart", user?.email]);
       toast.success("Item removed!");
     },
   });
-
   const handleDelete = (id) => {
     deleteItemMutation.mutate(id);
+  };
+
+  // Mutation for updating quantity
+  const updateQuantityMutation = useMutation({
+    mutationFn: async ({ _id, quantity, total_price }) => {
+      const res = await axiosSecure.patch(`/api/cart/${_id}`, {
+        quantity,
+        total_price,
+      });
+      return res.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["cart", user?.email]);
+    },
+    onError: () => {
+      toast.error("Failed to update quantity");
+    },
+  });
+  const handleQuantityChange = (item, change) => {
+    const newQuantity = item.quantity + change;
+    const totalPrice =
+      (item.price - (item.price * item.discount) / 100) * newQuantity;
+    if (newQuantity < 1) return;
+
+    updateQuantityMutation.mutate({
+      _id: item._id,
+      quantity: newQuantity,
+      total_price: totalPrice,
+    });
   };
 
   return (
@@ -72,11 +100,17 @@ const CartPage = () => {
                     </td>
                     <td>
                       <div className="flex items-center gap-2">
-                        <button className="btn btn-xs btn-outline">
+                        <button
+                          onClick={() => handleQuantityChange(item, -1)}
+                          className="btn btn-xs btn-outline"
+                        >
                           <FaMinus />
                         </button>
                         <span>{item.quantity}</span>
-                        <button className="btn btn-xs btn-outline">
+                        <button
+                          onClick={() => handleQuantityChange(item, 1)}
+                          className="btn btn-xs btn-outline"
+                        >
                           <FaPlus />
                         </button>
                       </div>
