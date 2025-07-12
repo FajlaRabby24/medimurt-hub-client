@@ -51,10 +51,10 @@ const Shop = () => {
 
   // update quantity in medicine
   const updateQuantityMutation = useMutation({
-    mutationFn: async ({ _id, quantity }) => {
-      console.log(_id, quantity);
+    mutationFn: async ({ _id, quantity, total_price }) => {
       const res = await axiosSecure.patch(`/api/cart/${_id}`, {
         quantity,
+        total_price,
       });
       return res.data;
     },
@@ -75,25 +75,31 @@ const Shop = () => {
       return navigate("/auth/join-us", { state: { from: location.pathname } });
     }
 
-    const cartInfo = {
-      user_email: user?.email,
-      medicine_id: medicine._id,
-      medicine_name: medicine.medicine_name,
-      image: medicine.image,
-      price: medicine.price,
-      discount: medicine.discount,
-      quantity: 1,
-      total_price: medicine.price - (medicine.price * 1) / 100,
-      seller_email: medicine.created_by,
-    };
     const exist = cart.find((item) => item.medicine_id === medicine._id);
-    console.log(exist);
     if (exist) {
+      console.log(exist);
       updateQuantityMutation.mutate({
         _id: exist._id,
         quantity: exist.quantity + 1,
+        total_price:
+          (exist.price - (exist.price * exist.discount) / 100) *
+          (exist.quantity + 1),
       });
     } else {
+      console.log(medicine);
+      const cartInfo = {
+        user_email: user?.email,
+        medicine_id: medicine._id,
+        medicine_name: medicine.medicine_name,
+        image: medicine.image,
+        price: medicine.price,
+        discount: medicine.discount,
+        company_name: medicine.company,
+        quantity: 1,
+        total_price:
+          medicine.price - (medicine.price * medicine.discount) / 100,
+        seller_email: medicine.created_by,
+      };
       addToCartMutation.mutate(cartInfo);
     }
   };
