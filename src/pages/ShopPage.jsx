@@ -1,12 +1,22 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { FaCartPlus, FaEye } from "react-icons/fa";
+import { useLocation, useNavigate } from "react-router";
+import { toast } from "react-toastify";
 import LoadingSpiner from "../components/common/Loading/LoadingSpiner";
 import Container from "../components/common/Ui/Container";
+import useAuth from "../hooks/useAuth";
 import useAxios from "../hooks/useAxios";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import useCart from "../hooks/useCart";
 
 const Shop = () => {
   const axiosPublic = useAxios();
+  const { user } = useAuth();
+  const { addToCart, cart, setCart } = useCart();
+  const axiosSecure = useAxiosSecure();
+  const location = useLocation();
+  const navigate = useNavigate();
   const [selectedMedicine, setSelectedMedicine] = useState(null);
 
   const {
@@ -22,7 +32,48 @@ const Shop = () => {
     staleTime: Infinity,
   });
 
+  // add to cart
+  const addToCartMutation = useMutation({
+    mutationFn: async (cartInfo) => {
+      console.log(cartInfo);
+      const cartRes = await axiosSecure.post("/api/cart", cartInfo);
+      return cartRes.data;
+    },
+    onSuccess: () => {
+      toast.success("Added successfully!");
+    },
+    onError: () => {
+      toast.error("Failed. Please try again!");
+    },
+  });
+
   if (isLoading || isFetching) return <LoadingSpiner />;
+
+  // handle Add to Cart
+  const handleAddToCart = async (medicine) => {
+    if (!user) {
+      return navigate("/auth/join-us", { state: { from: location.pathname } });
+    }
+
+    const cartInfo = {
+      user_email: user?.email,
+      medicine_id: medicine._id,
+      medicine_name: medicine.medicine_name,
+      image: medicine.image,
+      price: medicine.price,
+      discount: medicine.discount,
+      quantity: 1,
+      total_price: medicine.price - (medicine.price * 1) / 100,
+      seller_email: medicine.created_by,
+    };
+
+    const exists = cart.find((i) => i.medicine_id === medicine.medicine_id);
+    if (exists) {
+      console.log("already exist");
+    } else {
+      addToCartMutation.mutate(cartInfo);
+    }
+  };
 
   return (
     <Container className={"pb-20"}>
@@ -72,7 +123,7 @@ const Shop = () => {
                       <FaEye />
                     </button>
                     <button
-                      // onClick={() => handleAddToCart(med)}
+                      onClick={() => handleAddToCart(med)}
                       className="btn btn-sm btn-primary"
                       title="Add to Cart"
                     >

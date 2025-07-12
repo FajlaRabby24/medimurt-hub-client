@@ -14,8 +14,8 @@ const GoogleLogin = () => {
     googleLogin()
       .then(async (result) => {
         const user = result?.user;
-        console.log(result);
         toast.success("Login successfully!");
+
         const newUser = {
           name: user?.displayName,
           email: user?.email,
@@ -25,8 +25,7 @@ const GoogleLogin = () => {
           last_logged_in: new Date().toISOString(),
         };
 
-        const userRes = await axiosPublic.post("/api/users", newUser);
-        console.log(userRes);
+        await axiosPublic.post("/api/users", newUser);
         navigate(from);
       })
       .catch((error) => {

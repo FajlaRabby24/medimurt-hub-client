@@ -9,6 +9,7 @@ const axiosSecure = axios.create({
 const useAxiosSecure = () => {
   const navigate = useNavigate();
   const { user, signOutUser } = useAuth();
+
   axiosSecure.interceptors.request.use(
     (config) => {
       config.headers.Authorization = `Bearer ${user.accessToken}`;
