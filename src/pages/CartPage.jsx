@@ -88,7 +88,7 @@ const CartPage = () => {
   };
 
   return (
-    <Container>
+    <Container className={"pb-20"}>
       <section className="p-4 ">
         <h2 className="text-2xl font-bold mb-6">My Cart</h2>
 

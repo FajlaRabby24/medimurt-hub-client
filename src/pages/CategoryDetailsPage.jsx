@@ -1,13 +1,21 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { useParams } from "react-router";
-import Swal from "sweetalert2";
+import { useNavigate, useParams } from "react-router";
+import { toast } from "react-toastify";
 import Container from "../components/common/Ui/Container";
+import useAuth from "../hooks/useAuth";
 import useAxios from "../hooks/useAxios";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import useCart from "../hooks/useCart";
 
 const CategoryDetailsPage = () => {
   const { category } = useParams();
   const axiosPublic = useAxios();
+  const { cart } = useCart();
+  const axiosSecure = useAxiosSecure();
+  const queryClient = useQueryClient();
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const [selectedMedicine, setSelectedMedicine] = useState(null);
 
   const { data: medicines = [] } = useQuery({
@@ -19,9 +27,72 @@ const CategoryDetailsPage = () => {
     staleTime: Infinity,
   });
 
+  // add to cart mutation
+  const addToCartMutation = useMutation({
+    mutationFn: async (cartInfo) => {
+      const res = await axiosSecure.post("/api/cart", cartInfo);
+      return res.data;
+    },
+    onSuccess: () => {
+      toast.success("Added to cart!");
+      queryClient.invalidateQueries(["cart", user?.email]);
+    },
+    onError: () => {
+      toast.error("Failed to add. Try again!");
+    },
+  });
+
+  // update quantity in medicine
+  const updateQuantityMutation = useMutation({
+    mutationFn: async ({ _id, quantity, total_price }) => {
+      const res = await axiosSecure.patch(`/api/cart/${_id}`, {
+        quantity,
+        total_price,
+      });
+      return res.data;
+    },
+    onSuccess: () => {
+      toast.success(`Update the quantity `);
+      queryClient.invalidateQueries(["cart", user?.email]);
+    },
+    onError: () => {
+      toast.error("Failed. Try again!");
+    },
+  });
+
+  // handle select
   const handleSelect = (medicine) => {
-    // Add to cart logic here (could be context or local state)
-    Swal.fire("Added!", `${medicine.name} added to cart.`, "success");
+    if (!user) {
+      return navigate("/auth/join-us", { state: { from: location.pathname } });
+    }
+
+    const exist = cart.find((item) => item.medicine_id === medicine._id);
+    if (exist) {
+      console.log(exist);
+      updateQuantityMutation.mutate({
+        _id: exist._id,
+        quantity: exist.quantity + 1,
+        total_price:
+          (exist.price - (exist.price * exist.discount) / 100) *
+          (exist.quantity + 1),
+      });
+    } else {
+      console.log(medicine);
+      const cartInfo = {
+        user_email: user?.email,
+        medicine_id: medicine._id,
+        medicine_name: medicine.medicine_name,
+        image: medicine.image,
+        price: medicine.price,
+        discount: medicine.discount,
+        company_name: medicine.company,
+        quantity: 1,
+        total_price:
+          medicine.price - (medicine.price * medicine.discount) / 100,
+        seller_email: medicine.created_by,
+      };
+      addToCartMutation.mutate(cartInfo);
+    }
   };
 
   return (
