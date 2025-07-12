@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { FaMinus, FaPlus, FaTrash } from "react-icons/fa";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 import Container from "../components/common/Ui/Container";
 import useAuth from "../hooks/useAuth";
 import useAxiosSecure from "../hooks/useAxiosSecure";
@@ -55,6 +56,34 @@ const CartPage = () => {
       _id: item._id,
       quantity: newQuantity,
       total_price: totalPrice,
+    });
+  };
+
+  // handle clear cart
+  const clearCartMutation = useMutation({
+    mutationFn: async () => {
+      await axiosSecure.delete(`/api/cart/clear?email=${user.email}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["cart", user?.email]);
+    },
+    onError: () => {
+      toast.error("Something went wrong. Please try again!");
+    },
+  });
+  const handleClearCart = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Clear cart!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        clearCartMutation.mutate();
+      }
     });
   };
 
@@ -135,7 +164,9 @@ const CartPage = () => {
                 Total: ${total.toFixed(2)}
               </div>
               <div className="flex gap-4">
-                <button className="btn btn-warning">Clear Cart</button>
+                <button onClick={handleClearCart} className="btn btn-warning">
+                  Clear Cart
+                </button>
                 <button className="btn btn-primary">Proceed to Checkout</button>
               </div>
             </div>
