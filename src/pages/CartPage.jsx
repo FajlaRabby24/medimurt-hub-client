@@ -1,12 +1,34 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { FaMinus, FaPlus, FaTrash } from "react-icons/fa";
+import { toast } from "react-toastify";
 import Container from "../components/common/Ui/Container";
+import useAuth from "../hooks/useAuth";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 import useCart from "../hooks/useCart";
 
 const CartPage = () => {
   const { cart } = useCart();
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+  const queryclient = useQueryClient();
 
   // Calculate total
   const total = cart.reduce((sum, item) => sum + item.total_price, 0);
+
+  // delete item mutation
+  const deleteItemMutation = useMutation({
+    mutationFn: async (id) => {
+      await axiosSecure.delete(`/api/cart/${id}`);
+    },
+    onSuccess: () => {
+      queryclient.invalidateQueries(["cart", user?.email]);
+      toast.success("Item removed!");
+    },
+  });
+
+  const handleDelete = (id) => {
+    deleteItemMutation.mutate(id);
+  };
 
   return (
     <Container>
@@ -61,7 +83,10 @@ const CartPage = () => {
                     </td>
                     <td>${item.total_price}</td>
                     <td>
-                      <button className="btn btn-sm btn-error text-white">
+                      <button
+                        onClick={() => handleDelete(item._id)}
+                        className="btn btn-sm btn-error text-white"
+                      >
                         <FaTrash />
                       </button>
                     </td>
