@@ -5,11 +5,13 @@ import { Link, NavLink, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import defaultUser from "../../assets/images/defaultUser.png";
 import useAuth from "../../hooks/useAuth";
+import useCart from "../../hooks/useCart";
 import Logo from "../common/logo/Logo";
 
 const Navbar = () => {
   const { user, signOutUser } = useAuth();
   const queryClient = useQueryClient();
+  const { cart } = useCart();
   const navigate = useNavigate();
 
   const links = (
@@ -81,7 +83,9 @@ const Navbar = () => {
             <button className="btn btn-ghost btn-circle">
               <div className="indicator">
                 <FaShoppingCart size={25} />
-                <span className="badge badge-sm indicator-item">3</span>
+                <span className="badge badge-sm indicator-item">
+                  {cart.length || 0}
+                </span>
               </div>
             </button>
           </Link>

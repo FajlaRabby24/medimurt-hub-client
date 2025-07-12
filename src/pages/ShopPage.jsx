@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { FaCartPlus, FaEye } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router";
@@ -13,12 +13,15 @@ import useCart from "../hooks/useCart";
 const Shop = () => {
   const axiosPublic = useAxios();
   const { user } = useAuth();
-  const { addToCart, cart, setCart } = useCart();
+  const queryClient = useQueryClient();
   const axiosSecure = useAxiosSecure();
   const location = useLocation();
+  const { cart } = useCart();
   const navigate = useNavigate();
   const [selectedMedicine, setSelectedMedicine] = useState(null);
 
+  console.log(cart, "cart");
+  // get medicine
   const {
     data: medicines = [],
     isLoading,
@@ -32,18 +35,18 @@ const Shop = () => {
     staleTime: Infinity,
   });
 
-  // add to cart
+  // add to cart mutation
   const addToCartMutation = useMutation({
     mutationFn: async (cartInfo) => {
-      console.log(cartInfo);
-      const cartRes = await axiosSecure.post("/api/cart", cartInfo);
-      return cartRes.data;
+      const res = await axiosSecure.post("/api/cart", cartInfo);
+      return res.data;
     },
     onSuccess: () => {
-      toast.success("Added successfully!");
+      toast.success("Added to cart!");
+      queryClient.invalidateQueries(["cart", user?.email]);
     },
     onError: () => {
-      toast.error("Failed. Please try again!");
+      toast.error("Failed to add. Try again!");
     },
   });
 
@@ -67,12 +70,7 @@ const Shop = () => {
       seller_email: medicine.created_by,
     };
 
-    const exists = cart.find((i) => i.medicine_id === medicine.medicine_id);
-    if (exists) {
-      console.log("already exist");
-    } else {
-      addToCartMutation.mutate(cartInfo);
-    }
+    addToCartMutation.mutate(cartInfo);
   };
 
   return (

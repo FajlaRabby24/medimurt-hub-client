@@ -6,7 +6,6 @@ import { ToastContainer } from "react-toastify";
 import "./global.css";
 import { router } from "./Routes/router";
 import AuthPrivider from "./store/provider/AuthProvider";
-import CartProvider from "./store/provider/CartProvider";
 
 const queryClient = new QueryClient();
 
@@ -14,10 +13,8 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <AuthPrivider>
-        <CartProvider>
-          <ToastContainer autoClose={1500} position="top-left" />
-          <RouterProvider router={router} />
-        </CartProvider>
+        <ToastContainer autoClose={1500} position="top-left" />
+        <RouterProvider router={router} />
       </AuthPrivider>
     </QueryClientProvider>
   </StrictMode>
