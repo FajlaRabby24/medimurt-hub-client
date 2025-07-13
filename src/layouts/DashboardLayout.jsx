@@ -62,6 +62,8 @@ const DashboardLayout = () => {
                 Dashboard
               </NavLink>
             </li>
+
+            {/* admin routes  */}
             {role === "admin" && !roleLoading && (
               <>
                 <li>
@@ -101,6 +103,18 @@ const DashboardLayout = () => {
                   >
                     <FaUsersCog size={25} className="inline-block mr-1" />
                     Manage category
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/dashboard/manage-payments"
+                    end
+                    className={({ isActive }) =>
+                      `text-lg font-semibold ${isActive ? "active" : ""}`
+                    }
+                  >
+                    <FaUsersCog size={25} className="inline-block mr-1" />
+                    Manage payments
                   </NavLink>
                 </li>
               </>

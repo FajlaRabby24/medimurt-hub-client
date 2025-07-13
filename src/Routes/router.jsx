@@ -8,6 +8,7 @@ import CartPage from "../pages/CartPage";
 import CategoryDetailsPage from "../pages/CategoryDetailsPage";
 import ManageBannerAdvertise from "../pages/Dashboard/Admin/ManageBannerAdvertise";
 import ManageCategory from "../pages/Dashboard/Admin/ManageCategory";
+import ManagePayments from "../pages/Dashboard/Admin/ManagePayments";
 import ManageUsers from "../pages/Dashboard/Admin/ManageUser";
 import DashboardHome from "../pages/Dashboard/DashboardHome";
 import AskForAdvertisement from "../pages/Dashboard/seller/AskForAdvertisement";
@@ -101,6 +102,14 @@ export const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <ManageBannerAdvertise />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "manage-payments",
+        element: (
+          <AdminRoute>
+            <ManagePayments />
           </AdminRoute>
         ),
       },
