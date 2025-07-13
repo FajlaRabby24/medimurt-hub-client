@@ -1,8 +1,7 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useLocation } from "react-router";
-import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
@@ -22,20 +21,7 @@ const CheckoutForm = () => {
   const [isPaymenting, setIsPaymenting] = useState(false);
 
   const grandTotal = state?.grand_total;
-  const grandTotalInCents = (grandTotal * 100).toFixed(2);
-
-  // handle clear cart
-  const clearCartMutation = useMutation({
-    mutationFn: async () => {
-      await axiosSecure.delete(`/api/cart/clear?email=${user.email}`);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries(["cart", user?.email]);
-    },
-    onError: () => {
-      toast.error("Something went wrong. Please try again!");
-    },
-  });
+  const grandTotalInCents = parseFloat(grandTotal * 100);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -89,46 +75,22 @@ const CheckoutForm = () => {
           } else {
             setErrors("");
             if (result.paymentIntent.status === "succeeded") {
-              const medicines = await cart.map((c) => ({
-                medicine_id: c.medicine_id,
-                medicine_name: c.medicine_name,
-                quantity: c.quantity,
-                price: c.price,
-                discount: c.discount,
-                seller_email: c.seller_email,
-                company_name: c.company_name,
-                total_price: c.total_price,
-              }));
-
               const transactionId = result.paymentIntent.id;
-              const paymentData = {
-                user_name: user?.displayName,
-                user_email: user?.email,
-                transaction_id: transactionId,
-                payment_method: "stripe",
-                payment_method_types: result.paymentIntent.payment_method_types,
-                medicines,
-                total_amount: grandTotal,
-                order_status: "pending",
-              };
 
-              const paymentRes = await axiosSecure.post(
-                "/api/orders/create",
-                paymentData
-              );
+              const paymentRes = await axiosSecure.patch("/api/cart/update", {
+                email: user?.email,
+                transactionId,
+              });
 
               console.log(paymentRes);
-              if (paymentRes.data.insertedId) {
-                setIsPaymenting(false);
-                // ✅ Show SweetAlert with transaction ID
+              setIsPaymenting(false);
+              if (paymentRes.data.updatedCount) {
                 await Swal.fire({
                   icon: "success",
                   title: "Payment Successful!",
                   html: `<strong>Transaction ID:</strong> <code>${transactionId}</code>`,
                   confirmButtonText: "Go to Invoice page",
                 });
-
-                clearCartMutation.mutate();
               }
             }
           }
@@ -152,7 +114,7 @@ const CheckoutForm = () => {
         {isPaymenting ? (
           <span className="loading loading-spinner loading-md"></span>
         ) : (
-          `${grandTotal}`
+          `$${grandTotal}`
         )}
       </button>
 

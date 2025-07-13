@@ -17,6 +17,8 @@ const ManagePayments = () => {
     staleTime: 0,
   });
 
+  console.log(payments);
+
   // Accept payment mutation
   const acceptPaymentMutation = useMutation({
     mutationFn: async (email) => {
