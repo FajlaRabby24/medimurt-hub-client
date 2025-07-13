@@ -6,6 +6,7 @@ import { CartContext } from "../contexts/contexts"; // must be created using cre
 
 const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
+  const [isCartLoading, setIsCartLoading] = useState(false);
   const { user, loading } = useAuth();
   const axiosPublic = useAxios();
 
@@ -14,10 +15,12 @@ const CartProvider = ({ children }) => {
     queryKey: ["cart", user?.email],
     enabled: !!user?.email && !loading,
     queryFn: async () => {
+      setIsCartLoading(true);
       const cartRes = await axiosPublic.get(`/api/cart?email=${user?.email}`, {
         headers: { Authorization: `Bearer ${user?.accessToken}` },
       });
       setCart(cartRes.data, "data");
+      setIsCartLoading(false);
       return cartRes.data;
     },
     refetchOnMount: true,
@@ -27,6 +30,7 @@ const CartProvider = ({ children }) => {
 
   const cartValue = {
     cart,
+    isCartLoading,
   };
 
   return (

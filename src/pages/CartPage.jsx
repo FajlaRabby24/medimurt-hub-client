@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { FaMinus, FaPlus, FaTrash } from "react-icons/fa";
+import { FaMinus, FaPlus, FaShoppingCart, FaTrash } from "react-icons/fa";
+import { Link, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import Container from "../components/common/Ui/Container";
@@ -9,6 +10,7 @@ import useCart from "../hooks/useCart";
 
 const CartPage = () => {
   const { cart } = useCart();
+  const navigate = useNavigate();
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
@@ -86,6 +88,16 @@ const CartPage = () => {
       }
     });
   };
+  // handle proceed checkout
+  const proceedCheckout = () => {
+    if (!user) {
+      return navigate("/auth/join-us", { state: { from: location.pathname } });
+    }
+
+    navigate(`/payment/checkout`, {
+      state: { grand_total: total },
+    });
+  };
 
   return (
     <Container className={"pb-20"}>
@@ -93,7 +105,14 @@ const CartPage = () => {
         <h2 className="text-2xl font-bold mb-6">My Cart</h2>
 
         {cart.length === 0 ? (
-          <p className="text-lg text-center">Your cart is empty.</p>
+          <div className="flex items-center justify-center flex-col gap-4">
+            <p className="text-lg text-center">Your cart is empty.</p>
+            <Link to={"/shop"}>
+              <button className="btn btn-primary  text-center">
+                <FaShoppingCart size={20} /> Go and Shop
+              </button>
+            </Link>
+          </div>
         ) : (
           <div>
             <div className="overflow-x-auto">
@@ -169,7 +188,9 @@ const CartPage = () => {
                 <button onClick={handleClearCart} className="btn btn-warning">
                   Clear Cart
                 </button>
-                <button className="btn btn-primary">Proceed to Checkout</button>
+                <button onClick={proceedCheckout} className="btn btn-primary">
+                  Proceed to Checkout
+                </button>
               </div>
             </div>
           </div>

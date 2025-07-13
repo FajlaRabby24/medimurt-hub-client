@@ -15,6 +15,7 @@ import AskForAdvertisement from "../pages/Dashboard/seller/AskForAdvertisement";
 import ManageMedicine from "../pages/Dashboard/seller/ManageMedicine";
 import Forbidden from "../pages/Forbidden";
 import HomePage from "../pages/HomePage";
+import CheckoutPage from "../pages/Payment/CheckoutPage";
 import ShopPage from "../pages/ShopPage";
 import AdminRoute from "./AdminRoute";
 import PrivateRoute from "./PrivateRoute";
@@ -33,6 +34,14 @@ export const router = createBrowserRouter([
       {
         path: "shop",
         Component: ShopPage,
+      },
+      {
+        path: "payment/checkout",
+        element: (
+          <PrivateRoute>
+            <CheckoutPage />
+          </PrivateRoute>
+        ),
       },
       {
         path: "cart",
@@ -67,6 +76,7 @@ export const router = createBrowserRouter([
       },
     ],
   },
+  // dashboard
   {
     path: "/dashboard",
     element: (
