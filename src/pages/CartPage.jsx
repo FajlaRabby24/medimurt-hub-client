@@ -95,68 +95,70 @@ const CartPage = () => {
         {cart.length === 0 ? (
           <p className="text-lg text-center">Your cart is empty.</p>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="table w-full">
-              <thead>
-                <tr>
-                  <th>Image</th>
-                  <th>Name</th>
-                  <th>Company</th>
-                  <th>Unit Price</th>
-                  <th>Quantity</th>
-                  <th>Subtotal</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {cart.map((item) => (
-                  <tr key={item._id}>
-                    <td>
-                      <img
-                        src={item.image}
-                        alt={item.medicine_name}
-                        className="w-16 h-16 object-cover rounded"
-                      />
-                    </td>
-                    <td>{item.medicine_name}</td>
-                    <td>{item.company_name}</td>
-                    <td>
-                      $
-                      {(
-                        item.price -
-                        (item.price * item.discount) / 100
-                      ).toFixed(2)}
-                    </td>
-                    <td>
-                      <div className="flex items-center gap-2">
-                        <button
-                          onClick={() => handleQuantityChange(item, -1)}
-                          className="btn btn-xs btn-outline"
-                        >
-                          <FaMinus />
-                        </button>
-                        <span>{item.quantity}</span>
-                        <button
-                          onClick={() => handleQuantityChange(item, 1)}
-                          className="btn btn-xs btn-outline"
-                        >
-                          <FaPlus />
-                        </button>
-                      </div>
-                    </td>
-                    <td>${item.total_price}</td>
-                    <td>
-                      <button
-                        onClick={() => handleDelete(item._id)}
-                        className="btn btn-sm btn-error text-white"
-                      >
-                        <FaTrash />
-                      </button>
-                    </td>
+          <div>
+            <div className="overflow-x-auto">
+              <table className="table w-full">
+                <thead>
+                  <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Company</th>
+                    <th>Unit Price</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                    <th>Action</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {cart.map((item) => (
+                    <tr key={item._id}>
+                      <td>
+                        <img
+                          src={item.image}
+                          alt={item.medicine_name}
+                          className="w-16 h-16 object-cover rounded"
+                        />
+                      </td>
+                      <td>{item.medicine_name}</td>
+                      <td>{item.company_name}</td>
+                      <td>
+                        $
+                        {(
+                          item.price -
+                          (item.price * item.discount) / 100
+                        ).toFixed(2)}
+                      </td>
+                      <td>
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => handleQuantityChange(item, -1)}
+                            className="btn btn-xs btn-outline"
+                          >
+                            <FaMinus />
+                          </button>
+                          <span>{item.quantity}</span>
+                          <button
+                            onClick={() => handleQuantityChange(item, 1)}
+                            className="btn btn-xs btn-outline"
+                          >
+                            <FaPlus />
+                          </button>
+                        </div>
+                      </td>
+                      <td>${item.total_price}</td>
+                      <td>
+                        <button
+                          onClick={() => handleDelete(item._id)}
+                          className="btn btn-sm btn-error text-white"
+                        >
+                          <FaTrash />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
 
             {/* Bottom Actions */}
             <div className="mt-6 flex flex-col sm:flex-row justify-between items-center gap-4">

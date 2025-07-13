@@ -99,6 +99,7 @@ const Shop = () => {
         total_price:
           medicine.price - (medicine.price * medicine.discount) / 100,
         seller_email: medicine.created_by,
+        status: "pending",
       };
       addToCartMutation.mutate(cartInfo);
     }
