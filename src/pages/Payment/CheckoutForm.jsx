@@ -1,13 +1,13 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useCart from "../../hooks/useCart";
 
 const CheckoutForm = () => {
+  const navigate = useNavigate();
   const stripe = useStripe();
   const elements = useElements();
   const { cart } = useCart();
@@ -16,7 +16,6 @@ const CheckoutForm = () => {
   const { user } = useAuth();
   const { state } = useLocation();
   console.log(state);
-  const queryClient = useQueryClient();
   const [errors, setErrors] = useState("");
   const [isPaymenting, setIsPaymenting] = useState(false);
 
@@ -76,7 +75,7 @@ const CheckoutForm = () => {
             setErrors("");
             if (result.paymentIntent.status === "succeeded") {
               const transactionId = result.paymentIntent.id;
-
+              const paymentTime = new Date().toISOString();
               const paymentRes = await axiosSecure.patch("/api/cart/update", {
                 email: user?.email,
                 transactionId,
@@ -84,14 +83,21 @@ const CheckoutForm = () => {
 
               console.log(paymentRes);
               setIsPaymenting(false);
-              if (paymentRes.data.updatedCount) {
-                await Swal.fire({
-                  icon: "success",
-                  title: "Payment Successful!",
-                  html: `<strong>Transaction ID:</strong> <code>${transactionId}</code>`,
-                  confirmButtonText: "Go to Invoice page",
-                });
-              }
+              await Swal.fire({
+                icon: "success",
+                title: "Payment Successful!",
+                html: `<strong>Transaction ID:</strong> <code>${transactionId}</code>`,
+                confirmButtonText: "Go to Invoice page",
+              });
+              navigate("/payment/invoice", {
+                state: {
+                  transactionId,
+                  cart,
+                  paymentTime,
+                  grandTotal,
+                  paymentMethod,
+                },
+              });
             }
           }
         }
@@ -114,7 +120,7 @@ const CheckoutForm = () => {
         {isPaymenting ? (
           <span className="loading loading-spinner loading-md"></span>
         ) : (
-          `$${grandTotal}`
+          `$${grandTotal.toFixed(2)}`
         )}
       </button>
 

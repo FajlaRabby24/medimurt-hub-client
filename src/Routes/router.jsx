@@ -16,6 +16,7 @@ import ManageMedicine from "../pages/Dashboard/seller/ManageMedicine";
 import Forbidden from "../pages/Forbidden";
 import HomePage from "../pages/HomePage";
 import CheckoutPage from "../pages/Payment/CheckoutPage";
+import InvoicePage from "../pages/Payment/InvoicePage";
 import ShopPage from "../pages/ShopPage";
 import AdminRoute from "./AdminRoute";
 import PrivateRoute from "./PrivateRoute";
@@ -40,6 +41,15 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <CheckoutPage />
+          </PrivateRoute>
+        ),
+      },
+
+      {
+        path: "payment/invoice",
+        element: (
+          <PrivateRoute>
+            <InvoicePage />
           </PrivateRoute>
         ),
       },

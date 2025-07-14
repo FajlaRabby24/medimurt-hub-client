@@ -14,7 +14,7 @@ const ManagePayments = () => {
       const res = await axiosSecure.get("/api/cart/all-payments");
       return res.data;
     },
-    staleTime: 0,
+    staleTime: Infinity,
   });
 
   console.log(payments);
