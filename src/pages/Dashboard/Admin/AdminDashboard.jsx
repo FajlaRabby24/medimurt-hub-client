@@ -1,10 +1,26 @@
+import { useQuery } from "@tanstack/react-query";
 import {
   FaCheckCircle,
   FaHourglassHalf,
   FaMoneyCheckAlt,
 } from "react-icons/fa";
+import LoadingSpiner from "../../../components/common/Loading/LoadingSpiner";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const AdminDashboard = () => {
+  const axiosSecure = useAxiosSecure();
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["salesSummary"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/api/admin/sales-summary");
+      return res.data;
+    },
+  });
+
+  if (isLoading) return <LoadingSpiner />;
+
+  const { totalRevenue, totalPaid, totalPending } = data;
   return (
     <div className="p-4 w-full">
       <h2 className="text-2xl font-bold mb-6">
@@ -18,7 +34,7 @@ const AdminDashboard = () => {
             <FaMoneyCheckAlt className="text-4xl" />
             <div>
               <p className="text-lg">Total Revenue</p>
-              <h3 className="text-2xl font-bold">$0</h3>
+              <h3 className="text-2xl font-bold">${totalRevenue || 0}</h3>
             </div>
           </div>
         </div>
@@ -28,7 +44,7 @@ const AdminDashboard = () => {
             <FaCheckCircle className="text-4xl" />
             <div>
               <p className="text-lg">Paid Orders</p>
-              <h3 className="text-2xl font-bold">$0</h3>
+              <h3 className="text-2xl font-bold">${totalPaid || 0}</h3>
             </div>
           </div>
         </div>
@@ -38,7 +54,7 @@ const AdminDashboard = () => {
             <FaHourglassHalf className="text-4xl" />
             <div>
               <p className="text-lg">Pending Orders</p>
-              <h3 className="text-2xl font-bold">$0</h3>
+              <h3 className="text-2xl font-bold">${totalPending || 0}</h3>
             </div>
           </div>
         </div>
