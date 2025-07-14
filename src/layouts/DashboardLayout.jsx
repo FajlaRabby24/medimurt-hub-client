@@ -169,6 +169,22 @@ const DashboardLayout = () => {
                 </li>
               </>
             )}
+            {role === "user" && !roleLoading && (
+              <>
+                <li>
+                  <NavLink
+                    to="/dashboard/payment-history"
+                    end
+                    className={({ isActive }) =>
+                      `text-lg font-semibold ${isActive ? "active" : ""}`
+                    }
+                  >
+                    <FaUsersCog size={25} className="inline-block mr-1" />
+                    Payment history
+                  </NavLink>
+                </li>
+              </>
+            )}
           </div>
         </ul>
       </div>
