@@ -4,6 +4,14 @@ import {
   FaHourglassHalf,
   FaMoneyCheckAlt,
 } from "react-icons/fa";
+import {
+  Cell,
+  Legend,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
+} from "recharts";
 import LoadingSpiner from "../../../components/common/Loading/LoadingSpiner";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
@@ -11,7 +19,7 @@ const AdminDashboard = () => {
   const axiosSecure = useAxiosSecure();
 
   const { data, isLoading } = useQuery({
-    queryKey: ["salesSummary"],
+    queryKey: ["salesSummaryForAdmin"],
     queryFn: async () => {
       const res = await axiosSecure.get("/api/admin/sales-summary");
       return res.data;
@@ -19,8 +27,16 @@ const AdminDashboard = () => {
   });
 
   if (isLoading) return <LoadingSpiner />;
+  const COLORS = ["#16a34a", "#facc15", "#3b82f6"]; // green, yellow, blue
 
   const { totalRevenue, totalPaid, totalPending } = data;
+
+  const chartData = [
+    { name: "Paid", value: totalPaid },
+    { name: "Pending", value: totalPending },
+    { name: "Total Revenue", value: totalRevenue },
+  ];
+
   return (
     <div className="p-4 w-full">
       <h2 className="text-2xl font-bold mb-6">
@@ -59,6 +75,27 @@ const AdminDashboard = () => {
           </div>
         </div>
       </div>
+
+      {/* charts  */}
+      <ResponsiveContainer width="100%" height={300}>
+        <PieChart>
+          <Pie
+            data={chartData}
+            cx="50%"
+            cy="50%"
+            outerRadius={100}
+            fill="#8884d8"
+            dataKey="value"
+            label
+          >
+            {chartData.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS[index]} />
+            ))}
+          </Pie>
+          <Tooltip formatter={(value) => `৳${value.toFixed(2)}`} />
+          <Legend />
+        </PieChart>
+      </ResponsiveContainer>
     </div>
   );
 };
