@@ -1,4 +1,5 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import Swal from "sweetalert2";
@@ -13,6 +14,7 @@ const CheckoutForm = () => {
   const { cart } = useCart();
   console.log(cart);
   const axiosSecure = useAxiosSecure();
+  const queryClient = useQueryClient();
   const { user } = useAuth();
   const { state } = useLocation();
   console.log(state);
@@ -83,12 +85,7 @@ const CheckoutForm = () => {
 
               console.log(paymentRes);
               setIsPaymenting(false);
-              await Swal.fire({
-                icon: "success",
-                title: "Payment Successful!",
-                html: `<strong>Transaction ID:</strong> <code>${transactionId}</code>`,
-                confirmButtonText: "Go to Invoice page",
-              });
+              queryClient.invalidateQueries(["allPayments"]);
               navigate("/payment/invoice", {
                 state: {
                   transactionId,
@@ -97,6 +94,11 @@ const CheckoutForm = () => {
                   grandTotal,
                   paymentMethod,
                 },
+              });
+              await Swal.fire({
+                icon: "success",
+                title: "Payment Successful!",
+                html: `<strong>Transaction ID:</strong> <code>${transactionId}</code>`,
               });
             }
           }
