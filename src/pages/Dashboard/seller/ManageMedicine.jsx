@@ -27,7 +27,7 @@ const ManageMedicine = () => {
     queryKey: ["sellerMedicines"],
     queryFn: async () => {
       const res = await axiosSecure.get(
-        `/api/medicines/mine?email=${user.email}`
+        `/api/seller/medicines/mine?email=${user.email}`
       );
       return res.data;
     },
@@ -37,7 +37,7 @@ const ManageMedicine = () => {
   const { data: allCategories = [] } = useQuery({
     queryKey: ["allCategories"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/api/categories");
+      const res = await axiosSecure.get("/api/users/categories");
       return res.data;
     },
     staleTime: Infinity,
@@ -64,7 +64,7 @@ const ManageMedicine = () => {
 
     try {
       const medicineRes = await axiosSecure.post(
-        "/api/medicines",
+        "/api/seller/add-medicines",
         medicineData
       );
       if (medicineRes.data.insertedId) {
@@ -91,7 +91,7 @@ const ManageMedicine = () => {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await axiosSecure.delete(`/api/medicines/${id}`);
+        await axiosSecure.delete(`/api/seller/delete-medicines/${id}`);
         refetch();
         toast.success("Medicine deleted successfully!");
       }

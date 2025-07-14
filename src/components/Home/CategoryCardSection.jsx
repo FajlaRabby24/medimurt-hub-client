@@ -14,7 +14,7 @@ const CategoryCardSection = () => {
   } = useQuery({
     queryKey: ["medicineCategoriesForHomePage"],
     queryFn: async () => {
-      const res = await axiosPublic.get("/api/categories");
+      const res = await axiosPublic.get("/api/users/categories");
       return res.data;
     },
     staleTime: Infinity,

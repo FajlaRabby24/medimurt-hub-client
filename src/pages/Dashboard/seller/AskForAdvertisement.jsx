@@ -35,7 +35,7 @@ const AskForAdvertisement = () => {
     queryKey: ["sellerAdvertisements", user.email],
     queryFn: async () => {
       const res = await axiosSecure.get(
-        `/api/advertisements/mine?email=${user.email}`
+        `/api/seller/advertisements/mine?email=${user.email}`
       );
       return res.data;
     },
@@ -58,7 +58,7 @@ const AskForAdvertisement = () => {
 
     try {
       const res = await axiosSecure.post(
-        `/api/advertisements?email=${user.email}`,
+        `/api/seller/add-advertisements?email=${user.email}`,
         newAd
       );
       if (res?.data?.insertedId) {
@@ -101,7 +101,7 @@ const AskForAdvertisement = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         const adDeleteRes = await axiosSecure.delete(
-          `/api/advertisements/${id}`
+          `/api/seller/delete-advertisements/${id}`
         );
         if (adDeleteRes?.data.deletedCount) {
           toast.success("Advertisement deleted!");
@@ -114,7 +114,7 @@ const AskForAdvertisement = () => {
   if (isLoading || isFetching) return <LoadingSpiner />;
 
   return (
-    <div className="p-4 sm:p-6 w-full">
+    <div className="p-4  sm:p-6 max-w-7xl">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
         <h2 className="text-xl sm:text-2xl font-bold">Ask For Advertisement</h2>
         <button onClick={() => setShowModal(true)} className="btn btn-primary">
