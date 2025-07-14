@@ -21,7 +21,7 @@ const CartPage = () => {
   // delete item mutation
   const deleteItemMutation = useMutation({
     mutationFn: async (id) => {
-      await axiosSecure.delete(`/api/cart/${id}`);
+      await axiosSecure.delete(`/api/users/cart/${id}`);
     },
     onSuccess: () => {
       queryClient.invalidateQueries(["cart", user?.email]);
@@ -35,7 +35,7 @@ const CartPage = () => {
   // Mutation for updating quantity
   const updateQuantityMutation = useMutation({
     mutationFn: async ({ _id, quantity, total_price }) => {
-      const res = await axiosSecure.patch(`/api/cart/${_id}`, {
+      const res = await axiosSecure.patch(`/api/users/cart/${_id}`, {
         quantity,
         total_price,
       });
@@ -64,7 +64,7 @@ const CartPage = () => {
   // handle clear cart
   const clearCartMutation = useMutation({
     mutationFn: async () => {
-      await axiosSecure.delete(`/api/cart/clear?email=${user.email}`);
+      await axiosSecure.delete(`/api/users/cart/clear?email=${user.email}`);
     },
     onSuccess: () => {
       queryClient.invalidateQueries(["cart", user?.email]);

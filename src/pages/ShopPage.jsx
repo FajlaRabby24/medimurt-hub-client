@@ -28,7 +28,7 @@ const Shop = () => {
   } = useQuery({
     queryKey: ["allMedicines"],
     queryFn: async () => {
-      const res = await axiosPublic.get("/api/medicines");
+      const res = await axiosPublic.get("/api/users/medicines");
       return res.data;
     },
     staleTime: Infinity,
@@ -37,7 +37,7 @@ const Shop = () => {
   // add to cart mutation
   const addToCartMutation = useMutation({
     mutationFn: async (cartInfo) => {
-      const res = await axiosSecure.post("/api/cart", cartInfo);
+      const res = await axiosSecure.post("/api/users/add-to-cart", cartInfo);
       return res.data;
     },
     onSuccess: () => {
@@ -52,7 +52,7 @@ const Shop = () => {
   // update quantity in medicine
   const updateQuantityMutation = useMutation({
     mutationFn: async ({ _id, quantity, total_price }) => {
-      const res = await axiosSecure.patch(`/api/cart/${_id}`, {
+      const res = await axiosSecure.patch(`/api/users/cart/${_id}`, {
         quantity,
         total_price,
       });

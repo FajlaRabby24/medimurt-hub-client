@@ -78,10 +78,13 @@ const CheckoutForm = () => {
             if (result.paymentIntent.status === "succeeded") {
               const transactionId = result.paymentIntent.id;
               const paymentTime = new Date().toISOString();
-              const paymentRes = await axiosSecure.patch("/api/cart/update", {
-                email: user?.email,
-                transactionId,
-              });
+              const paymentRes = await axiosSecure.patch(
+                "/api/users/cart/update",
+                {
+                  email: user?.email,
+                  transactionId,
+                }
+              );
 
               console.log(paymentRes);
               setIsPaymenting(false);

@@ -6,7 +6,7 @@ import CartProvider from "../store/provider/CartProvider";
 const MainLayout = () => {
   return (
     <CartProvider>
-      <header>
+      <header className="sticky z-50 top-0 backdrop-blur-2xl">
         <Navbar />
       </header>
       <main className="min-h-[calc(100vh-349px)]">

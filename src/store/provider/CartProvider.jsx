@@ -16,9 +16,12 @@ const CartProvider = ({ children }) => {
     enabled: !!user?.email && !loading,
     queryFn: async () => {
       setIsCartLoading(true);
-      const cartRes = await axiosPublic.get(`/api/cart?email=${user?.email}`, {
-        headers: { Authorization: `Bearer ${user?.accessToken}` },
-      });
+      const cartRes = await axiosPublic.get(
+        `/api/users/cart?email=${user?.email}`,
+        {
+          headers: { Authorization: `Bearer ${user?.accessToken}` },
+        }
+      );
       setCart(cartRes.data, "data");
       setIsCartLoading(false);
       return cartRes.data;

@@ -11,7 +11,7 @@ const Banner = () => {
   const { data: banners = [], isLoading } = useQuery({
     queryKey: ["activeBanners"],
     queryFn: async () => {
-      const res = await axiosPublic.get("/api/advertisements/active");
+      const res = await axiosPublic.get("/api/users/advertisements/active");
       return res.data;
     },
     staleTime: Infinity,

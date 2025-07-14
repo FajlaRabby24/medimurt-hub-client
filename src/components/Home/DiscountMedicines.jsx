@@ -12,7 +12,7 @@ const DiscountMedicines = () => {
   const { data: discounts = [], isLoading } = useQuery({
     queryKey: ["discountMedicines"],
     queryFn: async () => {
-      const res = await axiosPublic.get("/api/medicines/discounted");
+      const res = await axiosPublic.get("/api/users/medicines/discounted");
       return res.data;
     },
     staleTime: Infinity,

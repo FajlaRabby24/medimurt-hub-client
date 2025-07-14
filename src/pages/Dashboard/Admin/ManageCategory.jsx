@@ -46,7 +46,7 @@ const ManageCategorys = () => {
           data
         );
       } else {
-        return axiosSecure.post("/api/categories", data);
+        return axiosSecure.post("/api/admin/categories", data);
       }
     },
     onSuccess: () => {
@@ -71,7 +71,7 @@ const ManageCategorys = () => {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await axiosSecure.delete(`/api/categories/${id}`);
+        await axiosSecure.delete(`/api/admin/categories/${id}`);
         queryClient.invalidateQueries(["medicineCategories"]);
         toast.error(`Category deleted successfully!`);
       }
