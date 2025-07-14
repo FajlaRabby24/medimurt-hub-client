@@ -19,7 +19,7 @@ const AdminDashboard = () => {
   const axiosSecure = useAxiosSecure();
 
   const { data, isLoading } = useQuery({
-    queryKey: ["salesSummaryForAdmin"],
+    queryKey: ["adminSalesSummary"],
     queryFn: async () => {
       const res = await axiosSecure.get("/api/admin/sales-summary");
       return res.data;
