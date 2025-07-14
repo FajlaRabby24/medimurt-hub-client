@@ -16,7 +16,7 @@ const ManageBannerAdvertise = () => {
   } = useQuery({
     queryKey: ["allAdvertisements"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/api/advertisements");
+      const res = await axiosSecure.get("/api/admin/advertisements");
       return res.data;
     },
     staleTime: Infinity,
@@ -25,7 +25,7 @@ const ManageBannerAdvertise = () => {
   // Toggle status mutation
   const statusMutation = useMutation({
     mutationFn: async ({ id, status }) => {
-      const res = await axiosSecure.patch(`/api/advertisements/${id}`, {
+      const res = await axiosSecure.patch(`/api/admin/advertisements/${id}`, {
         status,
       });
       return res.data;

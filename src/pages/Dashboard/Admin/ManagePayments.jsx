@@ -11,7 +11,7 @@ const ManagePayments = () => {
   const { data: payments = [], isLoading } = useQuery({
     queryKey: ["allPayments"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/api/cart/all-payments");
+      const res = await axiosSecure.get("/api/admin/cart/all-payments");
       return res.data;
     },
     staleTime: Infinity,
@@ -23,7 +23,7 @@ const ManagePayments = () => {
   const acceptPaymentMutation = useMutation({
     mutationFn: async (email) => {
       const res = await axiosSecure.patch(
-        `/api/cart/accept-payment?email=${email}`
+        `/api/admin/cart/accept-payment?email=${email}`
       );
       return res.data;
     },

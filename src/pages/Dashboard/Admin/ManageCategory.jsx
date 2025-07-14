@@ -31,7 +31,7 @@ const ManageCategorys = () => {
   const { data: categories = [], isLoading } = useQuery({
     queryKey: ["medicineCategories"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/api/categories");
+      const res = await axiosSecure.get("/api/admin/categories");
       return res.data;
     },
     staleTime: Infinity,
@@ -42,7 +42,7 @@ const ManageCategorys = () => {
     mutationFn: async (data) => {
       if (editingCategory) {
         return axiosSecure.patch(
-          `/api/categories/${editingCategory._id}`,
+          `/api/admin/categories/${editingCategory._id}`,
           data
         );
       } else {
@@ -111,7 +111,7 @@ const ManageCategorys = () => {
   };
 
   return (
-    <div className="p-4 w-full">
+    <div className="p-4 max-w-7xl">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
         <h2 className="text-2xl font-bold">Manage Categories</h2>
         <button

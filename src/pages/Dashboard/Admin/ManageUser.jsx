@@ -12,7 +12,7 @@ const ManageUsers = () => {
   const { data: users = [], isLoading } = useQuery({
     queryKey: ["allUsers"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/api/users");
+      const res = await axiosSecure.get("/api/admin/manage-users");
       return res.data;
     },
     staleTime: Infinity,
@@ -20,7 +20,7 @@ const ManageUsers = () => {
 
   const { mutateAsync: updateRole } = useMutation({
     mutationFn: async ({ id, role }) => {
-      await axiosSecure.patch(`/api/users/${id}/role`, { role });
+      await axiosSecure.patch(`/api/admin/update-user-role/${id}`, { role });
     },
     onSuccess: () => {
       queryClient.invalidateQueries(["allUsers"]);

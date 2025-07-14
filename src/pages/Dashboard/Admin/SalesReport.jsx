@@ -16,7 +16,7 @@ const SalesReport = () => {
   const { data: salesData = [], isLoading } = useQuery({
     queryKey: ["salesData"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/api/sales");
+      const res = await axiosSecure.get("/api/admin/sales");
       return res.data;
     },
   });
