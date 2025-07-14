@@ -117,6 +117,18 @@ const DashboardLayout = () => {
                     Manage payments
                   </NavLink>
                 </li>
+                <li>
+                  <NavLink
+                    to="/dashboard/sales-report"
+                    end
+                    className={({ isActive }) =>
+                      `text-lg font-semibold ${isActive ? "active" : ""}`
+                    }
+                  >
+                    <FaUsersCog size={25} className="inline-block mr-1" />
+                    Sales report
+                  </NavLink>
+                </li>
               </>
             )}
             {/* seller routes  */}

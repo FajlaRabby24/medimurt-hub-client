@@ -10,6 +10,7 @@ import ManageBannerAdvertise from "../pages/Dashboard/Admin/ManageBannerAdvertis
 import ManageCategory from "../pages/Dashboard/Admin/ManageCategory";
 import ManagePayments from "../pages/Dashboard/Admin/ManagePayments";
 import ManageUsers from "../pages/Dashboard/Admin/ManageUser";
+import SalesReport from "../pages/Dashboard/Admin/SalesReport";
 import DashboardHome from "../pages/Dashboard/DashboardHome";
 import AskForAdvertisement from "../pages/Dashboard/seller/AskForAdvertisement";
 import ManageMedicine from "../pages/Dashboard/seller/ManageMedicine";
@@ -130,6 +131,14 @@ export const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <ManagePayments />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "sales-report",
+        element: (
+          <AdminRoute>
+            <SalesReport />
           </AdminRoute>
         ),
       },
