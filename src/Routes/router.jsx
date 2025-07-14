@@ -14,6 +14,7 @@ import SalesReport from "../pages/Dashboard/Admin/SalesReport";
 import DashboardHome from "../pages/Dashboard/DashboardHome";
 import AskForAdvertisement from "../pages/Dashboard/seller/AskForAdvertisement";
 import ManageMedicine from "../pages/Dashboard/seller/ManageMedicine";
+import SellerPaymentHistory from "../pages/Dashboard/seller/SellerPaymentHistory";
 import Forbidden from "../pages/Forbidden";
 import HomePage from "../pages/HomePage";
 import CheckoutPage from "../pages/Payment/CheckoutPage";
@@ -156,6 +157,14 @@ export const router = createBrowserRouter([
         element: (
           <SellerRouter>
             <ManageMedicine />
+          </SellerRouter>
+        ),
+      },
+      {
+        path: "payment-history",
+        element: (
+          <SellerRouter>
+            <SellerPaymentHistory />
           </SellerRouter>
         ),
       },
