@@ -1,6 +1,7 @@
 import { Switch } from "@headlessui/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ReTitle } from "re-title";
+import { useState } from "react";
 import { toast } from "react-toastify";
 import LoadingSpiner from "../../../components/common/Loading/LoadingSpiner";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
@@ -9,19 +10,26 @@ const ManageBannerAdvertise = () => {
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
 
+  const [page, setPage] = useState(1);
+  const limit = 5;
+  console.log(page);
+
   // Fetch all advertisements
-  const {
-    data: advertisements = [],
-    isLoading,
-    isFetching,
-  } = useQuery({
-    queryKey: ["allAdvertisements"],
+  const { data, isLoading, isFetching } = useQuery({
+    queryKey: ["allAdvertisements", page],
     queryFn: async () => {
-      const res = await axiosSecure.get("/api/admin/advertisements");
+      const res = await axiosSecure.get(
+        `/api/admin/advertisements?page=${page}&limit=${limit}`
+      );
       return res.data;
     },
-    staleTime: Infinity,
+    keepPreviousData: true,
+    staleTime: 1000 * 60 * 5,
   });
+
+  console.log(data);
+  const advertisedatments = data?.data || [];
+  const totalPages = data?.totalPages || 0;
 
   // Toggle status mutation
   const statusMutation = useMutation({
@@ -66,7 +74,7 @@ const ManageBannerAdvertise = () => {
             </tr>
           </thead>
           <tbody>
-            {advertisements.map((ad) => (
+            {advertisedatments?.map((ad) => (
               <tr key={ad._id}>
                 <td>
                   <img
@@ -112,6 +120,38 @@ const ManageBannerAdvertise = () => {
             ))}
           </tbody>
         </table>
+      </div>
+      {/* Pagination */}
+      <div className="flex justify-center mt-4">
+        <div className="join">
+          <button
+            className="join-item btn"
+            onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+            disabled={page === 1}
+          >
+            Prev
+          </button>
+
+          {[...Array(totalPages).keys()].map((num) => (
+            <button
+              key={num}
+              className={`join-item btn ${
+                page === num + 1 ? "btn-primary" : ""
+              }`}
+              onClick={() => setPage(num + 1)}
+            >
+              {num + 1}
+            </button>
+          ))}
+
+          <button
+            className="join-item btn"
+            onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+            disabled={page === totalPages}
+          >
+            Next
+          </button>
+        </div>
       </div>
     </div>
   );
