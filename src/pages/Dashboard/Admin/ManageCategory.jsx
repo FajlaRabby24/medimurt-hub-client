@@ -20,6 +20,9 @@ const ManageCategorys = () => {
   const [previewImage, setPreviewImage] = useState(null);
   const { user } = useAuth();
 
+  const [page, setPage] = useState(1);
+  const limit = 5;
+
   const {
     register,
     handleSubmit,
@@ -29,14 +32,21 @@ const ManageCategorys = () => {
   } = useForm();
 
   // Fetch all categories
-  const { data: categories = [], isLoading } = useQuery({
-    queryKey: ["medicineCategories"],
+  const { data, isLoading, isFetching } = useQuery({
+    queryKey: ["medicineCategories", page],
     queryFn: async () => {
-      const res = await axiosSecure.get("/api/admin/categories");
+      const res = await axiosSecure.get(
+        `/api/admin/categories?page=${page}&limit=${limit}`
+      );
       return res.data;
     },
-    staleTime: Infinity,
+    keepPreviousData: true,
+    staleTime: 1000 * 60 * 5,
   });
+
+  console.log(data);
+  const categories = data?.data || [];
+  const totalPages = data?.totalPages || 0;
 
   // Add / Update category
   const categoryMutation = useMutation({
@@ -100,7 +110,7 @@ const ManageCategorys = () => {
     setIsUploading(false);
   };
 
-  if (isLoading) return <LoadingSpiner />;
+  if (isLoading || isFetching) return <LoadingSpiner />;
 
   // handle image preview
   const handleImagePreview = (e) => {
@@ -176,6 +186,41 @@ const ManageCategorys = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Pagination */}
+      {limit < data?.totalCount && (
+        <div className="flex justify-center mt-4">
+          <div className="join">
+            <button
+              className="join-item btn"
+              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+              disabled={page === 1}
+            >
+              Prev
+            </button>
+
+            {[...Array(totalPages).keys()].map((num) => (
+              <button
+                key={num}
+                className={`join-item btn ${
+                  page === num + 1 ? "btn-primary" : ""
+                }`}
+                onClick={() => setPage(num + 1)}
+              >
+                {num + 1}
+              </button>
+            ))}
+
+            <button
+              className="join-item btn"
+              onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+              disabled={page === totalPages}
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Modal */}
       {showModal && (
