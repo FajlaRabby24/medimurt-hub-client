@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { ReTitle } from "re-title";
+import { useState } from "react";
 import LoadingSpiner from "../../../components/common/Loading/LoadingSpiner";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
@@ -7,19 +8,27 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 const UserPaymentHistory = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
+  const [page, setPage] = useState(1);
+  const limit = 5;
 
-  const { data: payments = [], isLoading } = useQuery({
-    queryKey: ["userPaymentHistory", user?.email],
+  const { data, isLoading, isFetching } = useQuery({
+    queryKey: ["userPaymentHistory", user?.email, page],
     queryFn: async () => {
       const res = await axiosSecure.get(
-        `/api/users/payment-history?user=${user?.email}`
+        `/api/users/payment-history?page=${page}&limit=${limit}`
       );
       return res.data;
     },
     enabled: !!user?.email,
+    keepPreviousData: true,
+    staleTime: 1000 * 60 * 5,
   });
 
-  if (isLoading) return <LoadingSpiner />;
+  console.log(data);
+  const payments = data?.data || [];
+  const totalPages = data?.totalPages || 0;
+
+  if (isLoading || isFetching) return <LoadingSpiner />;
 
   return (
     <div className="p-4 max-w-7xl">
@@ -78,6 +87,41 @@ const UserPaymentHistory = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Pagination */}
+      {limit < data?.totalCount && (
+        <div className="flex justify-center mt-4">
+          <div className="join">
+            <button
+              className="join-item btn"
+              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+              disabled={page === 1}
+            >
+              Prev
+            </button>
+
+            {[...Array(totalPages).keys()].map((num) => (
+              <button
+                key={num}
+                className={`join-item btn ${
+                  page === num + 1 ? "btn-primary" : ""
+                }`}
+                onClick={() => setPage(num + 1)}
+              >
+                {num + 1}
+              </button>
+            ))}
+
+            <button
+              className="join-item btn"
+              onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+              disabled={page === totalPages}
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

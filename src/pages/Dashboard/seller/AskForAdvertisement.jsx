@@ -19,6 +19,9 @@ const AskForAdvertisement = () => {
   const [uploading, setIsUploading] = useState(false);
   const [previewImage, setPreviewImage] = useState(null);
 
+  const [page, setPage] = useState(1);
+  const limit = 5;
+
   const {
     register,
     handleSubmit,
@@ -27,19 +30,21 @@ const AskForAdvertisement = () => {
   } = useForm();
 
   // Fetch Advertisements
-  const {
-    data: advertisements = [],
-    isLoading,
-    isFetching,
-    refetch,
-  } = useQuery({
-    queryKey: ["sellerAdvertisements", user.email],
+  const { data, isLoading, isFetching, refetch } = useQuery({
+    queryKey: ["sellerAdvertisements", user.email, page],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/api/seller/advertisements/mine`);
+      const res = await axiosSecure.get(
+        `/api/seller/advertisements/mine?page=${page}&limit=${limit}`
+      );
       return res.data;
     },
-    staleTime: Infinity,
+    keepPreviousData: true,
+    staleTime: 1000 * 60 * 5,
   });
+
+  console.log(data);
+  const advertisements = data?.data || [];
+  const totalPages = data?.totalPages || 0;
 
   // Submit Handler
   const onSubmit = async (data) => {
@@ -180,6 +185,41 @@ const AskForAdvertisement = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Pagination */}
+      {limit < data?.totalCount && (
+        <div className="flex justify-center mt-4">
+          <div className="join">
+            <button
+              className="join-item btn"
+              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+              disabled={page === 1}
+            >
+              Prev
+            </button>
+
+            {[...Array(totalPages).keys()].map((num) => (
+              <button
+                key={num}
+                className={`join-item btn ${
+                  page === num + 1 ? "btn-primary" : ""
+                }`}
+                onClick={() => setPage(num + 1)}
+              >
+                {num + 1}
+              </button>
+            ))}
+
+            <button
+              className="join-item btn"
+              onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+              disabled={page === totalPages}
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Add Modal */}
       {showModal && (

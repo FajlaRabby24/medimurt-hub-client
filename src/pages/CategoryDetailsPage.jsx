@@ -3,6 +3,7 @@ import { ReTitle } from "re-title";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
+import LoadingSpiner from "../components/common/Loading/LoadingSpiner";
 import Container from "../components/common/Ui/Container";
 import useAuth from "../hooks/useAuth";
 import useAxios from "../hooks/useAxios";
@@ -19,16 +20,24 @@ const CategoryDetailsPage = () => {
   const navigate = useNavigate();
   const [selectedMedicine, setSelectedMedicine] = useState(null);
 
-  const { data: medicines = [] } = useQuery({
-    queryKey: ["categoryMedicines", category],
+  const [page, setPage] = useState(1);
+  const limit = 5;
+
+  const { data, isLoading, isFetching } = useQuery({
+    queryKey: ["categoryMedicines", category, page],
     queryFn: async () => {
       const res = await axiosPublic.get(
-        `/api/users/medicines/category/${category}`
+        `/api/users/medicines/category/${category}?page=${page}&limit=${limit}`
       );
       return res.data;
     },
-    staleTime: Infinity,
+    keepPreviousData: true,
+    staleTime: 1000 * 60 * 5,
   });
+
+  console.log(data);
+  const medicines = data?.data || [];
+  const totalPages = data?.totalPages || 0;
 
   // add to cart mutation
   const addToCartMutation = useMutation({
@@ -98,6 +107,8 @@ const CategoryDetailsPage = () => {
     }
   };
 
+  if (isLoading || isFetching) return <LoadingSpiner />;
+
   return (
     <Container>
       <ReTitle title="Category " />
@@ -120,7 +131,7 @@ const CategoryDetailsPage = () => {
               </tr>
             </thead>
             <tbody>
-              {medicines.map((med) => (
+              {medicines?.map((med) => (
                 <tr key={med._id}>
                   <td>
                     <img
@@ -156,6 +167,43 @@ const CategoryDetailsPage = () => {
             </tbody>
           </table>
         </div>
+
+        {/* Pagination */}
+        {limit < data?.totalCount && (
+          <div className="flex justify-center mt-4">
+            <div className="join">
+              <button
+                className="join-item btn"
+                onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+                disabled={page === 1}
+              >
+                Prev
+              </button>
+
+              {[...Array(totalPages).keys()].map((num) => (
+                <button
+                  key={num}
+                  className={`join-item btn ${
+                    page === num + 1 ? "btn-primary" : ""
+                  }`}
+                  onClick={() => setPage(num + 1)}
+                >
+                  {num + 1}
+                </button>
+              ))}
+
+              <button
+                className="join-item btn"
+                onClick={() =>
+                  setPage((prev) => Math.min(prev + 1, totalPages))
+                }
+                disabled={page === totalPages}
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* Modal */}
         {selectedMedicine && (

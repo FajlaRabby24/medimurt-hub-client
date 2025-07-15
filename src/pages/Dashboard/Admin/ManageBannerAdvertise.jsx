@@ -122,37 +122,39 @@ const ManageBannerAdvertise = () => {
         </table>
       </div>
       {/* Pagination */}
-      <div className="flex justify-center mt-4">
-        <div className="join">
-          <button
-            className="join-item btn"
-            onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-            disabled={page === 1}
-          >
-            Prev
-          </button>
-
-          {[...Array(totalPages).keys()].map((num) => (
+      {limit < data?.totalCount && (
+        <div className="flex justify-center mt-4">
+          <div className="join">
             <button
-              key={num}
-              className={`join-item btn ${
-                page === num + 1 ? "btn-primary" : ""
-              }`}
-              onClick={() => setPage(num + 1)}
+              className="join-item btn"
+              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+              disabled={page === 1}
             >
-              {num + 1}
+              Prev
             </button>
-          ))}
 
-          <button
-            className="join-item btn"
-            onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
-            disabled={page === totalPages}
-          >
-            Next
-          </button>
+            {[...Array(totalPages).keys()].map((num) => (
+              <button
+                key={num}
+                className={`join-item btn ${
+                  page === num + 1 ? "btn-primary" : ""
+                }`}
+                onClick={() => setPage(num + 1)}
+              >
+                {num + 1}
+              </button>
+            ))}
+
+            <button
+              className="join-item btn"
+              onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+              disabled={page === totalPages}
+            >
+              Next
+            </button>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

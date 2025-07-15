@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { FaEye, FaTrashAlt } from "react-icons/fa";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import LoadingSpiner from "../../../components/common/Loading/LoadingSpiner";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { imageUpload } from "../../../utilities/imageUpload";
@@ -16,6 +17,8 @@ const ManageMedicine = () => {
   const [uploading, setIsUploading] = useState(false);
   const axiosSecure = useAxiosSecure();
   const [previewImage, setPreviewImage] = useState(null);
+  const [page, setPage] = useState(1);
+  const limit = 10;
 
   const {
     register,
@@ -24,14 +27,21 @@ const ManageMedicine = () => {
     formState: { errors },
   } = useForm();
 
-  const { data: medicines = [], refetch } = useQuery({
-    queryKey: ["sellerMedicines"],
+  const { data, isFetching, isLoading, refetch } = useQuery({
+    queryKey: ["sellerMedicines", page],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/api/seller/medicines/mine`);
+      const res = await axiosSecure.get(
+        `/api/seller/medicines/mine?page=${page}&limit=${limit}`
+      );
       return res.data;
     },
-    staleTime: Infinity,
+    keepPreviousData: true,
+    staleTime: 1000 * 60 * 5,
   });
+
+  console.log(data);
+  const medicines = data?.data || [];
+  const totalPages = data?.totalPages || 0;
 
   const { data: allCategories = [] } = useQuery({
     queryKey: ["allCategories"],
@@ -106,6 +116,8 @@ const ManageMedicine = () => {
     }
   };
 
+  if (isLoading || isFetching) return <LoadingSpiner />;
+
   return (
     <div className="p-4 sm:p-6 w-full">
       <ReTitle title="Dashboard | Manage medicine" />
@@ -177,6 +189,41 @@ const ManageMedicine = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Pagination */}
+      {limit < data?.totalCount && (
+        <div className="flex justify-center mt-4">
+          <div className="join">
+            <button
+              className="join-item btn"
+              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+              disabled={page === 1}
+            >
+              Prev
+            </button>
+
+            {[...Array(totalPages).keys()].map((num) => (
+              <button
+                key={num}
+                className={`join-item btn ${
+                  page === num + 1 ? "btn-primary" : ""
+                }`}
+                onClick={() => setPage(num + 1)}
+              >
+                {num + 1}
+              </button>
+            ))}
+
+            <button
+              className="join-item btn"
+              onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+              disabled={page === totalPages}
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Add */}
       {showModal && (
