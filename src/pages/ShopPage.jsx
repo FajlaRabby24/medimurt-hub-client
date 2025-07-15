@@ -13,29 +13,34 @@ import useCart from "../hooks/useCart";
 
 const Shop = () => {
   const axiosPublic = useAxios();
-  const { user } = useAuth();
-  const queryClient = useQueryClient();
   const axiosSecure = useAxiosSecure();
-  const location = useLocation();
+  const queryClient = useQueryClient();
+  const { user } = useAuth();
   const { cart } = useCart();
   const navigate = useNavigate();
+  const location = useLocation();
   const [selectedMedicine, setSelectedMedicine] = useState(null);
 
-  // get medicine
-  const {
-    data: medicines = [],
-    isLoading,
-    isFetching,
-  } = useQuery({
-    queryKey: ["allMedicines"],
+  const [page, setPage] = useState(1);
+  const limit = 5;
+
+  // Fetch paginated medicine data
+  const { data, isLoading, isFetching } = useQuery({
+    queryKey: ["allMedicines", page],
     queryFn: async () => {
-      const res = await axiosPublic.get("/api/users/medicines");
+      const res = await axiosPublic.get(
+        `/api/users/medicines?page=${page}&limit=${limit}`
+      );
       return res.data;
     },
-    staleTime: Infinity,
+    keepPreviousData: true,
+    staleTime: 1000 * 60 * 5,
   });
+  console.log(data);
+  const medicines = data?.data || [];
+  const totalPages = data?.totalPages || 0;
 
-  // add to cart mutation
+  // Add to cart mutation
   const addToCartMutation = useMutation({
     mutationFn: async (cartInfo) => {
       const res = await axiosSecure.post("/api/users/add-to-cart", cartInfo);
@@ -45,12 +50,9 @@ const Shop = () => {
       toast.success("Added to cart!");
       queryClient.invalidateQueries(["cart", user?.email]);
     },
-    onError: () => {
-      toast.error("Failed to add. Try again!");
-    },
+    onError: () => toast.error("Failed to add. Try again!"),
   });
 
-  // update quantity in medicine
   const updateQuantityMutation = useMutation({
     mutationFn: async ({ _id, quantity, total_price }) => {
       const res = await axiosSecure.patch(`/api/users/cart/${_id}`, {
@@ -60,25 +62,20 @@ const Shop = () => {
       return res.data;
     },
     onSuccess: () => {
-      toast.success(`Update the quantity `);
+      toast.success("Updated quantity!");
       queryClient.invalidateQueries(["cart", user?.email]);
     },
-    onError: () => {
-      toast.error("Failed. Try again!");
-    },
+    onError: () => toast.error("Failed to update. Try again!"),
   });
 
-  if (isLoading || isFetching) return <LoadingSpiner />;
-
-  // handle Add to Cart
-  const handleAddToCart = async (medicine) => {
+  // Handle Add to Cart
+  const handleAddToCart = (medicine) => {
     if (!user) {
       return navigate("/auth/join-us", { state: { from: location.pathname } });
     }
 
     const exist = cart.find((item) => item.medicine_id === medicine._id);
     if (exist) {
-      console.log(exist);
       updateQuantityMutation.mutate({
         _id: exist._id,
         quantity: exist.quantity + 1,
@@ -87,7 +84,6 @@ const Shop = () => {
           (exist.quantity + 1),
       });
     } else {
-      console.log(medicine);
       const cartInfo = {
         user_email: user?.email,
         medicine_id: medicine._id,
@@ -105,6 +101,8 @@ const Shop = () => {
       addToCartMutation.mutate(cartInfo);
     }
   };
+
+  if (isLoading || isFetching) return <LoadingSpiner />;
 
   return (
     <Container className={"pb-20"}>
@@ -130,7 +128,7 @@ const Shop = () => {
               </tr>
             </thead>
             <tbody>
-              {medicines.map((med) => (
+              {medicines?.map((med) => (
                 <tr key={med._id}>
                   <td>
                     <img
@@ -144,20 +142,18 @@ const Shop = () => {
                   <td>{med.category}</td>
                   <td>{med.company}</td>
                   <td>{med.unit}</td>
-                  <td>${med.price}</td>
+                  <td>৳{med.price}</td>
                   <td>{med.discount || 0}%</td>
                   <td className="flex gap-2">
                     <button
                       onClick={() => setSelectedMedicine(med)}
                       className="btn btn-sm btn-outline"
-                      title="View"
                     >
                       <FaEye />
                     </button>
                     <button
                       onClick={() => handleAddToCart(med)}
                       className="btn btn-sm btn-primary"
-                      title="Add to Cart"
                     >
                       <FaCartPlus />
                     </button>
@@ -166,6 +162,39 @@ const Shop = () => {
               ))}
             </tbody>
           </table>
+        </div>
+
+        {/* Pagination */}
+        <div className="flex justify-center mt-4">
+          <div className="join">
+            <button
+              className="join-item btn"
+              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+              disabled={page === 1}
+            >
+              Prev
+            </button>
+
+            {[...Array(totalPages).keys()].map((num) => (
+              <button
+                key={num}
+                className={`join-item btn ${
+                  page === num + 1 ? "btn-primary" : ""
+                }`}
+                onClick={() => setPage(num + 1)}
+              >
+                {num + 1}
+              </button>
+            ))}
+
+            <button
+              className="join-item btn"
+              onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+              disabled={page === totalPages}
+            >
+              Next
+            </button>
+          </div>
         </div>
 
         {/* View Modal */}
@@ -199,7 +228,7 @@ const Shop = () => {
                 <strong>Description:</strong> {selectedMedicine.description}
               </p>
               <p>
-                <strong>Price:</strong> ${selectedMedicine.price}
+                <strong>Price:</strong> ৳{selectedMedicine.price}
               </p>
               <p>
                 <strong>Discount:</strong> {selectedMedicine.discount}%
