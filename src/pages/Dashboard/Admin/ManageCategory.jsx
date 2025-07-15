@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { ReTitle } from "re-title";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEdit, FaTrash } from "react-icons/fa";
@@ -112,6 +113,7 @@ const ManageCategorys = () => {
 
   return (
     <div className="p-4 max-w-7xl">
+      <ReTitle title="Dashboard | Manage category" />
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
         <h2 className="text-2xl font-bold">Manage Categories</h2>
         <button

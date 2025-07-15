@@ -14,12 +14,12 @@ const useUserRole = () => {
     queryKey: ["userRole", user?.email],
     enabled: !authLoading && !!user?.email,
     queryFn: async () => {
-      const res = await axiosSecure.get(`/api/users/${user.email}/role`);
+      const res = await axiosSecure.get(`/api/users/role`);
       return res.data.role;
     },
     staleTime: Infinity,
   });
-
+  console.log(role);
   return { role, roleLoading: authLoading || roleLoading, refetch };
 };
 

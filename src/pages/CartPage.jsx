@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { ReTitle } from "re-title";
 import { FaMinus, FaPlus, FaShoppingCart, FaTrash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router";
 import { toast } from "react-toastify";
@@ -64,7 +65,7 @@ const CartPage = () => {
   // handle clear cart
   const clearCartMutation = useMutation({
     mutationFn: async () => {
-      await axiosSecure.delete(`/api/users/cart/clear?email=${user.email}`);
+      await axiosSecure.delete(`/api/users/cart/clear`);
     },
     onSuccess: () => {
       queryClient.invalidateQueries(["cart", user?.email]);
@@ -101,6 +102,7 @@ const CartPage = () => {
 
   return (
     <Container className={"pb-20"}>
+      <ReTitle title="Cart" />
       <section className="p-4 ">
         <h2 className="text-2xl font-bold mb-6">My Cart</h2>
 

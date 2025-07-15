@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { ReTitle } from "re-title";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEye, FaTrashAlt } from "react-icons/fa";
@@ -26,9 +27,7 @@ const ManageMedicine = () => {
   const { data: medicines = [], refetch } = useQuery({
     queryKey: ["sellerMedicines"],
     queryFn: async () => {
-      const res = await axiosSecure.get(
-        `/api/seller/medicines/mine?email=${user.email}`
-      );
+      const res = await axiosSecure.get(`/api/seller/medicines/mine`);
       return res.data;
     },
     staleTime: Infinity,
@@ -109,6 +108,7 @@ const ManageMedicine = () => {
 
   return (
     <div className="p-4 sm:p-6 w-full">
+      <ReTitle title="Dashboard | Manage medicine" />
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
         <h2 className="text-xl sm:text-2xl font-bold">Manage Medicines</h2>
         <button

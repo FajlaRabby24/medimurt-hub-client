@@ -17,6 +17,7 @@ import AskForAdvertisement from "../pages/Dashboard/seller/AskForAdvertisement";
 import ManageMedicine from "../pages/Dashboard/seller/ManageMedicine";
 import Forbidden from "../pages/Forbidden";
 import HomePage from "../pages/HomePage";
+import NotFound from "../pages/NotFound";
 import CheckoutPage from "../pages/Payment/CheckoutPage";
 import InvoicePage from "../pages/Payment/InvoicePage";
 import ShopPage from "../pages/ShopPage";
@@ -165,5 +166,9 @@ export const router = createBrowserRouter([
         ),
       },
     ],
+  },
+  {
+    path: "*",
+    Component: NotFound,
   },
 ]);

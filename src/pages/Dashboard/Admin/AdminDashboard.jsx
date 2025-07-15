@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { ReTitle } from "re-title";
 import {
   FaCheckCircle,
   FaHourglassHalf,
@@ -39,6 +40,7 @@ const AdminDashboard = () => {
 
   return (
     <div className="p-4 w-full">
+      <ReTitle title="Dashboard" />
       <h2 className="text-2xl font-bold mb-6">
         Welcome, <span className="text-primary">Admin</span>!
       </h2>

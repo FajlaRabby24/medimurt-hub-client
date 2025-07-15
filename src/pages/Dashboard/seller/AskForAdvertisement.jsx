@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { ReTitle } from "re-title";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEye, FaTrash } from "react-icons/fa";
@@ -34,9 +35,7 @@ const AskForAdvertisement = () => {
   } = useQuery({
     queryKey: ["sellerAdvertisements", user.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(
-        `/api/seller/advertisements/mine?email=${user.email}`
-      );
+      const res = await axiosSecure.get(`/api/seller/advertisements/mine`);
       return res.data;
     },
     staleTime: Infinity,
@@ -58,7 +57,7 @@ const AskForAdvertisement = () => {
 
     try {
       const res = await axiosSecure.post(
-        `/api/seller/add-advertisements?email=${user.email}`,
+        `/api/seller/add-advertisements`,
         newAd
       );
       if (res?.data?.insertedId) {
@@ -115,6 +114,7 @@ const AskForAdvertisement = () => {
 
   return (
     <div className="p-4  sm:p-6 max-w-7xl">
+      <ReTitle title="Dashboard | Ask for ads" />
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
         <h2 className="text-xl sm:text-2xl font-bold">Ask For Advertisement</h2>
         <button onClick={() => setShowModal(true)} className="btn btn-primary">

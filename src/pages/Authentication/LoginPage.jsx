@@ -1,3 +1,4 @@
+import { ReTitle } from "re-title";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router";
 import { toast } from "react-toastify";
@@ -40,6 +41,7 @@ const LoginPage = () => {
 
   return (
     <div className="max-w-lg mx-auto p-4  md:p-6 bg-white shadow-lg rounded-xl ">
+      <ReTitle title="Join-us" />
       <h2 className="text-2xl font-bold text-center text-primary mb-6">
         Login to MediMart Hub
       </h2>
@@ -91,7 +93,7 @@ const LoginPage = () => {
 
         {/* Submit Button */}
         <div className="form-control mt-6">
-          <button className="btn btn-primary w-full">Login</button>
+          <button className="btn btn-primary w-full">Join us</button>
         </div>
       </form>
 

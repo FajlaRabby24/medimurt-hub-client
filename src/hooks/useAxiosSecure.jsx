@@ -13,6 +13,10 @@ const useAxiosSecure = () => {
   axiosSecure.interceptors.request.use(
     (config) => {
       config.headers.Authorization = `Bearer ${user.accessToken}`;
+      config.params = {
+        ...(config.params || {}),
+        email: user?.email,
+      };
       return config;
     },
     (error) => {

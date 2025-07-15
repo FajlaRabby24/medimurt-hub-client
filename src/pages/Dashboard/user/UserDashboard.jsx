@@ -1,3 +1,4 @@
+import { ReTitle } from "re-title";
 import defaultUserImg from "../../../assets/images/defaultUser.png";
 import useAuth from "../../../hooks/useAuth";
 
@@ -6,6 +7,7 @@ const UserDashboard = () => {
 
   return (
     <div className="p-4 max-w-4xl mx-auto">
+      <ReTitle title="Dashboard" />
       <h2 className="text-2xl font-bold mb-6">Welcome to Your Dashboard</h2>
 
       <div className="bg-white shadow rounded-lg p-6">

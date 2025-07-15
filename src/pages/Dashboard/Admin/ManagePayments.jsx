@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { ReTitle } from "re-title";
 import Swal from "sweetalert2";
 import LoadingSpinner from "../../../components/common/Loading/LoadingSpiner";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
@@ -21,10 +22,8 @@ const ManagePayments = () => {
 
   // Accept payment mutation
   const acceptPaymentMutation = useMutation({
-    mutationFn: async (email) => {
-      const res = await axiosSecure.patch(
-        `/api/admin/cart/accept-payment?email=${email}`
-      );
+    mutationFn: async () => {
+      const res = await axiosSecure.patch(`/api/admin/cart/accept-payment`);
       return res.data;
     },
     onSuccess: () => {
@@ -56,6 +55,7 @@ const ManagePayments = () => {
 
   return (
     <div className="p-4">
+      <ReTitle title="Dashboard | Manage payments" />
       <h2 className="text-2xl font-bold mb-4">Manage Payments</h2>
 
       <div className="overflow-x-auto">

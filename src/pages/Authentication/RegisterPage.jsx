@@ -1,3 +1,4 @@
+import { ReTitle } from "re-title";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router";
@@ -73,6 +74,7 @@ const RegisterPage = () => {
 
   return (
     <div className="max-w-lg mx-auto p-4 md:p-6 bg-white shadow-lg rounded-xl ">
+      <ReTitle title="Register" />
       <h2 className="text-2xl font-bold text-center text-primary mb-6">
         Register to MediMart Hub
       </h2>

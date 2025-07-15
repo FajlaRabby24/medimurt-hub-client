@@ -11,9 +11,10 @@ const CartProvider = ({ children }) => {
   const axiosPublic = useAxios();
 
   // get all cart info by user email
-  const { data } = useQuery({
+  const { data = [] } = useQuery({
     queryKey: ["cart", user?.email],
     enabled: !!user?.email && !loading,
+
     queryFn: async () => {
       setIsCartLoading(true);
       const cartRes = await axiosPublic.get(
@@ -22,7 +23,7 @@ const CartProvider = ({ children }) => {
           headers: { Authorization: `Bearer ${user?.accessToken}` },
         }
       );
-      setCart(cartRes.data, "data");
+      setCart(cartRes.data || []);
       setIsCartLoading(false);
       return cartRes.data;
     },

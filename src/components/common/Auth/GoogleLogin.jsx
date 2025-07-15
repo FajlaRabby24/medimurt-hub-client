@@ -67,7 +67,7 @@ const GoogleLogin = () => {
             ></path>
           </g>
         </svg>
-        Login with Google
+        Join with Google
       </button>
     </div>
   );

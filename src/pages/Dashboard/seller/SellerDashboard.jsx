@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { ReTitle } from "re-title";
 import {
   FaCheckCircle,
   FaHourglassHalf,
@@ -24,9 +25,7 @@ const SellterDashboard = () => {
     queryKey: ["sellerSalesSummary", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
-      const res = await axiosSecure.get(
-        `/api/seller/sales-summary?email=${user.email}`
-      );
+      const res = await axiosSecure.get(`/api/seller/sales-summary`);
       return res.data;
     },
   });
@@ -44,6 +43,7 @@ const SellterDashboard = () => {
 
   return (
     <div className="p-4 w-full">
+      <ReTitle title="Dashboard" />
       <h2 className="text-2xl font-bold mb-6">
         Welcome back, {user?.displayName || "Seller"}!
       </h2>

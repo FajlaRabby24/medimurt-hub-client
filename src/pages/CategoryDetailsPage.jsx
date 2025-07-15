@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { ReTitle } from "re-title";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
@@ -99,6 +100,7 @@ const CategoryDetailsPage = () => {
 
   return (
     <Container>
+      <ReTitle title="Category " />
       <div className="p-4 w-full">
         <h2 className="text-2xl font-bold mb-6 text-center">
           Medicines in {category} Category

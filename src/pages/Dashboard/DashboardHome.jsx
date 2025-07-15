@@ -7,17 +7,16 @@ import UserDashboard from "./user/UserDashboard";
 
 const DashboardHome = () => {
   const { role, roleLoading } = useUserRole();
-
   if (roleLoading) {
     return <LoadingSpiner />;
   }
 
   if (role === "admin") {
     return <AdminDashboard></AdminDashboard>;
-  } else if (role === "user") {
-    return <UserDashboard></UserDashboard>;
   } else if (role === "seller") {
     return <SellerDashboard></SellerDashboard>;
+  } else if (role === "user") {
+    return <UserDashboard></UserDashboard>;
   } else {
     return <Forbidden></Forbidden>;
   }

@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { ReTitle } from "re-title";
 import LoadingSpiner from "../../../components/common/Loading/LoadingSpiner";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
@@ -10,9 +11,7 @@ const SellerPaymentHistory = () => {
   const { data: payments = [], isLoading } = useQuery({
     queryKey: ["sellerPaymentHistory", user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(
-        `/api/seller/payment-history?seller=${user?.email}`
-      );
+      const res = await axiosSecure.get(`/api/seller/payment-history`);
       return res.data;
     },
     enabled: !!user?.email,
@@ -22,6 +21,7 @@ const SellerPaymentHistory = () => {
 
   return (
     <div className="p-4 max-w-7xl ">
+      <ReTitle title="Dashboard | Payment history" />
       <h2 className="text-3xl font-bold mb-6 text-gray-800">Payment History</h2>
 
       <div className="overflow-x-auto">

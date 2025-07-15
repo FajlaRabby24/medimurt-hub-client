@@ -1,5 +1,6 @@
 import { Switch } from "@headlessui/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { ReTitle } from "re-title";
 import { toast } from "react-toastify";
 import LoadingSpiner from "../../../components/common/Loading/LoadingSpiner";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
@@ -47,6 +48,7 @@ const ManageBannerAdvertise = () => {
 
   return (
     <div className="p-4 sm:p-6 w-full">
+      <ReTitle title="Dashboard | Manage advertise" />
       <h2 className="text-xl sm:text-2xl font-bold mb-4">
         Manage Banner Advertisements
       </h2>

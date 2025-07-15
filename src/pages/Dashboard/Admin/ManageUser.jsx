@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { ReTitle } from "re-title";
 import { FaStore, FaUser, FaUserShield } from "react-icons/fa";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
@@ -46,6 +47,7 @@ const ManageUsers = () => {
 
   return (
     <div className="p-4 w-full">
+      <ReTitle title="Dashboard | Manage users" />
       <h2 className="text-2xl font-bold mb-6">Manage Users</h2>
 
       <div className="overflow-x-auto">

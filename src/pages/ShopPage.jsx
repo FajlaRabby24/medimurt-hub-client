@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { ReTitle } from "re-title";
 import { useState } from "react";
 import { FaCartPlus, FaEye } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router";
@@ -107,6 +108,7 @@ const Shop = () => {
 
   return (
     <Container className={"pb-20"}>
+      <ReTitle title="Shop" />
       <div className="p-4">
         <h2 className="text-2xl sm:text-3xl font-bold text-center mb-6">
           Shop Medicines

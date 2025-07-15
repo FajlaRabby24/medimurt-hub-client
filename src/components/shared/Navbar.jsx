@@ -79,6 +79,7 @@ const Navbar = () => {
         {/* navbar end  */}
         <div className="navbar-end md:gap-5">
           {/* Cart Icon */}
+          {/* {!roleLoading && role === "admin" && ( */}
           <Link to={"/cart"}>
             <button className="btn btn-ghost btn-circle">
               <div className="indicator">
@@ -89,6 +90,7 @@ const Navbar = () => {
               </div>
             </button>
           </Link>
+          {/* // )} */}
 
           {/* Language Dropdown */}
           <div className="dropdown dropdown-end ">

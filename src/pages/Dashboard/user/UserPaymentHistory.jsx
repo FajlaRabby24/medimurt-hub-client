@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { ReTitle } from "re-title";
 import LoadingSpiner from "../../../components/common/Loading/LoadingSpiner";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
@@ -22,6 +23,7 @@ const UserPaymentHistory = () => {
 
   return (
     <div className="p-4 max-w-7xl">
+      <ReTitle title="Dashboard | Payment history" />
       <h2 className="text-3xl font-bold mb-6 text-gray-800">
         My Payment History
       </h2>

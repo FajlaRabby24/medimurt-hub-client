@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { ReTitle } from "re-title";
 import { useMemo, useState } from "react";
 import DataTable from "react-data-table-component";
 import DatePicker from "react-datepicker";
@@ -96,6 +97,7 @@ const SalesReport = () => {
 
   return (
     <div className="p-4 max-w-7xl">
+      <ReTitle title="Dashboard | Sales report" />
       <div className="flex flex-col md:flex-row justify-between items-center mb-4 gap-4">
         <h2 className="text-2xl font-bold">Sales Report</h2>
 
