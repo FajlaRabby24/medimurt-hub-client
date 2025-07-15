@@ -12,11 +12,11 @@ const RegisterPage = () => {
   const { signUpUser, updateUserProfile } = useAuth();
   const location = useLocation();
   const axiosPublic = useAxios();
-  const [userCreatting, setUserCreating] = useState(false);
   const navigate = useNavigate();
   const from = location.state?.from || "/";
 
   // state
+  const [userCreatting, setUserCreating] = useState(false);
   const [previewImage, setPreviewImage] = useState(null);
 
   const {
@@ -54,13 +54,12 @@ const RegisterPage = () => {
         });
         setUserCreating(false);
         navigate(from);
+        reset();
       })
       .catch((error) => {
         setUserCreating(false);
         toast.error("Some went wrong. Please try again!");
       });
-
-    reset();
   };
 
   // handle preview image

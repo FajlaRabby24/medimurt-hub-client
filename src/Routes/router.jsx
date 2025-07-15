@@ -21,6 +21,7 @@ import NotFound from "../pages/NotFound";
 import CheckoutPage from "../pages/Payment/CheckoutPage";
 import InvoicePage from "../pages/Payment/InvoicePage";
 import ShopPage from "../pages/ShopPage";
+import UpdateProfile from "../pages/UpdateProfile";
 import AdminRoute from "./AdminRoute";
 import PrivateRoute from "./PrivateRoute";
 import SellerRouter from "./SellerRoute";
@@ -53,6 +54,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <InvoicePage />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "update-profile",
+        element: (
+          <PrivateRoute>
+            <UpdateProfile />
           </PrivateRoute>
         ),
       },
