@@ -3,6 +3,7 @@ import { FaShoppingCart } from "react-icons/fa";
 import { HiOutlineLanguage } from "react-icons/hi2";
 import { Link, NavLink, useNavigate } from "react-router";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 import defaultUser from "../../assets/images/defaultUser.png";
 import useAuth from "../../hooks/useAuth";
 import useCart from "../../hooks/useCart";
@@ -46,15 +47,27 @@ const Navbar = () => {
 
   // handle sign out
   const handleSignOut = () => {
-    signOutUser()
-      .then(() => {
-        toast.success("Sign out successfully!");
-        queryClient.clear();
-        navigate("/auth/join-us");
-      })
-      .catch((error) => {
-        toast.error("Some went wrong. Please try again!");
-      });
+    Swal.fire({
+      title: "Are you sure?",
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "No",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        signOutUser()
+          .then(() => {
+            toast.success("Sign out successfully!");
+            queryClient.clear();
+            navigate("/auth/join-us");
+          })
+          .catch((error) => {
+            toast.error("Some went wrong. Please try again!");
+          });
+      }
+    });
   };
 
   return (
@@ -142,17 +155,17 @@ const Navbar = () => {
                 className="dropdown-content menu bg-base-100 space-y-2 w-max rounded-box z-1  shadow-sm"
               >
                 <li>
-                  <Link to={"/update-profile"} className="btn btn-warning ">
+                  <Link to={"/update-profile"} className="btn  btn-primary">
                     Update Profile
                   </Link>
                 </li>
                 <li className="w">
-                  <Link to={"/dashboard"} className="btn btn-warning ">
+                  <Link to={"/dashboard"} className="btn btn-primary ">
                     Dashboard
                   </Link>
                 </li>
                 <li>
-                  <button onClick={handleSignOut} className="btn btn-warning">
+                  <button onClick={handleSignOut} className="btn btn-primary">
                     Log Out
                   </button>
                 </li>
