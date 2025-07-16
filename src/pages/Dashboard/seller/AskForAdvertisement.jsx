@@ -195,7 +195,7 @@ const AskForAdvertisement = () => {
               <button
                 type="submit"
                 disabled={uploading}
-                className="btn btn-primary w-full sm:w-auto"
+                className="btn btn-primary  "
               >
                 {uploading ? (
                   <span className="loading loading-spinner loading-md"></span>
@@ -205,7 +205,7 @@ const AskForAdvertisement = () => {
               </button>
               <button
                 type="button"
-                className="btn w-full sm:w-auto"
+                className="btn "
                 onClick={() => {
                   setShowModal(false);
                   reset();

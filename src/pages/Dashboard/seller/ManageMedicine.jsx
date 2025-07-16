@@ -253,7 +253,7 @@ const ManageMedicine = () => {
               </button>
               <button
                 type="button"
-                className="btn w-full sm:w-auto"
+                className="btn"
                 onClick={() => {
                   setShowModal(false);
                   reset();
