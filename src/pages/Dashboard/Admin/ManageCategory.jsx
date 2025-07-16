@@ -234,7 +234,7 @@ const ManageCategorys = () => {
 
       {/* Modal */}
       {showModal && (
-        <dialog open className="modal modal-bottom sm:modal-middle">
+        <dialog open className="modal modal-middle">
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="modal-box space-y-4"

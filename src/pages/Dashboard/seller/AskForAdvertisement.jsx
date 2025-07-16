@@ -128,7 +128,7 @@ const AskForAdvertisement = () => {
       </div>
       {/* Add Modal */}
       {showModal && (
-        <dialog open className="modal modal-bottom sm:modal-middle">
+        <dialog open className="modal modal-middle">
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="modal-box space-y-4 max-w-full sm:max-w-xl"
@@ -320,7 +320,7 @@ const AskForAdvertisement = () => {
 
           {/* View Modal */}
           {showViewModal && selectedAd && (
-            <dialog open className="modal modal-middle sm:modal-middle">
+            <dialog open className="modal modal-middle">
               <div className="modal-box max-w-xl">
                 <h3 className="font-bold text-xl mb-4">Advertisement Info</h3>
                 <img
