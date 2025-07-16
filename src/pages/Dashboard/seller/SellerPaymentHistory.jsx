@@ -24,7 +24,6 @@ const SellerPaymentHistory = () => {
     staleTime: 1000 * 60 * 5,
   });
 
-  console.log(data);
   const payments = data?.data || [];
   const totalPages = data?.totalPages || 0;
 

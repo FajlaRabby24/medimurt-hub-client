@@ -54,7 +54,6 @@ const Shop = () => {
     keepPreviousData: true,
     staleTime: 1000 * 60 * 5,
   });
-  console.log(debouncedQuery);
 
   const medicines = data?.data || [];
   const totalPages = data?.totalPages || 0;

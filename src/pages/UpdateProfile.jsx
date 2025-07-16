@@ -29,7 +29,6 @@ const UpdateProfile = () => {
       const imageUrl = await imageUpload(image);
       await updateUserProfile({ displayName: name, photoURL: imageUrl })
         .then(async () => {
-          console.log("update profile successfully");
           await axiosSecure.patch("/api/users/update-profile", {
             name,
             imageUrl,
@@ -42,7 +41,6 @@ const UpdateProfile = () => {
           toast.error("Something went wrong! Please try again later!");
         });
     } catch (error) {
-      console.log({ error });
       toast.error("Something went wrong! Please try again later!");
     }
   };

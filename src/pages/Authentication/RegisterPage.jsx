@@ -43,7 +43,6 @@ const RegisterPage = () => {
         };
 
         const userRes = await axiosPublic.post("/api/users", newUser);
-        console.log(userRes);
         if (userRes?.data.insertedId) {
           toast.success(userRes?.data.message);
         }

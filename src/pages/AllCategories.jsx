@@ -22,7 +22,6 @@ const AllCategories = () => {
   if (isFetching || isLoading) {
     return <LoadingSpiner />;
   }
-  console.log(categories);
 
   return (
     <Container>

@@ -19,7 +19,6 @@ const useUserRole = () => {
     },
     staleTime: Infinity,
   });
-  console.log(role);
   return { role, roleLoading: authLoading || roleLoading, refetch };
 };
 

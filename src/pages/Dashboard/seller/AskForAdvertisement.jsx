@@ -42,7 +42,6 @@ const AskForAdvertisement = () => {
     staleTime: 1000 * 60 * 5,
   });
 
-  console.log(data);
   const advertisements = data?.data || [];
   const totalPages = data?.totalPages || 0;
 

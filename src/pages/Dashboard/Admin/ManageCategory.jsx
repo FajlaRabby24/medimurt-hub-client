@@ -44,7 +44,6 @@ const ManageCategorys = () => {
     staleTime: 1000 * 60 * 5,
   });
 
-  console.log(data);
   const categories = data?.data || [];
   const totalPages = data?.totalPages || 0;
 
@@ -105,7 +104,6 @@ const ManageCategorys = () => {
       category_image: imageUrl,
       created_by: user.email,
     };
-    console.log(newCategory);
     categoryMutation.mutate(newCategory);
     setIsUploading(false);
   };

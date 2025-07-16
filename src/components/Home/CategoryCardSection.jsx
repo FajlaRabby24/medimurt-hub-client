@@ -23,7 +23,6 @@ const CategoryCardSection = () => {
   if (isFetching || isLoading) {
     return <LoadingSpiner />;
   }
-  console.log(categories);
 
   return (
     <Container>

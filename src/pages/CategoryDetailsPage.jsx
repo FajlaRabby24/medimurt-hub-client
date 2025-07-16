@@ -35,7 +35,6 @@ const CategoryDetailsPage = () => {
     staleTime: 1000 * 60 * 5,
   });
 
-  console.log(data);
   const medicines = data?.data || [];
   const totalPages = data?.totalPages || 0;
 
@@ -80,7 +79,6 @@ const CategoryDetailsPage = () => {
 
     const exist = cart.find((item) => item.medicine_id === medicine._id);
     if (exist) {
-      console.log(exist);
       updateQuantityMutation.mutate({
         _id: exist._id,
         quantity: exist.quantity + 1,
@@ -89,7 +87,6 @@ const CategoryDetailsPage = () => {
           (exist.quantity + 1),
       });
     } else {
-      console.log(medicine);
       const cartInfo = {
         user_email: user?.email,
         medicine_id: medicine._id,

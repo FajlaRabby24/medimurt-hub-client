@@ -21,7 +21,6 @@ const LoginPage = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log("Login Data:", data);
 
     signInUser(data?.email, data?.password)
       .then(async (result) => {

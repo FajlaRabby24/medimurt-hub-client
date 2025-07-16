@@ -12,12 +12,10 @@ const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
   const { cart } = useCart();
-  console.log(cart);
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
   const { user } = useAuth();
   const { state } = useLocation();
-  console.log(state);
   const [errors, setErrors] = useState("");
   const [isPaymenting, setIsPaymenting] = useState(false);
 
@@ -53,7 +51,6 @@ const CheckoutForm = () => {
       }).then(async (result) => {
         if (result.isConfirmed) {
           setIsPaymenting(true);
-          console.log({ paymentMethod });
           // create payment intent
           const res = await axiosSecure.post("/create-payment-intent", {
             grandTotalInCents,
@@ -86,7 +83,6 @@ const CheckoutForm = () => {
                 }
               );
 
-              console.log(paymentRes);
               setIsPaymenting(false);
               queryClient.invalidateQueries(["allPayments"]);
               navigate("/payment/invoice", {

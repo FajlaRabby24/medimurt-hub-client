@@ -18,7 +18,6 @@ const ManagePayments = () => {
     staleTime: Infinity,
   });
 
-  console.log(payments);
 
   // Accept payment mutation
   const acceptPaymentMutation = useMutation({
@@ -51,7 +50,6 @@ const ManagePayments = () => {
 
   if (isLoading) return <LoadingSpinner />;
 
-  console.log(payments);
 
   return (
     <div className="p-4">

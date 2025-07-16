@@ -12,7 +12,6 @@ const ManageBannerAdvertise = () => {
 
   const [page, setPage] = useState(1);
   const limit = 5;
-  console.log(page);
 
   // Fetch all advertisements
   const { data, isLoading, isFetching } = useQuery({
@@ -26,8 +25,7 @@ const ManageBannerAdvertise = () => {
     keepPreviousData: true,
     staleTime: 1000 * 60 * 5,
   });
-
-  console.log(data);
+  
   const advertisedatments = data?.data || [];
   const totalPages = data?.totalPages || 0;
 

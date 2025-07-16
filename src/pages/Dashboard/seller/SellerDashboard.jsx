@@ -30,7 +30,6 @@ const SellterDashboard = () => {
     },
   });
 
-  console.log(summary);
   if (isLoading) return <LoadingSpiner />;
 
   const { totalRevenue = 0, totalPaid = 0, totalPending = 0 } = summary;
