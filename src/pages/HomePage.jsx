@@ -4,7 +4,7 @@ import CategoryCardSection from "../components/Home/CategoryCardSection";
 import CustomerReviews from "../components/Home/CustomerReivew";
 import DiscountMedicines from "../components/Home/DiscountMedicines";
 import HealthTipsArticles from "../components/Home/HelthTipsArticles";
-import TrackMedicine from "../components/Home/TrackMedicine";
+import MedicineDelivery from "../components/Home/MedicineDelivery";
 
 const HomePage = () => {
   return (
@@ -13,7 +13,7 @@ const HomePage = () => {
       <Banner />
       <CategoryCardSection />
       <DiscountMedicines />
-      <TrackMedicine />
+      <MedicineDelivery />
       <CustomerReviews />
       <HealthTipsArticles />
     </div>

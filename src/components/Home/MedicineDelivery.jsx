@@ -1,28 +1,28 @@
 import { Link } from "react-router";
-import medicineReminder from "../../assets/images/trackingMedicine.jpg";
+import medicineReminder from "../../assets/images/medicinesDelivery.jpg";
 import Container from "../common/Ui/Container";
 
-const TrackMedicine = () => {
+const MedicineDelivery = () => {
   return (
     <Container>
       <section className=" px-4 py-12 flex flex-col md:flex-row gap-8">
         {/* Left side: text content */}
         <div className=" space-y-6 flex-1">
           <h2 className="text-3xl md:text-4xl font-bold text-primary">
-            Track Your Medicines Easily
+            Fast & Reliable Medicine Delivery
           </h2>
           <p className="text-gray-600 text-lg">
-            Stay on top of your health with our smart medicine tracker. Set
-            reminders, track doses, and get notified — never miss a pill again!
+            Order your medicines online and get them delivered safely at your
+            doorstep — on time, every time.
           </p>
           <ul className="list-disc list-inside text-gray-700 space-y-1">
-            <li>Custom reminders for each medicine</li>
-            <li>Daily, weekly, or hourly tracking</li>
-            <li>Auto refill alerts for prescriptions</li>
+            <li>Doorstep delivery in 2–3 days</li>
+            <li>Cold-chain delivery for sensitive items</li>
+            <li>Order tracking & email notifications</li>
           </ul>
-          <Link to={"/track-medicine"}>
+          <Link to={"/shop"}>
             <button className="btn bg-gradient-to-r from-purple-500 to-cyan-500 text-white">
-              Start Tracking Now
+              Start Shopping
             </button>
           </Link>
         </div>
@@ -40,4 +40,4 @@ const TrackMedicine = () => {
   );
 };
 
-export default TrackMedicine;
+export default MedicineDelivery;

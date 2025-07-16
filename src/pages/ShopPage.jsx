@@ -32,7 +32,7 @@ const Shop = () => {
   // Debounce search input
   const debouncedSearch = useMemo(() => {
     return debounce((value) => {
-      setDebouncedQuery(value.trim());
+      setDebouncedQuery(value);
       setPage(1);
     }, 500);
   }, []);
