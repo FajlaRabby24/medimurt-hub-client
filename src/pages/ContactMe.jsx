@@ -44,14 +44,14 @@ const Contact = () => {
 
   return (
     <Container>
-      <section className="px-3 xl:px-0 overflow-hidden w-full">
+      <section className="px-3 xl:px-0 overflow-hidden w-full pb-20">
         <h2 className="text-4xl text-center font-semibold pb-10 pt-6">
           Contact Me
         </h2>
 
         <div className="grid md:grid-cols-2 gap-4">
           {/* Contact Information */}
-          <Reveal className="bg-gradient-to-br from-[#1e1b38] to-[#291e40] border border-[#5e4ca7] p-3 md:p-6 rounded-lg bg-base-100 shadow-md">
+          <Reveal className="bg-neutral  p-3 md:p-6 rounded-lg  shadow-md">
             <h3 className="text-xl text-white font-semibold mb-4">
               Contact Information
             </h3>
@@ -97,7 +97,7 @@ const Contact = () => {
           </Reveal>
 
           {/* Contact Form */}
-          <Reveal className="bg-gradient-to-br from-[#1e1b38] to-[#291e40] border border-[#5e4ca7] p-3 md:p-6 rounded-lg bg-base-100 shadow-md">
+          <Reveal className="bg-neutral p-3 md:p-6 rounded-lg shadow-md">
             <form
               ref={formRef}
               onSubmit={handleSubmit(onSubmit)}
@@ -181,7 +181,7 @@ const Contact = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="btn w-full btn-info"
+                className="btn w-full  hover:btn-base-300"
               >
                 {isSubmitting ? (
                   <span className="loading loading-spinner loading-md"></span>

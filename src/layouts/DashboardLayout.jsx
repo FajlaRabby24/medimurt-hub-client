@@ -1,5 +1,8 @@
-import { FaBullhorn, FaHome, FaPills, FaUsersCog } from "react-icons/fa";
-import { MdOutlineCampaign } from "react-icons/md";
+import { FaHome, FaMoneyBillWave, FaPills } from "react-icons/fa";
+import { HiOutlineUserGroup } from "react-icons/hi";
+import { MdCampaign, MdCategory, MdOutlinePayment } from "react-icons/md";
+import { RiAdvertisementLine } from "react-icons/ri";
+import { TbReportAnalytics } from "react-icons/tb";
 import { NavLink, Outlet } from "react-router";
 import Logo from "../components/common/logo/Logo";
 import useUserRole from "../hooks/useUserRole";
@@ -50,6 +53,7 @@ const DashboardLayout = () => {
           {/* Sidebar content here */}
           <Logo></Logo>
           <div className="space-y-2">
+            {/* Common Dashboard Link */}
             <li className="mt-7">
               <NavLink
                 to="/dashboard"
@@ -63,7 +67,7 @@ const DashboardLayout = () => {
               </NavLink>
             </li>
 
-            {/* admin routes  */}
+            {/* Admin Routes */}
             {role === "admin" && !roleLoading && (
               <>
                 <li>
@@ -74,11 +78,11 @@ const DashboardLayout = () => {
                       `text-lg font-semibold ${isActive ? "active" : ""}`
                     }
                   >
-                    <MdOutlineCampaign
+                    <RiAdvertisementLine
                       size={25}
                       className="inline-block mr-1"
                     />
-                    Manage advertise
+                    Manage Advertise
                   </NavLink>
                 </li>
                 <li>
@@ -89,8 +93,11 @@ const DashboardLayout = () => {
                       `text-lg font-semibold ${isActive ? "active" : ""}`
                     }
                   >
-                    <FaUsersCog size={25} className="inline-block mr-1" />
-                    Manage user
+                    <HiOutlineUserGroup
+                      size={25}
+                      className="inline-block mr-1"
+                    />
+                    Manage User
                   </NavLink>
                 </li>
                 <li>
@@ -101,8 +108,8 @@ const DashboardLayout = () => {
                       `text-lg font-semibold ${isActive ? "active" : ""}`
                     }
                   >
-                    <FaUsersCog size={25} className="inline-block mr-1" />
-                    Manage category
+                    <MdCategory size={25} className="inline-block mr-1" />
+                    Manage Category
                   </NavLink>
                 </li>
                 <li>
@@ -113,8 +120,8 @@ const DashboardLayout = () => {
                       `text-lg font-semibold ${isActive ? "active" : ""}`
                     }
                   >
-                    <FaUsersCog size={25} className="inline-block mr-1" />
-                    Manage payments
+                    <MdOutlinePayment size={25} className="inline-block mr-1" />
+                    Manage Payments
                   </NavLink>
                 </li>
                 <li>
@@ -125,13 +132,17 @@ const DashboardLayout = () => {
                       `text-lg font-semibold ${isActive ? "active" : ""}`
                     }
                   >
-                    <FaUsersCog size={25} className="inline-block mr-1" />
-                    Sales report
+                    <TbReportAnalytics
+                      size={25}
+                      className="inline-block mr-1"
+                    />
+                    Sales Report
                   </NavLink>
                 </li>
               </>
             )}
-            {/* seller routes  */}
+
+            {/* Seller Routes */}
             {role === "seller" && !roleLoading && (
               <>
                 <li>
@@ -142,7 +153,7 @@ const DashboardLayout = () => {
                     }
                   >
                     <FaPills size={25} className="inline-block mr-1" />
-                    Manage medicine
+                    Manage Medicine
                   </NavLink>
                 </li>
                 <li>
@@ -152,7 +163,7 @@ const DashboardLayout = () => {
                       `text-lg font-semibold ${isActive ? "active" : ""}`
                     }
                   >
-                    <FaBullhorn size={25} className="inline-block mr-1" />
+                    <MdCampaign size={25} className="inline-block mr-1" />
                     Ask for Advertise
                   </NavLink>
                 </li>
@@ -163,27 +174,27 @@ const DashboardLayout = () => {
                       `text-lg font-semibold ${isActive ? "active" : ""}`
                     }
                   >
-                    <FaBullhorn size={25} className="inline-block mr-1" />
-                    Payment history
+                    <FaMoneyBillWave size={25} className="inline-block mr-1" />
+                    Payment History
                   </NavLink>
                 </li>
               </>
             )}
+
+            {/* User Routes */}
             {role === "user" && !roleLoading && (
-              <>
-                <li>
-                  <NavLink
-                    to="/dashboard/payment-history"
-                    end
-                    className={({ isActive }) =>
-                      `text-lg font-semibold ${isActive ? "active" : ""}`
-                    }
-                  >
-                    <FaUsersCog size={25} className="inline-block mr-1" />
-                    Payment history
-                  </NavLink>
-                </li>
-              </>
+              <li>
+                <NavLink
+                  to="/dashboard/payment-history"
+                  end
+                  className={({ isActive }) =>
+                    `text-lg font-semibold ${isActive ? "active" : ""}`
+                  }
+                >
+                  <MdOutlinePayment size={25} className="inline-block mr-1" />
+                  Payment History
+                </NavLink>
+              </li>
             )}
           </div>
         </ul>

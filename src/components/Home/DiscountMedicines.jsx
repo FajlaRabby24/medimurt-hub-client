@@ -71,14 +71,14 @@ const DiscountMedicines = () => {
                     <span className="line-through text-gray-400">
                       ${med.price}
                     </span>{" "}
-                    <span className="text-green-600">
+                    <span className="text-green-700">
                       $
                       {(med.price - (med.price * med.discount) / 100).toFixed(
                         2
                       )}
                     </span>
                   </p>
-                  <span className="badge badge-success mt-2">
+                  <span className="badge bg-green-400 mt-2">
                     {med.discount}% OFF
                   </span>
                 </div>

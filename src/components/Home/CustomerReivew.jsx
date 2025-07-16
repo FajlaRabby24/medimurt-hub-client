@@ -119,10 +119,10 @@ const CustomerReviews = () => {
           {/* Custom navigation buttons */}
         </Swiper>
         <div className="flex justify-center mt-6 gap-5">
-          <button className="prev-btn p-2 rounded-full bg-white shadow-md hover:bg-gray-200">
+          <button className="prev-btn p-2 rounded-full bg-white shadow-md hover:bg-neutral hover:text-white">
             <ArrowLeft size={18} />
           </button>
-          <button className="next-btn p-2 rounded-full bg-lime-500 text-white hover:bg-lime-600">
+          <button className="next-btn p-2 rounded-full bg-neutral text-white ">
             <ArrowRight size={18} />
           </button>
         </div>

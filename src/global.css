@@ -6,17 +6,18 @@ body {
 }
 
 @import "tailwindcss";
-@plugin 'daisyui';
-
-.bg {
-  @apply bg-red-500;
+@plugin "daisyui" {
+  themes: light --default, light;
 }
-.bg2 {
-  @apply bg-green-500;
+
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  --color-primary: #09090b;
 }
 
 .grid-box {
-  @apply p-3 rounded-lg  border border-[#5e4ca7];
+  @apply p-3 rounded-lg  border border-primary bg-base-200;
 }
 
 .grid-box-title {

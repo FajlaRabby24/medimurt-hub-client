@@ -21,7 +21,7 @@ const MedicineDelivery = () => {
             <li>Order tracking & email notifications</li>
           </ul>
           <Link to={"/shop"}>
-            <button className="btn bg-gradient-to-r from-purple-500 to-cyan-500 text-white">
+            <button className="btn btn-primary text-white">
               Start Shopping
             </button>
           </Link>
