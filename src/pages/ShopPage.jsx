@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import debounce from "lodash.debounce";
 import { ReTitle } from "re-title";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { FaCartPlus, FaEye } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router";
 import { toast } from "react-toastify";
@@ -19,26 +20,51 @@ const Shop = () => {
   const { cart } = useCart();
   const navigate = useNavigate();
   const location = useLocation();
-  const [selectedMedicine, setSelectedMedicine] = useState(null);
 
+  const [selectedMedicine, setSelectedMedicine] = useState(null);
+  const [query, setQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState("");
   const [page, setPage] = useState(1);
+  const [sort, setSort] = useState("");
+
   const limit = 5;
 
-  // Fetch paginated medicine data
+  // Debounce search input
+  const debouncedSearch = useMemo(() => {
+    return debounce((value) => {
+      setDebouncedQuery(value);
+      setPage(1);
+    }, 500);
+  }, []);
+
+  const handleSearchChange = (e) => {
+    setQuery(e.target.value);
+    debouncedSearch(e.target.value);
+  };
+
+  // Fetch paginated + searchable medicines
   const { data, isLoading, isFetching } = useQuery({
-    queryKey: ["allMedicines", page],
+    queryKey: ["allMedicines", page, debouncedQuery],
     queryFn: async () => {
       const res = await axiosPublic.get(
-        `/api/users/medicines?page=${page}&limit=${limit}`
+        `/api/users/medicines?page=${page}&limit=${limit}&search=${debouncedQuery}`
       );
       return res.data;
     },
     keepPreviousData: true,
     staleTime: 1000 * 60 * 5,
   });
-  console.log(data);
+  console.log(debouncedQuery);
+
   const medicines = data?.data || [];
   const totalPages = data?.totalPages || 0;
+
+  // Sorting
+  const sortedMedicines = [...medicines].sort((a, b) => {
+    if (sort === "low") return a.price - b.price;
+    if (sort === "high") return b.price - a.price;
+    return 0;
+  });
 
   // Add to cart mutation
   const addToCartMutation = useMutation({
@@ -53,6 +79,7 @@ const Shop = () => {
     onError: () => toast.error("Failed to add. Try again!"),
   });
 
+  // Update cart item quantity
   const updateQuantityMutation = useMutation({
     mutationFn: async ({ _id, quantity, total_price }) => {
       const res = await axiosSecure.patch(`/api/users/cart/${_id}`, {
@@ -68,7 +95,7 @@ const Shop = () => {
     onError: () => toast.error("Failed to update. Try again!"),
   });
 
-  // Handle Add to Cart
+  // handle add to cart
   const handleAddToCart = (medicine) => {
     if (!user) {
       return navigate("/auth/join-us", { state: { from: location.pathname } });
@@ -105,13 +132,57 @@ const Shop = () => {
   if (isLoading || isFetching) return <LoadingSpiner />;
 
   return (
-    <Container className={"pb-20"}>
+    <Container className="pb-20">
       <ReTitle title="Shop" />
       <div className="p-4">
         <h2 className="text-2xl sm:text-3xl font-bold text-center mb-6">
           Shop Medicines
         </h2>
 
+        <div className="flex items-center justify-between gap-3 mb-6">
+          {/* Search */}
+          <label className="input">
+            <svg
+              className="h-[1em] opacity-50"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+            >
+              <g
+                strokeLinejoin="round"
+                strokeLinecap="round"
+                strokeWidth="2.5"
+                fill="none"
+                stroke="currentColor"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.3-4.3"></path>
+              </g>
+            </svg>
+            <input
+              type="search"
+              value={query}
+              onChange={handleSearchChange}
+              placeholder="Search medicine..."
+              className="w-full"
+            />
+          </label>
+
+          {/* Sort */}
+          <div className="flex items-center gap-3">
+            <select
+              name="sort"
+              onChange={(e) => setSort(e.target.value)}
+              value={sort}
+              className="select "
+            >
+              <option value="">Sort by price</option>
+              <option value="low">Lowest first</option>
+              <option value="high">Highest first</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Table */}
         <div className="overflow-x-auto">
           <table className="table table-zebra w-full min-w-[900px]">
             <thead>
@@ -128,7 +199,7 @@ const Shop = () => {
               </tr>
             </thead>
             <tbody>
-              {medicines?.map((med) => (
+              {sortedMedicines.map((med) => (
                 <tr key={med._id}>
                   <td>
                     <img
@@ -165,12 +236,12 @@ const Shop = () => {
         </div>
 
         {/* Pagination */}
-        {limit < data?.totalCount && (
-          <div className="flex justify-center mt-4">
+        {totalPages > 1 && (
+          <div className="flex justify-center mt-6">
             <div className="join">
               <button
                 className="join-item btn"
-                onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+                onClick={() => setPage((p) => Math.max(p - 1, 1))}
                 disabled={page === 1}
               >
                 Prev
@@ -190,9 +261,7 @@ const Shop = () => {
 
               <button
                 className="join-item btn"
-                onClick={() =>
-                  setPage((prev) => Math.min(prev + 1, totalPages))
-                }
+                onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
                 disabled={page === totalPages}
               >
                 Next

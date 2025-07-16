@@ -1,4 +1,3 @@
-import { Link } from "react-router";
 import immunityImg from "../../assets/images/boostImunity.jpg";
 import diabetisImg from "../../assets/images/diabetis.jpg";
 import heartHelthImg from "../../assets/images/heartHealth.jpg";
@@ -11,27 +10,23 @@ const articles = [
     description:
       "Discover effective ways to strengthen your immune system with simple lifestyle changes and natural remedies.",
     image: immunityImg,
-    slug: "boost-immunity-naturally",
   },
   {
     title: "Managing Diabetes: A Comprehensive Guide",
     description:
       "Learn how to control your blood sugar levels, plan your meals, and live well with diabetes.",
-    slug: "managing-diabetes",
     image: diabetisImg,
   },
   {
     title: "How to Reduce Stress and Improve Mental Health",
     description:
       "Explore techniques such as meditation, exercise, and good sleep habits to reduce stress and anxiety.",
-    slug: "mental-health-stress-relief",
     image: mentalHelthImg,
   },
   {
     title: "Understanding Heart Health and Preventing Disease",
     description:
       "Get insights into maintaining a healthy heart through diet, exercise, and regular checkups.",
-    slug: "heart-health-tips",
     image: heartHelthImg,
   },
 ];
@@ -66,12 +61,6 @@ const HealthTipsArticles = () => {
                 <p className="text-sm text-gray-600 mb-4">
                   {article.description}
                 </p>
-                <Link
-                  to={`/articles/${article.slug}`}
-                  className="inline-block text-lime-600 font-medium hover:underline"
-                >
-                  Read more →
-                </Link>
               </div>
             </div>
           ))}
