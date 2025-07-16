@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router";
 import AuthLayout from "../layouts/AuthLayout";
 import DashboardLayout from "../layouts/DashboardLayout";
 import MainLayout from "../layouts/MainLayout";
+import AboutMe from "../pages/AboutMe";
 import AllCategories from "../pages/AllCategories";
 import LoginPage from "../pages/Authentication/LoginPage";
 import RegisterPage from "../pages/Authentication/RegisterPage";
@@ -42,6 +43,22 @@ export const router = createBrowserRouter([
         Component: ShopPage,
       },
       {
+        path: "about-me",
+        Component: AboutMe,
+      },
+      {
+        path: "categories/:category",
+        Component: CategoryDetailsPage,
+      },
+      {
+        path: "all-categories",
+        Component: AllCategories,
+      },
+      {
+        path: "forbidden",
+        Component: Forbidden,
+      },
+      {
         path: "payment/checkout",
         element: (
           <PrivateRoute>
@@ -73,18 +90,6 @@ export const router = createBrowserRouter([
             <CartPage />
           </PrivateRoute>
         ),
-      },
-      {
-        path: "categories/:category",
-        Component: CategoryDetailsPage,
-      },
-      {
-        path: "all-categories",
-        Component: AllCategories,
-      },
-      {
-        path: "forbidden",
-        Component: Forbidden,
       },
     ],
   },

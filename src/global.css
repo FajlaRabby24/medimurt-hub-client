@@ -15,6 +15,14 @@ body {
   @apply bg-green-500;
 }
 
+.grid-box {
+  @apply p-3 rounded-lg  border border-[#5e4ca7];
+}
+
+.grid-box-title {
+  @apply text-xl font-semibold mb-2;
+}
+
 .radius {
   @apply rounded-md;
 }

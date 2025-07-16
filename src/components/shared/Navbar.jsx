@@ -31,6 +31,11 @@ const Navbar = () => {
           All categories
         </NavLink>
       </li>
+      <li>
+        <NavLink className={"font-semibold"} to={"/about-me"}>
+          About me
+        </NavLink>
+      </li>
     </>
   );
 
