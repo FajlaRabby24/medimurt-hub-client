@@ -1,7 +1,7 @@
 import emailjs from "@emailjs/browser";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { FaGithub, FaLinkedin, FaPhoneAlt, FaWhatsapp } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaPhoneAlt } from "react-icons/fa";
 import { FaLocationDot, FaX } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
 import { toast } from "react-toastify";
@@ -65,11 +65,7 @@ const Contact = () => {
                 <span className="font-normal">Dhaka, Bangladesh</span>
               </p>
               <p className="flex items-center gap-2 font-semibold">
-                <FaPhoneAlt size={20} /> Phone:{" "}
-                <span className="font-normal">+8801857796312</span>
-              </p>
-              <p className="flex items-center gap-2 font-semibold">
-                <FaWhatsapp size={20} /> Whatsapp:{" "}
+                <FaPhoneAlt size={20} /> Phone/Whatsapp:{" "}
                 <span className="font-normal">+8801307495864</span>
               </p>
 
