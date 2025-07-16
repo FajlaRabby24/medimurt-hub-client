@@ -1,10 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ReTitle } from "re-title";
-import { FaMinus, FaPlus, FaShoppingCart, FaTrash } from "react-icons/fa";
-import { Link, useNavigate } from "react-router";
+import { FaMinus, FaPlus, FaTrash } from "react-icons/fa";
+import { FaShop } from "react-icons/fa6";
+import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import Container from "../components/common/Ui/Container";
+import EmptyState from "../components/common/Ui/EmptyState";
 import useAuth from "../hooks/useAuth";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import useCart from "../hooks/useCart";
@@ -107,14 +109,14 @@ const CartPage = () => {
         <h2 className="text-2xl font-bold mb-6">My Cart</h2>
 
         {cart.length === 0 ? (
-          <div className="flex items-center justify-center flex-col gap-4">
-            <p className="text-lg text-center">Your cart is empty.</p>
-            <Link to={"/shop"}>
-              <button className="btn btn-primary  text-center">
-                <FaShoppingCart size={20} /> Go and Shop
-              </button>
-            </Link>
-          </div>
+          <EmptyState
+            className="p-10"
+            title="Your cart is empty."
+            description="Go to the shop page and add to your cart."
+            btnLink="/shop"
+            icon={<FaShop size={20} />}
+            btnText="Shop"
+          />
         ) : (
           <div>
             <div className="overflow-x-auto">

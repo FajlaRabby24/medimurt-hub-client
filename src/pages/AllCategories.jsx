@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router";
-import LoadingSpiner from "../components/common/Loading/LoadingSpiner";
 import Container from "../components/common/Ui/Container";
+import EmptyState from "../components/common/Ui/EmptyState";
 import useAxios from "../hooks/useAxios";
 
 const AllCategories = () => {
@@ -27,27 +27,40 @@ const AllCategories = () => {
   return (
     <Container>
       <section className="py-10 px-4">
-        <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-center">
-          Browse Categories
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {categories?.map((cat) => (
-            <Link to={`/categories/${cat.category_name}`} key={cat._id}>
-              <div className="bg-white rounded-lg shadow-md pb-3 cursor-pointer hover:shadow-lg transition">
-                <img
-                  src={cat.category_image}
-                  alt={cat.category_name}
-                  className="w-full h-32 object-cover rounded"
-                />
-                <h3 className="text-lg font-semibold mt-2 text-center">
-                  {cat.category_name}
-                </h3>
-                <p className="text-sm text-gray-600 text-center mt-1">
-                  {cat.total_medicines ? cat.total_medicines : "No"} Medicines
-                </p>
-              </div>
-            </Link>
-          ))}
+        {categories.length ? (
+          <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-center">
+            Browse Categories
+          </h2>
+        ) : undefined}
+        <div>
+          {categories.length ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {categories?.map((cat) => (
+                <Link to={`/categories/${cat.category_name}`} key={cat._id}>
+                  <div className="bg-white rounded-lg shadow-md pb-3 cursor-pointer hover:shadow-lg transition">
+                    <img
+                      src={cat.category_image}
+                      alt={cat.category_name}
+                      className="w-full h-32 object-cover rounded"
+                    />
+                    <h3 className="text-lg font-semibold mt-2 text-center">
+                      {cat.category_name}
+                    </h3>
+                    <p className="text-sm text-gray-600 text-center mt-1">
+                      {cat.total_medicines ? cat.total_medicines : "No"}{" "}
+                      Medicines
+                    </p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <EmptyState
+              className="pt-20"
+              title="There was no category!"
+              description="We are trying to add category as soon as possible!."
+            />
+          )}
         </div>
       </section>
     </Container>

@@ -6,6 +6,7 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import LoadingSpiner from "../../../components/common/Loading/LoadingSpiner";
+import EmptyState from "../../../components/common/Ui/EmptyState";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { convertToLocatTime } from "../../../utilities/convertToLocalTime";
@@ -135,89 +136,100 @@ const ManageCategorys = () => {
           Add Category
         </button>
       </div>
-
-      {/* Category Table */}
-      <div className="overflow-x-auto">
-        <table className="table table-zebra w-full min-w-[700px]">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Image</th>
-              <th>Category Name</th>
-              <th>Created</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {categories.map((cat, idx) => (
-              <tr key={cat._id}>
-                <td>{idx + 1}</td>
-                <td>
-                  <img
-                    src={cat.category_image}
-                    alt={cat.categoryName}
-                    className="w-16 h-16 rounded"
-                  />
-                </td>
-                <td>{cat.category_name}</td>
-                <td>{convertToLocatTime(cat.created_at)}</td>
-                <td>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => handleEdit(cat)}
-                      className="btn btn-sm btn-outline"
-                      title="Edit"
-                    >
-                      <FaEdit />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(cat._id)}
-                      className="btn btn-sm btn-error text-white"
-                      title="Delete"
-                    >
-                      <FaTrash />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      {/* Pagination */}
-      {limit < data?.totalCount && (
-        <div className="flex justify-center mt-4">
-          <div className="join">
-            <button
-              className="join-item btn"
-              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-              disabled={page === 1}
-            >
-              Prev
-            </button>
-
-            {[...Array(totalPages).keys()].map((num) => (
-              <button
-                key={num}
-                className={`join-item btn ${
-                  page === num + 1 ? "btn-primary" : ""
-                }`}
-                onClick={() => setPage(num + 1)}
-              >
-                {num + 1}
-              </button>
-            ))}
-
-            <button
-              className="join-item btn"
-              onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
-              disabled={page === totalPages}
-            >
-              Next
-            </button>
+      {categories.length ? (
+        <div>
+          {" "}
+          {/* Category Table */}
+          <div className="overflow-x-auto">
+            <table className="table table-zebra w-full min-w-[700px]">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Image</th>
+                  <th>Category Name</th>
+                  <th>Created</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {categories.map((cat, idx) => (
+                  <tr key={cat._id}>
+                    <td>{idx + 1}</td>
+                    <td>
+                      <img
+                        src={cat.category_image}
+                        alt={cat.categoryName}
+                        className="w-16 h-16 rounded"
+                      />
+                    </td>
+                    <td>{cat.category_name}</td>
+                    <td>{convertToLocatTime(cat.created_at)}</td>
+                    <td>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => handleEdit(cat)}
+                          className="btn btn-sm btn-outline"
+                          title="Edit"
+                        >
+                          <FaEdit />
+                        </button>
+                        <button
+                          onClick={() => handleDelete(cat._id)}
+                          className="btn btn-sm btn-error text-white"
+                          title="Delete"
+                        >
+                          <FaTrash />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
+          {/* Pagination */}
+          {limit < data?.totalCount && (
+            <div className="flex justify-center mt-4">
+              <div className="join">
+                <button
+                  className="join-item btn"
+                  onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+                  disabled={page === 1}
+                >
+                  Prev
+                </button>
+
+                {[...Array(totalPages).keys()].map((num) => (
+                  <button
+                    key={num}
+                    className={`join-item btn ${
+                      page === num + 1 ? "btn-primary" : ""
+                    }`}
+                    onClick={() => setPage(num + 1)}
+                  >
+                    {num + 1}
+                  </button>
+                ))}
+
+                <button
+                  className="join-item btn"
+                  onClick={() =>
+                    setPage((prev) => Math.min(prev + 1, totalPages))
+                  }
+                  disabled={page === totalPages}
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+          )}
         </div>
+      ) : (
+        <EmptyState
+          className="p-20"
+          title="There was no category!"
+          description="You can add category by clicking Add category button."
+        />
       )}
 
       {/* Modal */}

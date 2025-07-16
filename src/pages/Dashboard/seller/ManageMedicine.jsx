@@ -6,6 +6,7 @@ import { FaEye, FaTrashAlt } from "react-icons/fa";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import LoadingSpiner from "../../../components/common/Loading/LoadingSpiner";
+import EmptyState from "../../../components/common/Ui/EmptyState";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { imageUpload } from "../../../utilities/imageUpload";
@@ -118,7 +119,7 @@ const ManageMedicine = () => {
   if (isLoading || isFetching) return <LoadingSpiner />;
 
   return (
-    <div className="p-4 sm:p-6 w-full">
+    <div className="p-4 sm:p-6 max-w-7xl">
       <ReTitle title="Dashboard | Manage medicine" />
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
         <h2 className="text-xl sm:text-2xl font-bold">Manage Medicines</h2>
@@ -132,98 +133,6 @@ const ManageMedicine = () => {
           Add Medicine
         </button>
       </div>
-
-      <div className="overflow-x-auto">
-        <table className="table table-zebra w-full min-w-[800px]">
-          <thead>
-            <tr>
-              <th>Image</th>
-              <th>Name</th>
-              <th>Generic</th>
-              <th>Category</th>
-              <th>Company</th>
-              <th>Unit</th>
-              <th>Dosage form</th>
-              <th>Price</th>
-              <th>Discount</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {medicines.map((med) => (
-              <tr key={med._id}>
-                <td>
-                  <img
-                    src={med.image}
-                    alt={med.name}
-                    className="w-12 h-12 rounded"
-                  />
-                </td>
-                <td>{med.medicine_name}</td>
-                <td>{med.generic_name}</td>
-                <td>{med.category}</td>
-                <td>{med.company}</td>
-                <td>{med.unit}</td>
-                <td>{med.dosage_form}</td>
-                <td>${med.price}</td>
-                <td>{med.discount}%</td>
-                <td>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => setViewData(med)}
-                      className="btn btn-sm btn-outline"
-                    >
-                      <FaEye />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(med._id)}
-                      className="btn btn-sm btn-error text-white"
-                    >
-                      <FaTrashAlt />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      {/* Pagination */}
-      {limit < data?.totalCount && (
-        <div className="flex justify-center mt-4">
-          <div className="join">
-            <button
-              className="join-item btn"
-              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-              disabled={page === 1}
-            >
-              Prev
-            </button>
-
-            {[...Array(totalPages).keys()].map((num) => (
-              <button
-                key={num}
-                className={`join-item btn ${
-                  page === num + 1 ? "btn-primary" : ""
-                }`}
-                onClick={() => setPage(num + 1)}
-              >
-                {num + 1}
-              </button>
-            ))}
-
-            <button
-              className="join-item btn"
-              onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
-              disabled={page === totalPages}
-            >
-              Next
-            </button>
-          </div>
-        </div>
-      )}
-
       {/* Add */}
       {showModal && (
         <dialog open className="modal modal-middle">
@@ -358,50 +267,153 @@ const ManageMedicine = () => {
         </dialog>
       )}
 
-      {/* View Modal */}
-      {viewData && (
-        <dialog open className="modal modal-middle">
-          <div className="modal-box">
-            <h3 className="font-bold text-xl mb-2">Medicine Details</h3>
-            <img
-              src={viewData.image}
-              alt={viewData.name}
-              className="w-32 h-32 object-cover rounded mb-4"
-            />
-            <p>
-              <strong>Name:</strong> {viewData.medicine_name}
-            </p>
-            <p>
-              <strong>Generic Name:</strong> {viewData.generic_name}
-            </p>
-            <p>
-              <strong>Description:</strong> {viewData.description}
-            </p>
-            <p>
-              <strong>Category:</strong> {viewData.category}
-            </p>
-            <p>
-              <strong>Company:</strong> {viewData.company}
-            </p>
-            <p>
-              <strong>Unit:</strong> {viewData.unit}
-            </p>
-            <p>
-              <strong>Dosage form:</strong> {viewData.dosage_form}
-            </p>
-            <p>
-              <strong>Price:</strong> ${viewData.price}
-            </p>
-            <p>
-              <strong>Discount:</strong> {viewData.discount}%
-            </p>
-            <div className="modal-action">
-              <button onClick={() => setViewData(null)} className="btn">
-                Close
-              </button>
-            </div>
+      {medicines.length ? (
+        <div>
+          <div className="overflow-x-auto">
+            <table className="table table-zebra w-full min-w-[800px]">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Name</th>
+                  <th>Generic</th>
+                  <th>Category</th>
+                  <th>Company</th>
+                  <th>Unit</th>
+                  <th>Dosage form</th>
+                  <th>Price</th>
+                  <th>Discount</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {medicines.map((med) => (
+                  <tr key={med._id}>
+                    <td>
+                      <img
+                        src={med.image}
+                        alt={med.name}
+                        className="w-12 h-12 rounded"
+                      />
+                    </td>
+                    <td>{med.medicine_name}</td>
+                    <td>{med.generic_name}</td>
+                    <td>{med.category}</td>
+                    <td>{med.company}</td>
+                    <td>{med.unit}</td>
+                    <td>{med.dosage_form}</td>
+                    <td>${med.price}</td>
+                    <td>{med.discount}%</td>
+                    <td>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => setViewData(med)}
+                          className="btn btn-sm btn-outline"
+                        >
+                          <FaEye />
+                        </button>
+                        <button
+                          onClick={() => handleDelete(med._id)}
+                          className="btn btn-sm btn-error text-white"
+                        >
+                          <FaTrashAlt />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-        </dialog>
+
+          {/* Pagination */}
+          {limit < data?.totalCount && (
+            <div className="flex justify-center mt-4">
+              <div className="join">
+                <button
+                  className="join-item btn"
+                  onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+                  disabled={page === 1}
+                >
+                  Prev
+                </button>
+
+                {[...Array(totalPages).keys()].map((num) => (
+                  <button
+                    key={num}
+                    className={`join-item btn ${
+                      page === num + 1 ? "btn-primary" : ""
+                    }`}
+                    onClick={() => setPage(num + 1)}
+                  >
+                    {num + 1}
+                  </button>
+                ))}
+
+                <button
+                  className="join-item btn"
+                  onClick={() =>
+                    setPage((prev) => Math.min(prev + 1, totalPages))
+                  }
+                  disabled={page === totalPages}
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* View Modal */}
+          {viewData && (
+            <dialog open className="modal modal-middle">
+              <div className="modal-box">
+                <h3 className="font-bold text-xl mb-2">Medicine Details</h3>
+                <img
+                  src={viewData.image}
+                  alt={viewData.name}
+                  className="w-32 h-32 object-cover rounded mb-4"
+                />
+                <p>
+                  <strong>Name:</strong> {viewData.medicine_name}
+                </p>
+                <p>
+                  <strong>Generic Name:</strong> {viewData.generic_name}
+                </p>
+                <p>
+                  <strong>Description:</strong> {viewData.description}
+                </p>
+                <p>
+                  <strong>Category:</strong> {viewData.category}
+                </p>
+                <p>
+                  <strong>Company:</strong> {viewData.company}
+                </p>
+                <p>
+                  <strong>Unit:</strong> {viewData.unit}
+                </p>
+                <p>
+                  <strong>Dosage form:</strong> {viewData.dosage_form}
+                </p>
+                <p>
+                  <strong>Price:</strong> ${viewData.price}
+                </p>
+                <p>
+                  <strong>Discount:</strong> {viewData.discount}%
+                </p>
+                <div className="modal-action">
+                  <button onClick={() => setViewData(null)} className="btn">
+                    Close
+                  </button>
+                </div>
+              </div>
+            </dialog>
+          )}
+        </div>
+      ) : (
+        <EmptyState
+          className="p-20"
+          title="There was no medicines here!"
+          description="You can add medicine by clicking Add Medicine button."
+        />
       )}
     </div>
   );

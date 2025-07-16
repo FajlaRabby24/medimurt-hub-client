@@ -4,6 +4,7 @@ import { ReTitle } from "re-title";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import LoadingSpiner from "../../../components/common/Loading/LoadingSpiner";
+import EmptyState from "../../../components/common/Ui/EmptyState";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const ManageBannerAdvertise = () => {
@@ -25,7 +26,7 @@ const ManageBannerAdvertise = () => {
     keepPreviousData: true,
     staleTime: 1000 * 60 * 5,
   });
-  
+
   const advertisedatments = data?.data || [];
   const totalPages = data?.totalPages || 0;
 
@@ -58,100 +59,116 @@ const ManageBannerAdvertise = () => {
       <h2 className="text-xl sm:text-2xl font-bold mb-4">
         Manage Banner Advertisements
       </h2>
-
-      <div className="overflow-x-auto">
-        <table className="table table-zebra w-full min-w-[800px]">
-          <thead>
-            <tr>
-              <th>Image</th>
-              <th>Medicine Name</th>
-              <th>Description</th>
-              <th>Seller Email</th>
-              <th>Status</th>
-              <th>Slider Toggle</th>
-            </tr>
-          </thead>
-          <tbody>
-            {advertisedatments?.map((ad) => (
-              <tr key={ad._id}>
-                <td>
-                  <img
-                    src={ad.image_url}
-                    alt="Medicine"
-                    className="w-16 h-16 object-cover rounded"
-                  />
-                </td>
-                <td>{ad.medicine_name}</td>
-                <td className="max-w-[200px] break-words">{ad.description}</td>
-                <td>{ad.created_by}</td>
-                <td>
-                  <span
-                    className={`px-2 py-1 rounded text-xs font-semibold ${
-                      ad.status === "active"
-                        ? "bg-green-200 text-green-700"
-                        : "bg-yellow-200 text-yellow-700"
-                    }`}
-                  >
-                    {ad.status}
-                  </span>
-                </td>
-                <td>
-                  <Switch
-                    checked={ad.status === "active"}
-                    onChange={() => handleToggle(ad)}
-                    className={`${
-                      ad.status === "active" ? "bg-green-600" : "bg-gray-400"
-                    } relative inline-flex h-[24px] w-[44px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out`}
-                  >
-                    <span className="sr-only">Toggle banner</span>
-                    <span
-                      aria-hidden="true"
-                      className={`${
-                        ad.status === "active"
-                          ? "translate-x-5"
-                          : "translate-x-0"
-                      } pointer-events-none inline-block h-[20px] w-[20px] transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out`}
-                    />
-                  </Switch>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      {/* Pagination */}
-      {limit < data?.totalCount && (
-        <div className="flex justify-center mt-4">
-          <div className="join">
-            <button
-              className="join-item btn"
-              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-              disabled={page === 1}
-            >
-              Prev
-            </button>
-
-            {[...Array(totalPages).keys()].map((num) => (
-              <button
-                key={num}
-                className={`join-item btn ${
-                  page === num + 1 ? "btn-primary" : ""
-                }`}
-                onClick={() => setPage(num + 1)}
-              >
-                {num + 1}
-              </button>
-            ))}
-
-            <button
-              className="join-item btn"
-              onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
-              disabled={page === totalPages}
-            >
-              Next
-            </button>
+      {advertisedatments.length ? (
+        <div>
+          {" "}
+          <div className="overflow-x-auto">
+            <table className="table table-zebra w-full min-w-[800px]">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Medicine Name</th>
+                  <th>Description</th>
+                  <th>Seller Email</th>
+                  <th>Status</th>
+                  <th>Slider Toggle</th>
+                </tr>
+              </thead>
+              <tbody>
+                {advertisedatments?.map((ad) => (
+                  <tr key={ad._id}>
+                    <td>
+                      <img
+                        src={ad.image_url}
+                        alt="Medicine"
+                        className="w-16 h-16 object-cover rounded"
+                      />
+                    </td>
+                    <td>{ad.medicine_name}</td>
+                    <td className="max-w-[200px] break-words">
+                      {ad.description}
+                    </td>
+                    <td>{ad.created_by}</td>
+                    <td>
+                      <span
+                        className={`px-2 py-1 rounded text-xs font-semibold ${
+                          ad.status === "active"
+                            ? "bg-green-200 text-green-700"
+                            : "bg-yellow-200 text-yellow-700"
+                        }`}
+                      >
+                        {ad.status}
+                      </span>
+                    </td>
+                    <td>
+                      <Switch
+                        checked={ad.status === "active"}
+                        onChange={() => handleToggle(ad)}
+                        className={`${
+                          ad.status === "active"
+                            ? "bg-green-600"
+                            : "bg-gray-400"
+                        } relative inline-flex h-[24px] w-[44px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out`}
+                      >
+                        <span className="sr-only">Toggle banner</span>
+                        <span
+                          aria-hidden="true"
+                          className={`${
+                            ad.status === "active"
+                              ? "translate-x-5"
+                              : "translate-x-0"
+                          } pointer-events-none inline-block h-[20px] w-[20px] transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out`}
+                        />
+                      </Switch>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
+          {/* Pagination */}
+          {limit < data?.totalCount && (
+            <div className="flex justify-center mt-4">
+              <div className="join">
+                <button
+                  className="join-item btn"
+                  onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+                  disabled={page === 1}
+                >
+                  Prev
+                </button>
+
+                {[...Array(totalPages).keys()].map((num) => (
+                  <button
+                    key={num}
+                    className={`join-item btn ${
+                      page === num + 1 ? "btn-primary" : ""
+                    }`}
+                    onClick={() => setPage(num + 1)}
+                  >
+                    {num + 1}
+                  </button>
+                ))}
+
+                <button
+                  className="join-item btn"
+                  onClick={() =>
+                    setPage((prev) => Math.min(prev + 1, totalPages))
+                  }
+                  disabled={page === totalPages}
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+          )}
         </div>
+      ) : (
+        <EmptyState
+          className="p-20"
+          title="There was no advertisement right now!"
+          description="No seller has added an ad yet.."
+        />
       )}
     </div>
   );

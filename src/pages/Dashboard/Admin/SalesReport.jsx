@@ -7,6 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import Swal from "sweetalert2";
 import * as XLSX from "xlsx";
 import LoadingSpiner from "../../../components/common/Loading/LoadingSpiner";
+import EmptyState from "../../../components/common/Ui/EmptyState";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const SalesReport = () => {
@@ -14,7 +15,11 @@ const SalesReport = () => {
   const [dateRange, setDateRange] = useState([null, null]);
   const [startDate, endDate] = dateRange;
 
-  const { data: salesData = [], isLoading } = useQuery({
+  const {
+    data: salesData = [],
+    isLoading,
+    isFetching,
+  } = useQuery({
     queryKey: ["salesData"],
     queryFn: async () => {
       const res = await axiosSecure.get("/api/admin/sales");
@@ -49,7 +54,7 @@ const SalesReport = () => {
       }
     });
   };
-  if (isLoading) return <LoadingSpiner />;
+  if (isLoading || isFetching) return <LoadingSpiner />;
 
   // Table columns
   const columns = [
@@ -100,32 +105,40 @@ const SalesReport = () => {
       <ReTitle title="Dashboard | Sales report" />
       <div className="flex flex-col md:flex-row justify-between items-center mb-4 gap-4">
         <h2 className="text-2xl font-bold">Sales Report</h2>
-
-        <div className="flex items-center flex-wrap justify-center gap-2">
-          <DatePicker
-            selectsRange={true}
-            startDate={startDate}
-            endDate={endDate}
-            onChange={(update) => setDateRange(update)}
-            isClearable={true}
-            placeholderText="Select date range"
-            className="input input-bordered w-fit"
-          />
-          <button onClick={handleDownloadExcel} className="btn btn-primary">
-            Download Excel
-          </button>
-        </div>
+        {salesData.length ? (
+          <div className="flex items-center flex-wrap justify-center gap-2">
+            <DatePicker
+              selectsRange={true}
+              startDate={startDate}
+              endDate={endDate}
+              onChange={(update) => setDateRange(update)}
+              isClearable={true}
+              placeholderText="Select date range"
+              className="input input-bordered w-fit"
+            />
+            <button onClick={handleDownloadExcel} className="btn btn-primary">
+              Download Excel
+            </button>
+          </div>
+        ) : undefined}
       </div>
 
-      <DataTable
-        columns={columns}
-        data={filteredData}
-        pagination
-        highlightOnHover
-        responsive
-        striped
-        persistTableHead
-      />
+      {salesData.length ? (
+        <DataTable
+          columns={columns}
+          data={filteredData}
+          pagination
+          highlightOnHover
+          responsive
+          striped
+          persistTableHead
+        />
+      ) : (
+        <EmptyState
+          className="p-20"
+          title="There was no sales data right now!"
+        />
+      )}
     </div>
   );
 };

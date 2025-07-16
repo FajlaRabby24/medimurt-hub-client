@@ -6,6 +6,7 @@ import { FaEye, FaTrash } from "react-icons/fa";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import LoadingSpiner from "../../../components/common/Loading/LoadingSpiner";
+import EmptyState from "../../../components/common/Ui/EmptyState";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { imageUpload } from "../../../utilities/imageUpload";
@@ -125,101 +126,6 @@ const AskForAdvertisement = () => {
           Add Advertise
         </button>
       </div>
-
-      {/* Table */}
-      <div className="w-full overflow-x-auto">
-        <table className="table table-zebra w-full min-w-[750px]">
-          <thead>
-            <tr>
-              <th>Image</th>
-              <th>Medicine name</th>
-              <th>Description</th>
-              <th>Created</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {advertisements.map((ad) => (
-              <tr key={ad._id}>
-                <td>
-                  <img
-                    src={ad.image_url}
-                    alt="ad"
-                    className="w-16 h-16 object-cover rounded"
-                  />
-                </td>
-                <td>{ad.medicine_name}</td>
-                <td className="max-w-[200px] break-words">{ad.description}</td>
-                <td>{new Date(ad.created_at).toLocaleString()}</td>
-                <td>
-                  <span
-                    className={`px-3 py-1 rounded-xl font-semibold text-xs sm:text-sm ${
-                      ad.status === "pending"
-                        ? "bg-red-200 text-red-700"
-                        : "bg-green-200 text-green-700"
-                    }`}
-                  >
-                    {ad.status}
-                  </span>
-                </td>
-                <td>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => handleView(ad)}
-                      className="btn btn-sm btn-outline flex items-center gap-1"
-                    >
-                      <FaEye className="text-base" />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(ad._id)}
-                      className="btn btn-sm btn-error text-white flex items-center gap-1"
-                    >
-                      <FaTrash className="text-base" />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      {/* Pagination */}
-      {limit < data?.totalCount && (
-        <div className="flex justify-center mt-4">
-          <div className="join">
-            <button
-              className="join-item btn"
-              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-              disabled={page === 1}
-            >
-              Prev
-            </button>
-
-            {[...Array(totalPages).keys()].map((num) => (
-              <button
-                key={num}
-                className={`join-item btn ${
-                  page === num + 1 ? "btn-primary" : ""
-                }`}
-                onClick={() => setPage(num + 1)}
-              >
-                {num + 1}
-              </button>
-            ))}
-
-            <button
-              className="join-item btn"
-              onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
-              disabled={page === totalPages}
-            >
-              Next
-            </button>
-          </div>
-        </div>
-      )}
-
       {/* Add Modal */}
       {showModal && (
         <dialog open className="modal modal-bottom sm:modal-middle">
@@ -232,7 +138,9 @@ const AskForAdvertisement = () => {
               type="text"
               placeholder="Medicine Name"
               className="input input-bordered w-full"
-              {...register("name", { required: "Medicine name is required" })}
+              {...register("name", {
+                required: "Medicine name is required",
+              })}
             />
             {errors.name && (
               <p className="text-red-500 text-sm">{errors.name.message}</p>
@@ -310,52 +218,159 @@ const AskForAdvertisement = () => {
           </form>
         </dialog>
       )}
-
-      {/* View Modal */}
-      {showViewModal && selectedAd && (
-        <dialog open className="modal modal-middle sm:modal-middle">
-          <div className="modal-box max-w-xl">
-            <h3 className="font-bold text-xl mb-4">Advertisement Info</h3>
-            <img
-              src={selectedAd.image_url}
-              alt="ad"
-              className="w-full h-56 object-cover rounded mb-4"
-            />
-            <div className="space-y-1">
-              <p>
-                <strong>Medicine Name:</strong> {selectedAd.medicine_name}
-              </p>
-              <p>
-                <strong>Description:</strong> {selectedAd.description}
-              </p>
-              <p>
-                <strong>Status:</strong>{" "}
-                <span
-                  className={`inline-block px-3 py-1 rounded text-sm font-semibold ${
-                    selectedAd.status === "pending"
-                      ? "bg-red-200 text-red-700"
-                      : "bg-green-200 text-green-700"
-                  }`}
-                >
-                  {selectedAd.status}
-                </span>
-              </p>
-              <p>
-                <strong>Created:</strong>{" "}
-                {new Date(selectedAd.created_at).toLocaleString()}
-              </p>
-            </div>
-
-            <div className="modal-action">
-              <button
-                onClick={() => setShowViewModal(false)}
-                className="btn btn-outline"
-              >
-                Close
-              </button>
-            </div>
+      {advertisements.length ? (
+        <div>
+          {/* Table */}
+          <div className="w-full overflow-x-auto">
+            <table className="table table-zebra w-full min-w-[750px]">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Medicine name</th>
+                  <th>Description</th>
+                  <th>Created</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {advertisements.map((ad) => (
+                  <tr key={ad._id}>
+                    <td>
+                      <img
+                        src={ad.image_url}
+                        alt="ad"
+                        className="w-16 h-16 object-cover rounded"
+                      />
+                    </td>
+                    <td>{ad.medicine_name}</td>
+                    <td className="max-w-[200px] break-words">
+                      {ad.description}
+                    </td>
+                    <td>{new Date(ad.created_at).toLocaleString()}</td>
+                    <td>
+                      <span
+                        className={`px-3 py-1 rounded-xl font-semibold text-xs sm:text-sm ${
+                          ad.status === "pending"
+                            ? "bg-red-200 text-red-700"
+                            : "bg-green-200 text-green-700"
+                        }`}
+                      >
+                        {ad.status}
+                      </span>
+                    </td>
+                    <td>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => handleView(ad)}
+                          className="btn btn-sm btn-outline flex items-center gap-1"
+                        >
+                          <FaEye className="text-base" />
+                        </button>
+                        <button
+                          onClick={() => handleDelete(ad._id)}
+                          className="btn btn-sm btn-error text-white flex items-center gap-1"
+                        >
+                          <FaTrash className="text-base" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-        </dialog>
+
+          {/* Pagination */}
+          {limit < data?.totalCount && (
+            <div className="flex justify-center mt-4">
+              <div className="join">
+                <button
+                  className="join-item btn"
+                  onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+                  disabled={page === 1}
+                >
+                  Prev
+                </button>
+
+                {[...Array(totalPages).keys()].map((num) => (
+                  <button
+                    key={num}
+                    className={`join-item btn ${
+                      page === num + 1 ? "btn-primary" : ""
+                    }`}
+                    onClick={() => setPage(num + 1)}
+                  >
+                    {num + 1}
+                  </button>
+                ))}
+
+                <button
+                  className="join-item btn"
+                  onClick={() =>
+                    setPage((prev) => Math.min(prev + 1, totalPages))
+                  }
+                  disabled={page === totalPages}
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* View Modal */}
+          {showViewModal && selectedAd && (
+            <dialog open className="modal modal-middle sm:modal-middle">
+              <div className="modal-box max-w-xl">
+                <h3 className="font-bold text-xl mb-4">Advertisement Info</h3>
+                <img
+                  src={selectedAd.image_url}
+                  alt="ad"
+                  className="w-full h-56 object-cover rounded mb-4"
+                />
+                <div className="space-y-1">
+                  <p>
+                    <strong>Medicine Name:</strong> {selectedAd.medicine_name}
+                  </p>
+                  <p>
+                    <strong>Description:</strong> {selectedAd.description}
+                  </p>
+                  <p>
+                    <strong>Status:</strong>{" "}
+                    <span
+                      className={`inline-block px-3 py-1 rounded text-sm font-semibold ${
+                        selectedAd.status === "pending"
+                          ? "bg-red-200 text-red-700"
+                          : "bg-green-200 text-green-700"
+                      }`}
+                    >
+                      {selectedAd.status}
+                    </span>
+                  </p>
+                  <p>
+                    <strong>Created:</strong>{" "}
+                    {new Date(selectedAd.created_at).toLocaleString()}
+                  </p>
+                </div>
+
+                <div className="modal-action">
+                  <button
+                    onClick={() => setShowViewModal(false)}
+                    className="btn btn-outline"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </dialog>
+          )}
+        </div>
+      ) : (
+        <EmptyState
+          className="p-20"
+          title="There was no advertisement!"
+          description="You can add ads by clicking Add Advertise button."
+        />
       )}
     </div>
   );
