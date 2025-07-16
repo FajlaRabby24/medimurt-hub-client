@@ -59,8 +59,8 @@ const Navbar = () => {
       if (result.isConfirmed) {
         signOutUser()
           .then(() => {
-            toast.success("Sign out successfully!");
             queryClient.clear();
+            toast.success("Sign out successfully!");
             navigate("/auth/join-us");
           })
           .catch((error) => {
