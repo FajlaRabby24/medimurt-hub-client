@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router";
 import AuthLayout from "../layouts/AuthLayout";
 import DashboardLayout from "../layouts/DashboardLayout";
 import MainLayout from "../layouts/MainLayout";
+import AllCategories from "../pages/AllCategories";
 import LoginPage from "../pages/Authentication/LoginPage";
 import RegisterPage from "../pages/Authentication/RegisterPage";
 import CartPage from "../pages/CartPage";
@@ -76,6 +77,10 @@ export const router = createBrowserRouter([
       {
         path: "categories/:category",
         Component: CategoryDetailsPage,
+      },
+      {
+        path: "all-categories",
+        Component: AllCategories,
       },
       {
         path: "forbidden",

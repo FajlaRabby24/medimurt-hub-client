@@ -26,6 +26,11 @@ const Navbar = () => {
           Shop
         </NavLink>
       </li>
+      <li>
+        <NavLink className={"font-semibold"} to={"/all-categories"}>
+          All categories
+        </NavLink>
+      </li>
     </>
   );
 

@@ -1,10 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router";
-import useAxios from "../../hooks/useAxios";
-import LoadingSpiner from "../common/Loading/LoadingSpiner";
-import Container from "../common/Ui/Container";
+import Container from "../components/common/Ui/Container";
+import useAxios from "../hooks/useAxios";
 
-const CategoryCardSection = () => {
+const AllCategories = () => {
   const axiosPublic = useAxios();
 
   const {
@@ -32,7 +31,7 @@ const CategoryCardSection = () => {
           Browse Categories
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {categories?.slice(0, 8)?.map((cat) => (
+          {categories?.map((cat) => (
             <Link to={`/categories/${cat.category_name}`} key={cat._id}>
               <div className="bg-white rounded-lg shadow-md pb-3 cursor-pointer hover:shadow-lg transition">
                 <img
@@ -50,14 +49,9 @@ const CategoryCardSection = () => {
             </Link>
           ))}
         </div>
-        <div className="text-center py-12">
-          <Link to={"/all-categories"}>
-            <button className="btn btn-primary">All categories</button>
-          </Link>
-        </div>
       </section>
     </Container>
   );
 };
 
-export default CategoryCardSection;
+export default AllCategories;
