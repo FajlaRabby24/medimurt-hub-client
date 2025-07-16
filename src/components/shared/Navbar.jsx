@@ -36,6 +36,11 @@ const Navbar = () => {
           About me
         </NavLink>
       </li>
+      <li>
+        <NavLink className={"font-semibold"} to={"/contact"}>
+          Contact
+        </NavLink>
+      </li>
     </>
   );
 

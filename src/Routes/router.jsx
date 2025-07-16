@@ -8,6 +8,7 @@ import LoginPage from "../pages/Authentication/LoginPage";
 import RegisterPage from "../pages/Authentication/RegisterPage";
 import CartPage from "../pages/CartPage";
 import CategoryDetailsPage from "../pages/CategoryDetailsPage";
+import Contact from "../pages/ContactMe";
 import ManageBannerAdvertise from "../pages/Dashboard/Admin/ManageBannerAdvertise";
 import ManageCategory from "../pages/Dashboard/Admin/ManageCategory";
 import ManagePayments from "../pages/Dashboard/Admin/ManagePayments";
@@ -45,6 +46,10 @@ export const router = createBrowserRouter([
       {
         path: "about-me",
         Component: AboutMe,
+      },
+      {
+        path: "contact",
+        Component: Contact,
       },
       {
         path: "categories/:category",
