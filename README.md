@@ -2,7 +2,7 @@
 
 This is the **frontend** of a MERN stack project where multiple vendors can sell medicines online. Built with React, Tailwind CSS, Firebase, Stripe, React Hook Form, TanStack Query, and more.
 
-## 🔗 Live Site: [Visit Now](https://multi-vendor-medicine-e266c.web.app)
+## 🔗 Live Site: (https://multi-vendor-medicine-e266c.web.app)
 
 (Admin, Seller & User credential info provided below)
 
