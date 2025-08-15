@@ -21,7 +21,6 @@ const LoginPage = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-
     signInUser(data?.email, data?.password)
       .then(async (result) => {
         toast.success("Login successfull!");

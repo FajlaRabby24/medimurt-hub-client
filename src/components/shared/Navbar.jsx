@@ -107,7 +107,6 @@ const Navbar = () => {
         {/* navbar end  */}
         <div className="navbar-end md:gap-5">
           {/* Cart Icon */}
-          {/* {!roleLoading && role === "admin" && ( */}
           <Link to={"/cart"}>
             <button className="btn btn-ghost btn-circle">
               <div className="indicator">
@@ -173,7 +172,7 @@ const Navbar = () => {
             </div>
           ) : (
             <Link to={"/auth/join-us"}>
-              <button className="btn  ">Join Us</button>
+              <button className="btn btn-outline btn-neutral ">Join Us</button>
             </Link>
           )}
         </div>
