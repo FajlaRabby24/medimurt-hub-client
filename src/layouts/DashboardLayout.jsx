@@ -1,4 +1,4 @@
-import { FaHome, FaMoneyBillWave, FaPills } from "react-icons/fa";
+import { FaHome, FaMoneyBillWave, FaPills, FaUserCircle } from "react-icons/fa";
 import { HiOutlineUserGroup } from "react-icons/hi";
 import { MdCampaign, MdCategory, MdOutlinePayment } from "react-icons/md";
 import { RiAdvertisementLine } from "react-icons/ri";
@@ -49,155 +49,182 @@ const DashboardLayout = () => {
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
-        <ul className="menu bg-[#edf2fe] text-base-content min-h-full w-80 p-4">
-          {/* Sidebar content here */}
-          <Logo></Logo>
-          <div className="space-y-2">
-            {/* Common Dashboard Link */}
-            <li className="mt-7">
-              <NavLink
-                to="/dashboard"
-                end
-                className={({ isActive }) =>
-                  `text-lg font-semibold ${isActive ? "active" : ""}`
-                }
-              >
-                <FaHome size={25} className="inline-block mr-1" />
-                Dashboard
-              </NavLink>
-            </li>
+        <section className="bg-[#edf2fe] text-base-content min-h-full w-80 p-4 flex flex-col justify-between">
+          {/* Top Section */}
+          <div>
+            <Logo />
 
-            {/* Admin Routes */}
-            {role === "admin" && !roleLoading && (
-              <>
+            <ul className="menu mt-7 space-y-2">
+              {/* Generic Dashboard Link */}
+              <li>
+                <NavLink
+                  to="/dashboard"
+                  end
+                  className={({ isActive }) =>
+                    `text-lg font-semibold ${isActive ? "active" : ""}`
+                  }
+                >
+                  <FaHome size={25} className="inline-block mr-1" />
+                  Overview
+                </NavLink>
+              </li>
+
+              {/* Admin Routes */}
+              {role === "admin" && !roleLoading && (
+                <>
+                  <li>
+                    <NavLink
+                      to="/dashboard/manage-advertise"
+                      end
+                      className={({ isActive }) =>
+                        `text-lg font-semibold ${isActive ? "active" : ""}`
+                      }
+                    >
+                      <RiAdvertisementLine
+                        size={25}
+                        className="inline-block mr-1"
+                      />
+                      Manage Advertise
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/dashboard/manage-user"
+                      end
+                      className={({ isActive }) =>
+                        `text-lg font-semibold ${isActive ? "active" : ""}`
+                      }
+                    >
+                      <HiOutlineUserGroup
+                        size={25}
+                        className="inline-block mr-1"
+                      />
+                      Manage User
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/dashboard/manage-category"
+                      end
+                      className={({ isActive }) =>
+                        `text-lg font-semibold ${isActive ? "active" : ""}`
+                      }
+                    >
+                      <MdCategory size={25} className="inline-block mr-1" />
+                      Manage Category
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/dashboard/manage-payments"
+                      end
+                      className={({ isActive }) =>
+                        `text-lg font-semibold ${isActive ? "active" : ""}`
+                      }
+                    >
+                      <MdOutlinePayment
+                        size={25}
+                        className="inline-block mr-1"
+                      />
+                      Manage Payments
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/dashboard/sales-report"
+                      end
+                      className={({ isActive }) =>
+                        `text-lg font-semibold ${isActive ? "active" : ""}`
+                      }
+                    >
+                      <TbReportAnalytics
+                        size={25}
+                        className="inline-block mr-1"
+                      />
+                      Sales Report
+                    </NavLink>
+                  </li>
+                </>
+              )}
+
+              {/* Seller Routes */}
+              {role === "seller" && !roleLoading && (
+                <>
+                  <li>
+                    <NavLink
+                      to="/dashboard/manage-medicine"
+                      className={({ isActive }) =>
+                        `text-lg font-semibold ${isActive ? "active" : ""}`
+                      }
+                    >
+                      <FaPills size={25} className="inline-block mr-1" />
+                      Manage Medicine
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/dashboard/ask-for-advertise"
+                      className={({ isActive }) =>
+                        `text-lg font-semibold ${isActive ? "active" : ""}`
+                      }
+                    >
+                      <MdCampaign size={25} className="inline-block mr-1" />
+                      Ask for Advertise
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/dashboard/payment-history"
+                      className={({ isActive }) =>
+                        `text-lg font-semibold ${isActive ? "active" : ""}`
+                      }
+                    >
+                      <FaMoneyBillWave
+                        size={25}
+                        className="inline-block mr-1"
+                      />
+                      Payment History
+                    </NavLink>
+                  </li>
+                </>
+              )}
+
+              {/* User Routes */}
+              {role === "user" && !roleLoading && (
                 <li>
                   <NavLink
-                    to="/dashboard/manage-advertise"
-                    end
-                    className={({ isActive }) =>
-                      `text-lg font-semibold ${isActive ? "active" : ""}`
-                    }
-                  >
-                    <RiAdvertisementLine
-                      size={25}
-                      className="inline-block mr-1"
-                    />
-                    Manage Advertise
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/dashboard/manage-user"
-                    end
-                    className={({ isActive }) =>
-                      `text-lg font-semibold ${isActive ? "active" : ""}`
-                    }
-                  >
-                    <HiOutlineUserGroup
-                      size={25}
-                      className="inline-block mr-1"
-                    />
-                    Manage User
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/dashboard/manage-category"
-                    end
-                    className={({ isActive }) =>
-                      `text-lg font-semibold ${isActive ? "active" : ""}`
-                    }
-                  >
-                    <MdCategory size={25} className="inline-block mr-1" />
-                    Manage Category
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/dashboard/manage-payments"
+                    to="/dashboard/payment-history"
                     end
                     className={({ isActive }) =>
                       `text-lg font-semibold ${isActive ? "active" : ""}`
                     }
                   >
                     <MdOutlinePayment size={25} className="inline-block mr-1" />
-                    Manage Payments
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/dashboard/sales-report"
-                    end
-                    className={({ isActive }) =>
-                      `text-lg font-semibold ${isActive ? "active" : ""}`
-                    }
-                  >
-                    <TbReportAnalytics
-                      size={25}
-                      className="inline-block mr-1"
-                    />
-                    Sales Report
-                  </NavLink>
-                </li>
-              </>
-            )}
-
-            {/* Seller Routes */}
-            {role === "seller" && !roleLoading && (
-              <>
-                <li>
-                  <NavLink
-                    to="/dashboard/manage-medicine"
-                    className={({ isActive }) =>
-                      `text-lg font-semibold ${isActive ? "active" : ""}`
-                    }
-                  >
-                    <FaPills size={25} className="inline-block mr-1" />
-                    Manage Medicine
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/dashboard/ask-for-advertise"
-                    className={({ isActive }) =>
-                      `text-lg font-semibold ${isActive ? "active" : ""}`
-                    }
-                  >
-                    <MdCampaign size={25} className="inline-block mr-1" />
-                    Ask for Advertise
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/dashboard/payment-history"
-                    className={({ isActive }) =>
-                      `text-lg font-semibold ${isActive ? "active" : ""}`
-                    }
-                  >
-                    <FaMoneyBillWave size={25} className="inline-block mr-1" />
                     Payment History
                   </NavLink>
                 </li>
-              </>
-            )}
+              )}
+            </ul>
+          </div>
 
-            {/* User Routes */}
-            {role === "user" && !roleLoading && (
-              <li>
+          {/* Bottom Section */}
+          <div>
+            <ul className="menu space-y-2 w-full">
+              <li className="min-w-full">
                 <NavLink
-                  to="/dashboard/payment-history"
+                  to="/dashboard/profile"
                   end
                   className={({ isActive }) =>
                     `text-lg font-semibold ${isActive ? "active" : ""}`
                   }
                 >
-                  <MdOutlinePayment size={25} className="inline-block mr-1" />
-                  Payment History
+                  <FaUserCircle size={25} className="inline-block mr-1" />
+                  Profile
                 </NavLink>
               </li>
-            )}
+            </ul>
           </div>
-        </ul>
+        </section>
       </div>
     </div>
   );

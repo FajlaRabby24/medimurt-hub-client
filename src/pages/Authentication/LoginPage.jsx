@@ -1,4 +1,5 @@
 import { ReTitle } from "re-title";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router";
 import { toast } from "react-toastify";
@@ -17,8 +18,13 @@ const LoginPage = () => {
     register,
     handleSubmit,
     reset,
+    setFocus,
     formState: { errors },
   } = useForm();
+
+  useEffect(() => {
+    setFocus("email");
+  }, [setFocus]);
 
   const onSubmit = (data) => {
     signInUser(data?.email, data?.password)
@@ -51,6 +57,7 @@ const LoginPage = () => {
             <span className="label-text">Email</span>
           </label>
           <input
+            ref={emailRef}
             type="email"
             placeholder="Your Email"
             className="input input-bordered  w-full"

@@ -1,43 +1,13 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { FaShoppingCart } from "react-icons/fa";
-import { Link, NavLink, useNavigate } from "react-router";
-import { toast } from "react-toastify";
-import Swal from "sweetalert2";
+import { Link, NavLink } from "react-router";
 import defaultUser from "../../assets/images/defaultUser.png";
 import useAuth from "../../hooks/useAuth";
 import useCart from "../../hooks/useCart";
 import Logo from "../common/logo/Logo";
 
 const Navbar = () => {
-  const { user, signOutUser } = useAuth();
-  const queryClient = useQueryClient();
+  const { user } = useAuth();
   const { cart } = useCart();
-  const navigate = useNavigate();
-
-  // handle sign out
-  const handleSignOut = () => {
-    Swal.fire({
-      title: "Are you sure?",
-      icon: "info",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      cancelButtonText: "No",
-      confirmButtonText: "Yes",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        signOutUser()
-          .then(() => {
-            queryClient.clear();
-            toast.success("Sign out successfully!");
-            navigate("/auth/join-us");
-          })
-          .catch((error) => {
-            toast.error("Some went wrong. Please try again!");
-          });
-      }
-    });
-  };
 
   const links = (
     <>
@@ -68,26 +38,9 @@ const Navbar = () => {
       </li>
       {user && (
         <li>
-          <details>
-            <summary className="font-semibold">For you</summary>
-            <ul className="p-2 w-44">
-              <li>
-                <Link to={"/update-profile"} className="font-semibold">
-                  Update Profile
-                </Link>
-              </li>
-              <li className="w">
-                <Link to={"/dashboard"} className="font-semibold">
-                  Dashboard
-                </Link>
-              </li>
-              <li>
-                <button onClick={handleSignOut} className="font-semibold">
-                  Log Out
-                </button>
-              </li>
-            </ul>
-          </details>
+          <Link to={"/dashboard"} className="font-semibold">
+            Dashboard
+          </Link>
         </li>
       )}
     </>

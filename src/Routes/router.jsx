@@ -16,6 +16,7 @@ import ManageUsers from "../pages/Dashboard/Admin/ManageUser";
 import SalesReport from "../pages/Dashboard/Admin/SalesReport";
 import DashboardHome from "../pages/Dashboard/DashboardHome";
 import PaymentHistoryRoute from "../pages/Dashboard/PaymentHistoryRoute";
+import ProfilePage from "../pages/Dashboard/ProfilePage";
 import AskForAdvertisement from "../pages/Dashboard/seller/AskForAdvertisement";
 import ManageMedicine from "../pages/Dashboard/seller/ManageMedicine";
 import Forbidden from "../pages/Forbidden";
@@ -129,6 +130,10 @@ export const router = createBrowserRouter([
       {
         path: "payment-history",
         Component: PaymentHistoryRoute,
+      },
+      {
+        path: "profile",
+        Component: ProfilePage,
       },
       // admin routes
       {

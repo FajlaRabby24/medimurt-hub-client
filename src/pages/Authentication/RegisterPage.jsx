@@ -1,5 +1,5 @@
 import { ReTitle } from "re-title";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router";
 import { toast } from "react-toastify";
@@ -24,7 +24,12 @@ const RegisterPage = () => {
     handleSubmit,
     reset,
     formState: { errors },
+    setFocus,
   } = useForm();
+
+  useEffect(() => {
+    setFocus("name");
+  }, [setFocus]);
 
   const onSubmit = async (data) => {
     setUserCreating(true);
