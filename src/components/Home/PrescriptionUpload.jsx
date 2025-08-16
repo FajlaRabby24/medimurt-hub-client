@@ -1,8 +1,22 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { FaFilePrescription, FaUpload } from "react-icons/fa";
 
 const PrescriptionUpload = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
+
   const [fileName, setFileName] = useState("");
+
+  const onSubmit = (data) => {
+    console.log("Form Data:", data);
+    reset();
+    setFileName("");
+  };
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -24,8 +38,8 @@ const PrescriptionUpload = () => {
         </div>
 
         {/* Form Card */}
-        <div className="card bg-white shadow-md rounded-2xl p-8 ">
-          <form className="space-y-6">
+        <div className="card bg-white shadow-md rounded-2xl p-8">
+          <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
             {/* Name & Contact */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
@@ -36,8 +50,15 @@ const PrescriptionUpload = () => {
                   type="text"
                   placeholder="Enter your full name"
                   className="input input-bordered w-full"
-                  required
+                  {...register("fullName", {
+                    required: "Full name is required",
+                  })}
                 />
+                {errors.fullName && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.fullName.message}
+                  </p>
+                )}
               </div>
               <div>
                 <label className="label">
@@ -45,10 +66,21 @@ const PrescriptionUpload = () => {
                 </label>
                 <input
                   type="tel"
-                  placeholder="+880 1XXXXXXXXX"
+                  placeholder="01XXXXXXXXX"
                   className="input input-bordered w-full"
-                  required
+                  {...register("phone", {
+                    required: "Phone number is required",
+                    pattern: {
+                      value: /^(01[3-9]\d{8})$/,
+                      message: "Enter a valid Bangladeshi phone number",
+                    },
+                  })}
                 />
+                {errors.phone && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.phone.message}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -66,10 +98,12 @@ const PrescriptionUpload = () => {
                 <input
                   type="file"
                   accept="image/*,.pdf"
-                  onChange={handleFileChange}
-                  className="hidden"
                   id="fileUpload"
-                  required
+                  className="hidden"
+                  {...register("prescription", {
+                    required: "Prescription file is required",
+                  })}
+                  onChange={handleFileChange}
                 />
                 <label
                   htmlFor="fileUpload"
@@ -77,13 +111,18 @@ const PrescriptionUpload = () => {
                 >
                   <FaUpload className="text-3xl text-blue-600" />
                   <span className="text-gray-500">
-                    {fileName ? fileName : "Click to upload "}
+                    {fileName ? fileName : "Click to upload"}
                   </span>
                   <span className="text-xs text-gray-400">
                     (Only JPG, PNG, or PDF allowed)
                   </span>
                 </label>
               </label>
+              {errors.prescription && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.prescription.message}
+                </p>
+              )}
             </div>
 
             {/* Address */}
@@ -95,8 +134,15 @@ const PrescriptionUpload = () => {
                 className="textarea textarea-bordered w-full"
                 rows="3"
                 placeholder="Enter your delivery address"
-                required
+                {...register("address", {
+                  required: "Delivery address is required",
+                })}
               ></textarea>
+              {errors.address && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.address.message}
+                </p>
+              )}
             </div>
 
             {/* Submit Button */}
