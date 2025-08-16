@@ -1,6 +1,5 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { FaShoppingCart } from "react-icons/fa";
-import { HiOutlineLanguage } from "react-icons/hi2";
 import { Link, NavLink, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
@@ -14,6 +13,31 @@ const Navbar = () => {
   const queryClient = useQueryClient();
   const { cart } = useCart();
   const navigate = useNavigate();
+
+  // handle sign out
+  const handleSignOut = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "No",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        signOutUser()
+          .then(() => {
+            queryClient.clear();
+            toast.success("Sign out successfully!");
+            navigate("/auth/join-us");
+          })
+          .catch((error) => {
+            toast.error("Some went wrong. Please try again!");
+          });
+      }
+    });
+  };
 
   const links = (
     <>
@@ -42,33 +66,32 @@ const Navbar = () => {
           Contact
         </NavLink>
       </li>
+      {user && (
+        <li>
+          <details>
+            <summary className="font-semibold">For you</summary>
+            <ul className="p-2 w-44">
+              <li>
+                <Link to={"/update-profile"} className="font-semibold">
+                  Update Profile
+                </Link>
+              </li>
+              <li className="w">
+                <Link to={"/dashboard"} className="font-semibold">
+                  Dashboard
+                </Link>
+              </li>
+              <li>
+                <button onClick={handleSignOut} className="font-semibold">
+                  Log Out
+                </button>
+              </li>
+            </ul>
+          </details>
+        </li>
+      )}
     </>
   );
-
-  // handle sign out
-  const handleSignOut = () => {
-    Swal.fire({
-      title: "Are you sure?",
-      icon: "info",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      cancelButtonText: "No",
-      confirmButtonText: "Yes",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        signOutUser()
-          .then(() => {
-            queryClient.clear();
-            toast.success("Sign out successfully!");
-            navigate("/auth/join-us");
-          })
-          .catch((error) => {
-            toast.error("Some went wrong. Please try again!");
-          });
-      }
-    });
-  };
 
   return (
     <nav className="max-w-7xl px-1 xl:px-0 mx-auto ">
@@ -120,7 +143,7 @@ const Navbar = () => {
           {/* // )} */}
 
           {/* Language Dropdown */}
-          <div className="dropdown dropdown-end ">
+          {/* <div className="dropdown dropdown-end ">
             <label tabIndex={0} className="btn btn-ghost btn-sm">
               <HiOutlineLanguage size={25} />
             </label>
@@ -135,40 +158,18 @@ const Navbar = () => {
                 <a>বাংলা</a>
               </li>
             </ul>
-          </div>
+          </div> */}
 
           {/* Join Us Button */}
           {user ? (
-            <div className="dropdown dropdown-end  ml-5 ">
-              <div className="avatar" tabIndex={0}>
-                <div className="ring-primary ring-offset-base-100 w-9 rounded-full ring-2 ring-offset-2">
-                  <img
-                    src={user?.photoURL || defaultUser}
-                    alt="user profile image"
-                    className="cursor-pointer"
-                  />
-                </div>
+            <div className="avatar" tabIndex={0}>
+              <div className="ring-primary ring-offset-base-100 w-9 rounded-full ring-2 ring-offset-2">
+                <img
+                  src={user?.photoURL || defaultUser}
+                  alt="user profile image"
+                  className="cursor-pointer"
+                />
               </div>
-              <ul
-                tabIndex={0}
-                className="dropdown-content menu bg-base-100 space-y-2 w-max rounded-box z-1  shadow-sm"
-              >
-                <li>
-                  <Link to={"/update-profile"} className="btn  btn-primary">
-                    Update Profile
-                  </Link>
-                </li>
-                <li className="w">
-                  <Link to={"/dashboard"} className="btn btn-primary ">
-                    Dashboard
-                  </Link>
-                </li>
-                <li>
-                  <button onClick={handleSignOut} className="btn btn-primary">
-                    Log Out
-                  </button>
-                </li>
-              </ul>
             </div>
           ) : (
             <Link to={"/auth/join-us"}>

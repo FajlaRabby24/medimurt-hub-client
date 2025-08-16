@@ -71,7 +71,7 @@ const testimonials = [
 const CustomerReviews = () => {
   return (
     <Container>
-      <section className="bg-gray-100 py-16 px-4 radius text-center mb-36">
+      <section className="bg-gray-100 py-16 radius text-center mb-36">
         <h2 className="text-3xl font-bold text-gray-800 mb-4">
           What our customers are sayings
         </h2>

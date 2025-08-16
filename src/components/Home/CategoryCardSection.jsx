@@ -26,7 +26,7 @@ const CategoryCardSection = () => {
 
   return (
     <Container>
-      <section className="py-10 px-4">
+      <section className="py-10">
         <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-center">
           Browse Categories
         </h2>

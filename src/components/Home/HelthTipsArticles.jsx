@@ -34,7 +34,7 @@ const articles = [
 const HealthTipsArticles = () => {
   return (
     <Container>
-      <section className=" px-3 xl:px-0 py-16">
+      <section className="  py-16">
         <h2 className="text-3xl font-bold text-center text-primary mb-4">
           Health Tips & Articles
         </h2>

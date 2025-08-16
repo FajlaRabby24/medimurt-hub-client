@@ -5,7 +5,7 @@ import Container from "../common/Ui/Container";
 const MedicineDelivery = () => {
   return (
     <Container>
-      <section className=" px-4 py-12 flex flex-col md:flex-row gap-8">
+      <section className=" py-12 flex flex-col md:flex-row gap-8">
         {/* Left side: text content */}
         <div className=" space-y-6 flex-1">
           <h2 className="text-3xl md:text-4xl font-bold text-primary">
