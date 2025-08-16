@@ -1,11 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import useAxios from "../../hooks/useAxios";
 import LoadingSpiner from "../common/Loading/LoadingSpiner";
 import Container from "../common/Ui/Container";
 
 const CategoryCardSection = () => {
   const axiosPublic = useAxios();
+  const navigate = useNavigate();
 
   const {
     data: categories = [],
@@ -50,9 +51,12 @@ const CategoryCardSection = () => {
           ))}
         </div>
         <div className="text-center py-12">
-          <Link to={"/all-categories"}>
-            <button className="btn btn-primary">All categories</button>
-          </Link>
+          <button
+            onClick={() => navigate("/all-categories")}
+            className="btn btn-primary"
+          >
+            All categories
+          </button>
         </div>
       </section>
     </Container>
