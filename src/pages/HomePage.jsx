@@ -6,6 +6,7 @@ import DiscountMedicines from "../components/Home/DiscountMedicines";
 import FAQSection from "../components/Home/FAQSection";
 import HealthTipsArticles from "../components/Home/HelthTipsArticles";
 import MedicineDelivery from "../components/Home/MedicineDelivery";
+import PrescriptionUpload from "../components/Home/PrescriptionUpload";
 
 const HomePage = () => {
   return (
@@ -15,6 +16,7 @@ const HomePage = () => {
       <CategoryCardSection />
       <DiscountMedicines />
       <MedicineDelivery />
+      <PrescriptionUpload />
       <CustomerReviews />
       <HealthTipsArticles />
       <FAQSection />

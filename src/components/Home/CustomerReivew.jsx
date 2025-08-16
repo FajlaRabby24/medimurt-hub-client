@@ -3,7 +3,6 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import Container from "../common/Ui/Container";
 
 const testimonials = [
   {
@@ -70,64 +69,62 @@ const testimonials = [
 
 const CustomerReviews = () => {
   return (
-    <Container>
-      <section className="bg-gray-100 py-16 radius text-center mb-36">
-        <h2 className="text-3xl font-bold text-gray-800 mb-4">
-          What our customers are sayings
-        </h2>
-        <p className="max-w-3xl mx-auto text-gray-600 mb-10">
-          Enhance posture, mobility, and well-being effortlessly with Posture
-          Pro. Achieve proper alignment, reduce pain, and strengthen your body
-          with ease!
-        </p>
+    <section className="bg-gray-100 py-16 px-4 md:px-0 radius text-center max-w-7xl mx-auto">
+      <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
+        What our customers are sayings
+      </h2>
+      <p className="max-w-3xl mx-auto text-gray-600 mb-10">
+        Enhance posture, mobility, and well-being effortlessly with Posture Pro.
+        Achieve proper alignment, reduce pain, and strengthen your body with
+        ease!
+      </p>
 
-        <Swiper
-          spaceBetween={10}
-          breakpoints={{
-            320: { slidesPerView: 1 },
-            450: { slidesPerView: 1.5 },
-            768: { slidesPerView: 2.5 },
-            1024: { slidesPerView: 3.5 },
-          }}
-          centeredSlides={true}
-          loop={true}
-          autoplay={{
-            delay: 1500,
-            disableOnInteraction: false,
-          }}
-          navigation={{
-            nextEl: ".next-btn",
-            prevEl: ".prev-btn",
-          }}
-          modules={[Autoplay, Pagination, Navigation]}
-          className="max-w-7xl mx-auto"
-        >
-          {testimonials.map((testimonial, index) => (
-            <SwiperSlide key={index}>
-              <div className="testimonial-card transition-all duration-300 ease-in-ou">
-                <div className="text-4xl text-cyan-600 mb-4">“</div>
-                <p className="text-gray-700 mb-6">{testimonial.quote}</p>
-                <div className="h-1 w-16 mx-auto border-b-2 border-dashed border-gray-300 mb-3"></div>
-                <h4 className="text-lg font-semibold text-gray-800">
-                  {testimonial.name}
-                </h4>
-                <p className="text-sm text-gray-500">{testimonial.title}</p>
-              </div>
-            </SwiperSlide>
-          ))}
+      <Swiper
+        spaceBetween={10}
+        breakpoints={{
+          320: { slidesPerView: 1 },
+          450: { slidesPerView: 1.5 },
+          768: { slidesPerView: 2.5 },
+          1024: { slidesPerView: 3.5 },
+        }}
+        centeredSlides={true}
+        loop={true}
+        autoplay={{
+          delay: 1500,
+          disableOnInteraction: false,
+        }}
+        navigation={{
+          nextEl: ".next-btn",
+          prevEl: ".prev-btn",
+        }}
+        modules={[Autoplay, Pagination, Navigation]}
+        className="max-w-7xl mx-auto "
+      >
+        {testimonials.map((testimonial, index) => (
+          <SwiperSlide key={index}>
+            <div className="testimonial-card transition-all duration-300 ease-in-ou">
+              <div className="text-4xl text-cyan-600 mb-4">“</div>
+              <p className="text-gray-700 mb-6">{testimonial.quote}</p>
+              <div className="h-1 w-16 mx-auto border-b-2 border-dashed border-gray-300 mb-3"></div>
+              <h4 className="text-lg font-semibold text-gray-800">
+                {testimonial.name}
+              </h4>
+              <p className="text-sm text-gray-500">{testimonial.title}</p>
+            </div>
+          </SwiperSlide>
+        ))}
 
-          {/* Custom navigation buttons */}
-        </Swiper>
-        <div className="flex justify-center mt-6 gap-5">
-          <button className="prev-btn p-2 rounded-full bg-white shadow-md hover:bg-neutral hover:text-white">
-            <ArrowLeft size={18} />
-          </button>
-          <button className="next-btn p-2 rounded-full bg-neutral text-white ">
-            <ArrowRight size={18} />
-          </button>
-        </div>
-      </section>
-    </Container>
+        {/* Custom navigation buttons */}
+      </Swiper>
+      <div className="flex justify-center mt-6 gap-5">
+        <button className="prev-btn p-2 rounded-full bg-white shadow-md hover:bg-neutral hover:text-white">
+          <ArrowLeft size={18} />
+        </button>
+        <button className="next-btn p-2 rounded-full bg-neutral text-white ">
+          <ArrowRight size={18} />
+        </button>
+      </div>
+    </section>
   );
 };
 
