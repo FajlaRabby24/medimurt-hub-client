@@ -57,7 +57,6 @@ const LoginPage = () => {
             <span className="label-text">Email</span>
           </label>
           <input
-            ref={emailRef}
             type="email"
             placeholder="Your Email"
             className="input input-bordered  w-full"

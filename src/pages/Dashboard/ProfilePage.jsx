@@ -6,9 +6,11 @@ import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
+import { imageUpload } from "../../utilities/imageUpload";
 
 const ProfilePage = () => {
-  const { user, signOutUser } = useAuth();
+  const { user, signOutUser, updateUserProfile } = useAuth();
+  const [isProfileUpdating, setIsProfileUpdating] = useState(false);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   console.log(user);
@@ -16,15 +18,31 @@ const ProfilePage = () => {
 
   const {
     register,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    // Pass the data back to parent to handle Firebase update
-    // onUpdateProfile(data);
+  const onSubmit = async (data) => {
     console.log(data);
-    // setModalOpen(false);
+    try {
+      setIsProfileUpdating(true);
+      const image = data?.photo[0];
+      const imageUrl = await imageUpload(image);
+      await updateUserProfile({
+        displayName: data?.name,
+        photoURL: imageUrl,
+      });
+      toast.success("Profile update successfully!");
+      setTimeout(() => {
+        reset();
+        window.location.reload();
+      }, 1000);
+    } catch (error) {
+      toast.error("Something went wrong. Please try again!");
+    } finally {
+      setIsProfileUpdating(false);
+    }
   };
 
   // handle preview image
@@ -52,7 +70,7 @@ const ProfilePage = () => {
           .then(() => {
             queryClient.clear();
             toast.success("Sign out successfully!");
-            navigate("/auth/join-us");
+            navigate("/auth/join-us", { replace: true });
           })
           .catch((error) => {
             toast.error("Some went wrong. Please try again!");
@@ -123,8 +141,6 @@ const ProfilePage = () => {
             )}
             {/* name end */}
 
-            {/* photo start  */}
-
             {/* Photo */}
             <div>
               <label className="label text-neutral mb-1 mt-3">
@@ -154,39 +170,22 @@ const ProfilePage = () => {
             </div>
             {/* photo end */}
 
-            {/* phone number (optional) */}
-            <label className="label text-neutral mb-1 mt-3">
-              Phone Number (Optional)
-            </label>
-            <label className="input validator w-full">
-              <svg
-                className="h-[1em] opacity-50"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-              >
-                <g
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                  strokeWidth="2.5"
-                  fill="none"
-                  stroke="currentColor"
-                >
-                  <path d="M22 16.92V21a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.51 19.51 0 0 1-6-6A19.86 19.86 0 0 1 2 4.18 2 2 0 0 1 4 2h4.09a2 2 0 0 1 2 1.72c.12.9.37 1.77.72 2.58a2 2 0 0 1-.45 2.11L9.91 9.91a16 16 0 0 0 6 6l1.5-1.5a2 2 0 0 1 2.11-.45c.81.35 1.68.6 2.58.72A2 2 0 0 1 22 16.92z"></path>
-                </g>
-              </svg>
-              <input
-                type="tel"
-                placeholder="e.g. 01xxxxxxxxx"
-                {...register("phoneNumber")}
-                className="w-full"
-              />
-            </label>
-            {/* phone end */}
-
             <div className="mt-4 space-x-2">
-              <button type="submit" className="btn btn-primary ">
-                <FaUserEdit /> Update profile
-              </button>
+              {isProfileUpdating ? (
+                <button
+                  disabled
+                  className="btn"
+                  onClick={() => console.log("hellow")}
+                >
+                  <span className="loading loading-spinner"></span>
+                  updating
+                </button>
+              ) : (
+                <button type="submit" className="btn btn-primary ">
+                  <FaUserEdit /> Update profile
+                </button>
+              )}
+
               <button
                 onClick={handleSignOut}
                 type="button"

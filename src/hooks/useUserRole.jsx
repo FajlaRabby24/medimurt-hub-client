@@ -17,7 +17,6 @@ const useUserRole = () => {
       const res = await axiosSecure.get(`/api/users/role`);
       return res.data.role;
     },
-    staleTime: Infinity,
   });
   return { role, roleLoading: authLoading || roleLoading, refetch };
 };
