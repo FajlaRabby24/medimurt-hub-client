@@ -1,4 +1,5 @@
 import { useQueryClient } from "@tanstack/react-query";
+import { ReTitle } from "re-title";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaSignOutAlt, FaUserEdit } from "react-icons/fa";
@@ -13,7 +14,7 @@ const ProfilePage = () => {
   const [isProfileUpdating, setIsProfileUpdating] = useState(false);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  console.log(user);
+
   const [previewImage, setPreviewImage] = useState(null);
 
   const {
@@ -81,6 +82,7 @@ const ProfilePage = () => {
 
   return (
     <div className="max-wxl pt-20  px-4     mx-auto">
+      <ReTitle title="Profile" />
       <h1 className="font-semibold  mb-4 text-3xl">Your profile</h1>
       <div className="flex items-stretch flex-col md:flex-row  gap-5">
         {/* image  */}

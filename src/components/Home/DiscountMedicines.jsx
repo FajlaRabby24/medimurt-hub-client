@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { useNavigate } from "react-router";
 import "swiper/css";
 import "swiper/css/autoplay";
 import { Autoplay } from "swiper/modules";
@@ -8,8 +9,9 @@ import Container from "../common/Ui/Container";
 
 const DiscountMedicines = () => {
   const axiosPublic = useAxios();
+  const navigate = useNavigate();
 
-  const { data: discounts = [], isLoading } = useQuery({
+  const { data: discountsMedicines = [], isLoading } = useQuery({
     queryKey: ["discountMedicines"],
     queryFn: async () => {
       const res = await axiosPublic.get("/api/users/medicines/discounted");
@@ -26,7 +28,7 @@ const DiscountMedicines = () => {
     );
   }
 
-  if (!discounts.length) {
+  if (!discountsMedicines.length) {
     return (
       <h2 className="text-3xl font-semibold text-center">
         There are no discounted medications now!
@@ -53,9 +55,12 @@ const DiscountMedicines = () => {
           autoplay={{ delay: 2500, disableOnInteraction: false }}
           modules={[Autoplay]}
         >
-          {discounts.map((med) => (
+          {discountsMedicines.map((med) => (
             <SwiperSlide key={med._id}>
-              <div className="bg-white rounded-lg shadow p-4 h-full">
+              <div
+                onClick={() => navigate("/shop")}
+                className="bg-white rounded-lg shadow p-4 h-full hover:scale-105 transition-all"
+              >
                 <img
                   src={med.image}
                   alt={med.medicine_name}
