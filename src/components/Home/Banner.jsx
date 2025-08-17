@@ -30,7 +30,7 @@ const Banner = () => {
       <div className="relative">
         {isLoading ? (
           <h2 className="text-3xl  text-center py-10 font-semibold ">
-            Loading banners...
+            Loading advertisements...
           </h2>
         ) : banners.length ? (
           <div>

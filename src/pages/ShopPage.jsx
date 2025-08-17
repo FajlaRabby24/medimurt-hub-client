@@ -28,7 +28,7 @@ const Shop = () => {
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState("");
 
-  const limit = 5;
+  const limit = 8;
 
   // Debounce search input
   const debouncedSearch = useMemo(() => {
