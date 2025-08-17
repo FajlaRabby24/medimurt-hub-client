@@ -36,11 +36,11 @@ const SellterDashboard = () => {
   if (isLoading) return <LoadingSpiner />;
 
   const { totalRevenue = 0, totalPaid = 0, totalPending = 0 } = summary;
-  const COLORS = ["#16a34a", "#facc15", "#3b82f6"]; // green, yellow, blue
+  const COLORS = ["#43dc7b", "#5ca2ff", "#f7c400"]; // green, yellow, blue
   const chartData = [
+    { name: "Total Revenue", value: totalRevenue },
     { name: "Paid", value: totalPaid },
     { name: "Pending", value: totalPending },
-    { name: "Total Revenue", value: totalRevenue },
   ];
 
   return (
