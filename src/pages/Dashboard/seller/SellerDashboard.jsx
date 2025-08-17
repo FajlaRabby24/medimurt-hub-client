@@ -6,12 +6,15 @@ import {
   FaMoneyBillWave,
 } from "react-icons/fa";
 import {
+  Bar,
+  BarChart,
+  CartesianGrid,
   Cell,
   Legend,
-  Pie,
-  PieChart,
   ResponsiveContainer,
   Tooltip,
+  XAxis,
+  YAxis,
 } from "recharts";
 import LoadingSpiner from "../../../components/common/Loading/LoadingSpiner";
 import useAuth from "../../../hooks/useAuth";
@@ -82,25 +85,32 @@ const SellterDashboard = () => {
         </div>
       </div>
       {/* charts  */}
-      <ResponsiveContainer width="100%" height={300}>
-        <PieChart>
-          <Pie
+      {totalRevenue ? (
+        <ResponsiveContainer width="100%" height={300}>
+          <BarChart
             data={chartData}
-            cx="50%"
-            cy="50%"
-            outerRadius={100}
-            fill="#8884d8"
-            dataKey="value"
-            label
+            margin={{ top: 20, right: 20, left: 0, bottom: 20 }}
           >
-            {chartData.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index]} />
-            ))}
-          </Pie>
-          <Tooltip formatter={(value) => `৳${value.toFixed(2)}`} />
-          <Legend />
-        </PieChart>
-      </ResponsiveContainer>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="value">
+              {COLORS?.map((entry, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                />
+              ))}
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      ) : (
+        <h1 className="text-3xl font-semibold text-center pt-20">
+          Currently you don't have any revenue.
+        </h1>
+      )}
     </div>
   );
 };
