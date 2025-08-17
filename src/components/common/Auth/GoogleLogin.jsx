@@ -29,7 +29,7 @@ const GoogleLogin = () => {
         navigate(from);
       })
       .catch((error) => {
-        console.error(error);
+        toast.error("Login successfully!");
       });
   };
 

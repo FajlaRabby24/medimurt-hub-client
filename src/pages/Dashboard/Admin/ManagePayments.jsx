@@ -21,8 +21,10 @@ const ManagePayments = () => {
 
   // Accept payment mutation
   const acceptPaymentMutation = useMutation({
-    mutationFn: async () => {
-      const res = await axiosSecure.patch(`/api/admin/cart/accept-payment`);
+    mutationFn: async (email) => {
+      const res = await axiosSecure.patch(
+        `/api/admin/cart/accept-payment?paymentAcceptEmail=${email}`
+      );
       return res.data;
     },
     onSuccess: () => {

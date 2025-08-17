@@ -25,7 +25,6 @@ const ProfilePage = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
     try {
       setIsProfileUpdating(true);
       const image = data?.photo[0];
@@ -174,11 +173,7 @@ const ProfilePage = () => {
 
             <div className="mt-4 space-x-2">
               {isProfileUpdating ? (
-                <button
-                  disabled
-                  className="btn"
-                  onClick={() => console.log("hellow")}
-                >
+                <button disabled className="btn">
                   <span className="loading loading-spinner"></span>
                   updating
                 </button>
