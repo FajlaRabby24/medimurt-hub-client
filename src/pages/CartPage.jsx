@@ -168,7 +168,7 @@ const CartPage = () => {
                           </button>
                         </div>
                       </td>
-                      <td>${item.total_price}</td>
+                      <td>${item.total_price.toFixed(2)}</td>
                       <td>
                         <button
                           onClick={() => handleDelete(item._id)}
@@ -189,7 +189,7 @@ const CartPage = () => {
                 Total: ${total.toFixed(2)}
               </div>
               <div className="flex gap-4">
-                <button onClick={handleClearCart} className="btn btn-warning">
+                <button onClick={handleClearCart} className="btn btn-error">
                   Clear Cart
                 </button>
                 <button onClick={proceedCheckout} className="btn btn-primary">

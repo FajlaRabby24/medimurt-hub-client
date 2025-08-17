@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ReTitle } from "re-title";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -16,6 +16,7 @@ const ManageMedicine = () => {
   const { user } = useAuth();
   const [viewData, setViewData] = useState(null);
   const [uploading, setIsUploading] = useState(false);
+  const queryClient = useQueryClient();
   const axiosSecure = useAxiosSecure();
   const [previewImage, setPreviewImage] = useState(null);
   const [page, setPage] = useState(1);
@@ -87,6 +88,7 @@ const ManageMedicine = () => {
       reset();
       setPreviewImage(null);
       setShowModal(false);
+      queryClient.invalidateQueries([`recent-medicines`]);
     }
   };
 
