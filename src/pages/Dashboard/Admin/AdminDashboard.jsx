@@ -31,14 +31,14 @@ const AdminDashboard = () => {
   });
 
   if (isLoading) return <LoadingSpiner />;
-  const COLORS = ["#16a34a", "#facc15", "#3b82f6"]; // green, yellow, blue
+  const COLORS = ["#aa4eff", "#00c056", "#3b82f6"]; // green, yellow, blue
 
   const { totalRevenue, totalPaid, totalPending } = data;
 
   const chartData = [
+    { name: "Total Revenue", value: totalRevenue },
     { name: "Paid", value: totalPaid },
     { name: "Pending", value: totalPending },
-    { name: "Total Revenue", value: totalRevenue },
   ];
 
   return (
