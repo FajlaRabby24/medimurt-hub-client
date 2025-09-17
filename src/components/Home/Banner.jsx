@@ -49,10 +49,9 @@ const Banner = () => {
                     alt={ad.medicine_name}
                     className="w-full h-40 object-cover rounded"
                   />
-                  <h3 className="text-lg font-semibold mt-3">
+                  <h3 className="text-lg text-center font-semibold mt-3">
                     {ad.medicine_name}
                   </h3>
-                  <p className="text-sm text-gray-600 mt-1">{ad.description}</p>
                 </div>
               ))}
             </Marquee>
@@ -68,10 +67,9 @@ const Banner = () => {
                     alt={ad.medicine_name}
                     className="w-full h-40 object-cover rounded"
                   />
-                  <h3 className="text-lg font-semibold mt-3">
+                  <h3 className="text-lg text-center font-semibold mt-3">
                     {ad.medicine_name}
                   </h3>
-                  <p className="text-sm text-gray-600 mt-1">{ad.description}</p>
                 </div>
               ))}
             </Marquee>
