@@ -11,11 +11,13 @@ const AboutMe = () => {
         <Reveal className="md:col-span-8 grid-box">
           <h3 className="grid-box-title">My Programming Journey</h3>
           <p>
-            My journey into programming began out of curiosity. I was fascinated
-            by how code editors used colorful themes to make code visually
-            engaging. I started with HTML and CSS tutorials on YouTube, and
-            gradually found myself drawn to JavaScript. That curiosity soon
-            turned into passion.
+            My programming journey started a long time ago, an interesting thing
+            is that the reason behind my coming to programming is that I
+            actually like programming since the different themes in the code
+            editor show the codes in different colors. First I started with HTML
+            CSS which I watched on YouTube and then I got interested in
+            JavaScript. From then on, I actually got more interested in doing
+            something with programming.
           </p>
         </Reveal>
 
@@ -23,10 +25,9 @@ const AboutMe = () => {
         <Reveal className="md:col-span-4 grid-box">
           <h3 className="grid-box-title">How I Learned Programming</h3>
           <p>
-            Initially, I relied on free resources like YouTube playlists.
-            However, I soon realized that having structured guidance and
-            mentorship would help me grow faster. That’s when I decided to
-            invest in professional courses.
+            At first, I learned by watching various playlists on YouTube, but at
+            one point I realized that there were very few opportunities to get
+            help here, so I thought, let's actually take a course later.
           </p>
         </Reveal>
 
@@ -34,9 +35,9 @@ const AboutMe = () => {
         <Reveal className="md:col-span-4 grid-box">
           <h3 className="grid-box-title">Projects I've Built</h3>
           <p>
-            I’ve completed several full-stack projects including a Car Rental
-            App, Recipe Book App, and a complete authentication system. I
-            handled both frontend and backend development for each project.
+            I have done more than 3 projects till now — MediMurt Hub, Car Rental
+            App, Recipe Book App and authentication system. In each project I
+            have handled the frontend and backend myself.
           </p>
         </Reveal>
 
@@ -44,10 +45,11 @@ const AboutMe = () => {
         <Reveal className="md:col-span-8 grid-box">
           <h3 className="grid-box-title">What I Enjoy Building</h3>
           <p>
-            I love working on clean, responsive user interfaces with good UX.
-            I'm especially drawn to projects involving API integration,
-            authentication, and real-world functionality. I find true excitement
-            in challenges — they push me to grow.
+            I love working on projects where UI/UX is important. I like to
+            create minimalist and responsive designs. I am also interested in
+            API integration and authentication-related work. At the same time, I
+            also love challenging work because there is little interest in work
+            that does not have challenges.
           </p>
         </Reveal>
 
@@ -55,21 +57,20 @@ const AboutMe = () => {
         <Reveal className="md:col-span-4 row-span-2 grid-box">
           <h3 className="grid-box-title">Future Goals</h3>
           <p>
-            Programming can be challenging, but I genuinely enjoy the process.
-            My future plans include mastering TypeScript, Next.js, Python, and
-            even exploring C++. My ultimate goal is to build a SaaS product as a
-            full-stack developer.
+            Although programming is difficult, I enjoy learning it, so I have
+            made plans to learn Next.js, TypeScript, Socket.io, Python, and C++
+            in the future. My goal is to create a SaaS app as a full-stack
+            developer.
           </p>
         </Reveal>
 
         {/* six */}
         <Reveal className="md:col-span-4 grid-box">
-          <h3 className="grid-box-title">Skills & Tools</h3>
+          <h3 className="grid-box-title">My Skills & Tools</h3>
           <p>
-            I specialize in the MERN stack — MongoDB, Express, React, and
-            Node.js. I’m also experienced with Tailwind CSS, Firebase, JWT, and
-            GitHub. React and Tailwind are my favorite tools for building modern
-            UIs.
+            I work with the MERN Stack (MongoDB, Express, React, Node.js). I am
+            also proficient in Tailwind CSS, Firebase, JWT, Mongoose and GitHub
+            version control.
           </p>
         </Reveal>
 
@@ -77,21 +78,22 @@ const AboutMe = () => {
         <Reveal className="md:col-span-4 grid-box">
           <h3 className="grid-box-title">How I Solve Problems</h3>
           <p>
-            When I run into issues, I start with Google and Stack Overflow. I
-            also consult official documentation. If needed, I turn to YouTube or
-            ChatGPT. My goal is always to understand the "why" behind a
-            solution.
+            When I encounter a problem, I first look at Problem after watching,
+            I try to understand what the problem is and how to solve it. If I
+            can't solve it then I look at the ChatGPT and other AI tools and
+            also Google, Stack overflow, youtube.
           </p>
         </Reveal>
 
         {/* eight */}
         <Reveal className="md:col-span-8 grid-box">
-          <h3 className="grid-box-title">Outside of Programming</h3>
+          <h3 className="grid-box-title">What's good without programming</h3>
           <p>
-            Outside of coding, I enjoy playing football, especially when I visit
-            my village. When I’m in the city, I spend most of my time learning
-            and sharpening my development skills — there's always something new
-            to explore.
+            Apart from coding, I like to play football, sometimes when I go to
+            my village, I play football, and I also use other activities.
+            Besides, when I'm in the city, most of the time I spend on my
+            computer screen to gain knowledge, especially programming related
+            knowledge.
           </p>
         </Reveal>
       </div>
