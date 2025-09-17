@@ -126,7 +126,7 @@ const Navbar = () => {
             </div>
           ) : (
             <Link to={"/auth/join-us"}>
-              <button className="btn btn-outline btn-neutral ">Join Us</button>
+              <button className="btn btn- btn-neutral ">Join Us</button>
             </Link>
           )}
         </div>
