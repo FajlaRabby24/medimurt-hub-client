@@ -81,7 +81,7 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1 gap-5">{links}</ul>
         </div>
         {/* navbar end  */}
-        <div className="navbar-end md:gap-5">
+        <div className="navbar-end gap-2 md:gap-5">
           {/* Cart Icon */}
           <Link to={"/cart"}>
             <button className="btn btn-ghost btn-circle">
@@ -126,7 +126,7 @@ const Navbar = () => {
             </div>
           ) : (
             <Link to={"/auth/join-us"}>
-              <button className="btn btn-outlin btn-neutral ">Join Us</button>
+              <button className="btn  btn-neutral ">Join Us</button>
             </Link>
           )}
         </div>
