@@ -14,7 +14,7 @@ const Forbidden = () => {
       </p>
 
       <Link to="/" className="mt-6">
-        <button className="btn btn-primary text-black">Go to Home</button>
+        <button className="btn btn-primary ">Go to Home</button>
       </Link>
     </div>
   );
